@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Episode video URLs for Season 1 (placeholder URLs - replace with actual links when available)
     const season1Videos = {
         // These are placeholder URLs - you'll need to replace these with the actual links
-        "1": "https://voe.sx/e/placeholder1", // Episode 1
-        "2": "https://voe.sx/e/placeholder2", // Episode 2
+        "1": "https://voe.sx/e/zcrrmw6me2e8", // Episode 1
+        "2": "https://voe.sx/e/zkmwgdbyhzcp", // Episode 2
         "3": "https://voe.sx/e/placeholder3", // Episode 3
         "4": "https://voe.sx/e/placeholder4", // Episode 4
         "5": "https://voe.sx/e/placeholder5", // Episode 5
