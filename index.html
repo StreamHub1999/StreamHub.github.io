@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamHub - Watch Movies & TV Shows</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for the slideshow */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            height: 80vh;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8));
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            margin-top: 60px;
+        }
+        
+        .slideshow-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 3;
+        }
+        
+        .slideshow-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .slideshow-dot.active {
+            background-color: var(--primary-color);
+        }
+        
+        .slideshow-arrows {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            z-index: 3;
+            transform: translateY(-50%);
+            padding: 0 20px;
+        }
+        
+        .slideshow-arrow {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .slideshow-arrow:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* Auth buttons styling */
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-login {
+            color: var(--text-primary);
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-login:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-signup {
+            color: white;
+            background-color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-signup:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* Search dropdown styles */
+        .search {
+            position: relative;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--background-lighter);
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-result-item:hover {
+            background-color: var(--card-hover);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-thumb {
+            width: 40px;
+            height: 60px;
+            object-fit: cover;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+
+        .search-result-info {
+            flex: 1;
+        }
+
+        .search-result-title {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .search-result-meta {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .no-results {
+            padding: 15px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i>🔍</i>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login-page.html" class="btn-small btn-login">Login</a>
+                    <a href="simplified-register-page.html" class="btn-small btn-signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Slideshow -->
+    <section class="hero">
+        <!-- Slide 1: House of the Dragon -->
+        <div class="slide active" id="slide1">
+            <div class="slide-overlay"></div>
+            <div class="hero-content">
+                <h1>House of the Dragon</h1>
+                <p>Based on George R.R. Martin's "Fire & Blood," this Game of Thrones prequel chronicles the rise and fall of House Targaryen. Set 200 years before the events of Game of Thrones, the series explores the devastating Targaryen civil war known as the "Dance of the Dragons."</p>
+                <div class="hero-buttons">
+                    <a href="hotd-detail.html" class="btn"><i>▶</i> Watch Now</a>
+                    <a href="hotd-detail.html" class="btn btn-secondary"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Oppenheimer -->
+        <div class="slide" id="slide2">
+            <div class="slide-overlay"></div>
+            <div class="hero-content">
+                <h1>Oppenheimer</h1>
+                <p>The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb. During World War II, Lt. Gen. Leslie Groves Jr. appoints physicist J. Robert Oppenheimer to work on the top-secret Manhattan Project, forever changing the course of history.</p>
+                <div class="hero-buttons">
+                    <a href="oppenheimer-detail.html" class="btn"><i>▶</i> Watch Now</a>
+                    <a href="oppenheimer-detail.html" class="btn btn-secondary"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: FROM -->
+        <div class="slide" id="slide3">
+            <div class="slide-overlay"></div>
+            <div class="hero-content">
+                <h1>FROM</h1>
+                <p>A nightmarish setting in a small town in the heart of America: No one who enters can ever escape again. The unwilling inhabitants try to maintain some kind of normalcy and search for a way out, but they are not prepared for what awaits them in the surrounding woods.</p>
+                <div class="hero-buttons">
+                    <a href="series-detail.html" class="btn"><i>▶</i> Watch Now</a>
+                    <a href="series-detail.html" class="btn btn-secondary"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Torchwood -->
+        <div class="slide" id="slide4">
+            <div class="slide-overlay"></div>
+            <div class="hero-content">
+                <h1>Torchwood</h1>
+                <p>The Torchwood Institute, a secret organization founded by the British Crown, fights to protect the Earth from extraterrestrial and supernatural threats. Led by the enigmatic and immortal Captain Jack Harkness, the team stands outside the government and police, beyond any jurisdiction.</p>
+                <div class="hero-buttons">
+                    <a href="torchwood-detail.html" class="btn"><i>▶</i> Watch Now</a>
+                    <a href="torchwood-detail.html" class="btn btn-secondary"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slideshow Navigation Dots -->
+        <div class="slideshow-nav">
+            <div class="slideshow-dot active" data-slide="1"></div>
+            <div class="slideshow-dot" data-slide="2"></div>
+            <div class="slideshow-dot" data-slide="3"></div>
+            <div class="slideshow-dot" data-slide="4"></div>
+        </div>
+        
+        <!-- Slideshow Arrows -->
+        <div class="slideshow-arrows">
+            <div class="slideshow-arrow prev">❮</div>
+            <div class="slideshow-arrow next">❯</div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Trending Now Section -->
+        <section>
+            <div class="section-title">
+                <h2>Trending Now</h2>
+                <a href="#">View All</a>
+            </div>
+            <div class="featured-row">
+            <a href="series-detail.html" style="text-decoration: none;">
+                <div class="featured-card">
+                    <img src="https://s.to/public/img/cover/from-stream-cover-lDUcOqk1x2G3wrwNiMEbMwxFgWXgy48r_220x330.jpg" alt="Movie">
+                    <div class="featured-info">
+                        <h3 class="featured-title">FROM</h3>
+                        <p class="featured-desc">Eine albtraumhafte Kulisse in einer Kleinstadt im Herzen von Amerika: Keiner, der sie betritt, kann ihr wieder entkommen. Die unfreiwilligen Bewohner versuchen zwar, irgendeine Art von Normalität aufrechtzuerhalten und nach einem Ausweg zu suchen. Doch sie sind nicht auf das vorbereitet, was auf sie in den Wäldern wartet, welche die Ortschaft umgeben.</p>
+                        <div class="movie-meta">
+                            <span>Drama, Action</span>
+                            <div class="rating">
+                                <i>★</i> 9.2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                <a href="oppenheimer-detail.html" style="text-decoration: none;">
+                <div class="featured-card">
+                    <img src="https://m.media-amazon.com/images/I/61nEhs3kAVL._AC_SL1500_.jpg" alt="Movie">
+                    <div class="featured-info">
+                        <h3 class="featured-title">Oppenheimer</h3>
+                        <p class="featured-desc">The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.</p>
+                        <div class="movie-meta">
+                            <span>Biography, Drama</span>
+                            <div class="rating">
+                                <i>★</i> 8.8
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                <a href="hotd-detail.html" style="text-decoration: none;">
+                <div class="featured-card">
+                    <img src="https://s.to/public/img/cover/house-of-the-dragon-stream-cover-kMWFFbMXzuL0fM6Jpq4BXQNA6duokG3q_220x330.jpg" alt="Movie">
+                    <div class="featured-info">
+                        <h3 class="featured-title">House of the Dragon</h3>
+                        <p class="featured-desc">An internal succession war within House Targaryen at the height of its power, 172 years before the birth of Daenerys Targaryen.</p>
+                        <div class="movie-meta">
+                            <span>Fantasy, Drama</span>
+                            <div class="rating">
+                                <i>★</i> 8.5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                <a href="torchwood-detail.html" style="text-decoration: none;">
+                <div class="featured-card">
+                    <img src="https://s.to/public/img/cover/torchwood-stream-cover-zPQfhrZMmcTbr4zkHTakU723LisT7KTY_220x330.png" alt="Movie">
+                    <div class="featured-info">
+                        <h3 class="featured-title">Torchwood</h3>
+                        <p class="featured-desc">Auf den Straßen Cardiffs bekämpft eine Einheit der Geheimorganisation Torchwood ungewöhnliche Verbrechen mit ungewöhnlichen Mitteln und irdischer und außerirdischer Technologie. Torchwood steht über dem Gesetz und ist unabhängig vom Staat und den Vereinten Nationen. Mittelpunkt der Gruppe bildet der geheimnisvolle Captain Jack Harkness, der bereits mit dem Doctor (Doctor Who) durch Raum und Zeit gereist ist.</p>
+                        <div class="movie-meta">
+                            <span>Sci-Fi, Adventure</span>
+                            <div class="rating">
+                                <i>★</i> 8.7
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Popular Movies -->
+        <section>
+            <div class="section-title">
+                <h2>Popular Movies</h2>
+                <a href="#">View All</a>
+            </div>
+            
+            <div class="category-tabs">
+                <div class="category-tab active" id="all-tab">All</div>
+                <div class="category-tab" id="action-tab">Action</div>
+                <div class="category-tab" id="comedy-tab">Comedy</div>
+                <div class="category-tab" id="sci-fi-tab">Sci-Fi</div>
+                <div class="category-tab" id="horror-tab">Horror</div>
+                <div class="category-tab" id="drama-tab">Drama</div>
+                <div class="category-tab" id="anime-tab">Anime</div>
+                <div class="category-tab" id="thriller-tab">Thriller</div>
+            </div>
+            
+            <div class="movies-grid">
+                <!-- Joker -->
+                <a href="joker-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="drama,thriller,crime">
+                    <img src="https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg" alt="Joker">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Joker</h3>
+                        <div class="movie-meta">
+                            <span>Drama, Thriller, Crime</span>
+                            <div class="rating">
+                                <i>★</i> 8.4
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                
+                <!-- Joker 2: Folie à Deux -->
+                <a href="joker2-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="drama,thriller,crime">
+                    <img src="https://cdn.kinocheck.com/i/paucjss7ne.jpg" alt="Joker 2">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Joker 2: Folie à Deux</h3>
+                        <div class="movie-meta">
+                            <span>Drama, Thriller, Crime</span>
+                            <div class="rating">
+                                <i>★</i> 8.1
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                
+                <!-- John Wick -->
+                <a href="johnwick-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="action,thriller">
+                    <img src="https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_.jpg" alt="John Wick">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">John Wick</h3>
+                        <div class="movie-meta">
+                            <span>Action, Thriller</span>
+                            <div class="rating">
+                                <i>★</i> 7.4
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                
+                <!-- John Wick 2 -->
+                <a href="johnwick2-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="action,thriller">
+                    <img src="https://m.media-amazon.com/images/M/MV5BMjE2NDkxNTY2M15BMl5BanBnXkFtZTgwMDc2NzE0MTI@._V1_.jpg" alt="John Wick 2">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">John Wick 2</h3>
+                        <div class="movie-meta">
+                            <span>Action, Thriller</span>
+                            <div class="rating">
+                                <i>★</i> 7.5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                
+                <!-- John Wick 3 -->
+                <a href="johnwick3-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="action,thriller">
+                    <img src="https://m.media-amazon.com/images/M/MV5BMDg2YzI0ODctYjliMy00NTU0LTkxODYtYTNkNjQwMzVmOTcxXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_FMjpg_UX1000_.jpg" alt="John Wick 3">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">John Wick 3</h3>
+                        <div class="movie-meta">
+                            <span>Action, Thriller</span>
+                            <div class="rating">
+                                <i>★</i> 7.4
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                
+                <!-- John Wick 4 -->
+                <a href="johnwick4-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="action,thriller">
+                    <img src="https://m.media-amazon.com/images/M/MV5BMDExZGMyOTMtMDgyYi00NGIwLWJhMTEtOTdkZGFjNmZiMTEwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_FMjpg_UX1000_.jpg" alt="John Wick 4">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">John Wick 4</h3>
+                        <div class="movie-meta">
+                            <span>Action, Thriller</span>
+                            <div class="rating">
+                                <i>★</i> 7.8
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                
+                <!-- Hitman - Agent 47 -->
+                <a href="hitman-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="action,thriller">
+                    <img src="https://cdn.kinocheck.com/i/2ibqysun2s.jpg" alt="Hitman - Agent 47">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Hitman - Agent 47</h3>
+                        <div class="movie-meta">
+                            <span>Action, Thriller</span>
+                            <div class="rating">
+                                <i>★</i> 5.7
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                
+                <!-- Deadpool -->
+                <a href="deadpool-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="action,comedy">
+                    <img src="https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg" alt="Deadpool">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Deadpool</h3>
+                        <div class="movie-meta">
+                            <span>Action, Comedy</span>
+                            <div class="rating">
+                                <i>★</i> 8.0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                
+                <!-- Deadpool 2 -->
+                <a href="deadpool2-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="action,comedy">
+                    <img src="https://m.media-amazon.com/images/M/MV5BNjk1Njk3YjctMmMyYS00Y2I4LThhMzktN2U0MTMyZTFlYWQ5XkEyXkFqcGdeQXVyODM2ODEzMDA@._V1_.jpg" alt="Deadpool 2">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Deadpool 2</h3>
+                        <div class="movie-meta">
+                            <span>Action, Comedy</span>
+                            <div class="rating">
+                                <i>★</i> 7.7
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                
+                <!-- Deadpool & Wolverine -->
+                <a href="deadpool3-detail.html" style="text-decoration: none;">
+                <div class="movie-card" data-categories="action,comedy,adventure">
+                    <img src="https://cdn.kinocheck.com/i/d3mx9y2anl.jpg" alt="Deadpool & Wolverine">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Deadpool & Wolverine</h3>
+                        <div class="movie-meta">
+                            <span>Action, Comedy, Adventure</span>
+                            <div class="rating">
+                                <i>★</i> 8.3
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Popular Shows -->
+        <section>
+            <div class="section-title">
+                <h2>Popular TV Shows</h2>
+                <a href="#">View All</a>
+            </div>
+            
+            <div class="movies-grid" id="tv-shows-grid">
+                <!-- Your Lie in April -->
+                <div class="movie-card" data-categories="anime,drama,music">
+                    <img src="https://aniworld.to/public/img/cover/your-lie-in-april-stream-cover-Dh4NQ6b0M2mKWei4c5hzugmntqN9WuYh_220x330.jpg" alt="Your Lie in April">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Your Lie in April</h3>
+                        <div class="movie-meta">
+                            <span>Anime, Drama, Music</span>
+                            <div class="rating">
+                                <i>★</i> 8.6
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tower of God -->
+                <div class="movie-card" data-categories="anime,adventure,fantasy">
+                    <img src="https://aniworld.to/public/img/cover/tower-of-god-stream-cover-8nCCJxa8YByM62sG2rhj2bG2LtGm6iRX_220x330.jpg" alt="Tower of God">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Tower of God</h3>
+                        <div class="movie-meta">
+                            <span>Anime, Adventure, Fantasy</span>
+                            <div class="rating">
+                                <i>★</i> 7.6
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Steins;Gate -->
+                <div class="movie-card" data-categories="anime,sci-fi,thriller">
+                    <img src="https://m.media-amazon.com/images/M/MV5BMjUxMzE4ZDctODNjMS00MzIwLThjNDktODkwYjc5YWU0MDc0XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_.jpg" alt="Steins;Gate">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Steins;Gate</h3>
+                        <div class="movie-meta">
+                            <span><span>Anime, Sci-Fi, Thriller</span>
+                            <div class="rating">
+                                <i>★</i> 8.8
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Steins;Gate 0 -->
+                <div class="movie-card" data-categories="anime,sci-fi,thriller">
+                    <img src="https://aniworld.to/public/img/cover/steinsgate-0-stream-cover-79gtgs9qzc4BOZ4CH59YBsL7U5Dym0qz_220x330.jpg" alt="Steins;Gate 0">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Steins;Gate 0</h3>
+                        <div class="movie-meta">
+                            <span>Anime, Sci-Fi, Thriller</span>
+                            <div class="rating">
+                                <i>★</i> 8.5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attack on Titan -->
+                <div class="movie-card" data-categories="anime,action,fantasy">
+                    <img src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg" alt="Attack on Titan">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Attack on Titan</h3>
+                        <div class="movie-meta">
+                            <span>Anime, Action, Fantasy</span>
+                            <div class="rating">
+                                <i>★</i> 9.0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Another -->
+                <div class="movie-card" data-categories="anime,horror,mystery">
+                    <img src="https://aniworld.to/public/img/cover/another-stream-cover-b6AzljvYW1fg6QclAXZGsjGCa3mxvzn1_220x330.jpg" alt="Another">
+                    <div class="overlay">
+                        <div class="play-btn">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Another</h3>
+                        <div class="movie-meta">
+                            <span>Anime, Horror, Mystery</span>
+                            <div class="rating">
+                                <i>★</i> 7.7
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Slideshow functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all slides
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slideshow-dot');
+            const prevArrow = document.querySelector('.slideshow-arrow.prev');
+            const nextArrow = document.querySelector('.slideshow-arrow.next');
+            let currentSlide = 0;
+            let slideInterval;
+
+            // Set background images for slides with the updated wallpapers
+            document.getElementById('slide1').style.backgroundImage = "url('https://4kwallpapers.com/images/walls/thumbs_3t/8382.jpg')";
+            document.getElementById('slide2').style.backgroundImage = "url('https://images.wallpapersden.com/image/download/oppenheimer-2023-movie-poster_bmVpamqUmZqaraWkpJRmbmdlrWZlbWU.jpg')";
+            document.getElementById('slide3').style.backgroundImage = "url('https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2023/06/hbo-max-3057428.jpg?tf=1200x')";
+            document.getElementById('slide4').style.backgroundImage = "url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f5336759-9709-48ab-a2e5-09f303fa54c3/d3kotdc-20c29d07-a749-451f-8d3c-e87be20c7109.jpg/v1/fill/w_1131,h_707,q_70,strp/torchwood__miracle_day_by_demigod_25_d3kotdc-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MTA1MCIsInBhdGgiOiJcL2ZcL2Y1MzM2NzU5LTk3MDktNDhhYi1hMmU1LTA5ZjMwM2ZhNTRjM1wvZDNrb3RkYy0yMGMyOWQwNy1hNzQ5LTQ1MWYtOGQzYy1lODdiZTIwYzcxMDkuanBnIiwid2lkdGgiOiI8PTE2ODAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.fkNuiXNXbaS0EzPxMaL4UYaMEfP-lZb492P1tb9UGhA')";
+
+            // Function to show a specific slide
+            function showSlide(index) {
+                // Hide all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                // Deactivate all dots
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                
+                // Show the specific slide
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                
+                // Update current slide index
+                currentSlide = index;
+            }
+
+            // Function for next slide
+            function nextSlide() {
+                let next = currentSlide + 1;
+                if (next >= slides.length) {
+                    next = 0;
+                }
+                showSlide(next);
+            }
+
+            // Function for previous slide
+            function prevSlide() {
+                let prev = currentSlide - 1;
+                if (prev < 0) {
+                    prev = slides.length - 1;
+                }
+                showSlide(prev);
+            }
+
+            // Start automatic slideshow
+            function startSlideshow() {
+                stopSlideshow(); // Stop any existing interval
+                slideInterval = setInterval(nextSlide, 7000); // Change slide every 7 seconds
+            }
+
+            // Stop automatic slideshow
+            function stopSlideshow() {
+                if (slideInterval) {
+                    clearInterval(slideInterval);
+                }
+            }
+
+            // Set up dot click events
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const slideIndex = parseInt(dot.dataset.slide) - 1;
+                    showSlide(slideIndex);
+                    startSlideshow(); // Restart the timer when manually changing slides
+                });
+            });
+
+            // Set up arrow click events
+            nextArrow.addEventListener('click', () => {
+                nextSlide();
+                startSlideshow(); // Restart the timer when manually changing slides
+            });
+
+            prevArrow.addEventListener('click', () => {
+                prevSlide();
+                startSlideshow(); // Restart the timer when manually changing slides
+            });
+
+            // Pause slideshow when hovering over the hero section
+            const heroSection = document.querySelector('.hero');
+            heroSection.addEventListener('mouseenter', stopSlideshow);
+            heroSection.addEventListener('mouseleave', startSlideshow);
+
+            // Initialize slideshow
+            startSlideshow();
+            
+            // Category tabs filtering functionality
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const movieCards = document.querySelectorAll('.movie-card');
+            
+            // Function to filter movies by category
+            function filterMovies(category) {
+                console.log("Filtering by category:", category);
+                
+                movieCards.forEach(card => {
+                    const categories = card.getAttribute('data-categories') || '';
+                    
+                    if (category === 'all' || categories.includes(category)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Set up event listeners for category tabs
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Get the category from the tab's ID or text content
+                    const category = this.id.replace('-tab', '') || this.textContent.toLowerCase();
+                    
+                    // Filter movies based on the selected category
+                    filterMovies(category);
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            
+            // Collection of all content (movies and shows)
+            const allContent = [
+                { 
+                    title: "House of the Dragon", 
+                    type: "TV Show", 
+                    url: "hotd-detail.html", 
+                    image: "https://s.to/public/img/cover/house-of-the-dragon-stream-cover-kMWFFbMXzuL0fM6Jpq4BXQNA6duokG3q_220x330.jpg", 
+                    genre: "Fantasy, Drama" 
+                },
+                { 
+                    title: "Oppenheimer", 
+                    type: "Movie", 
+                    url: "oppenheimer-detail.html", 
+                    image: "https://m.media-amazon.com/images/I/61nEhs3kAVL._AC_SL1500_.jpg", 
+                    genre: "Biography, Drama" 
+                },
+                { 
+                    title: "FROM", 
+                    type: "TV Show", 
+                    url: "series-detail.html", 
+                    image: "https://s.to/public/img/cover/from-stream-cover-lDUcOqk1x2G3wrwNiMEbMwxFgWXgy48r_220x330.jpg", 
+                    genre: "Drama, Action" 
+                },
+                { 
+                    title: "Torchwood", 
+                    type: "TV Show", 
+                    url: "torchwood-detail.html", 
+                    image: "https://s.to/public/img/cover/torchwood-stream-cover-zPQfhrZMmcTbr4zkHTakU723LisT7KTY_220x330.png", 
+                    genre: "Sci-Fi, Adventure" 
+                },
+                { 
+                    title: "Joker", 
+                    type: "Movie", 
+                    url: "joker-detail.html", 
+                    image: "https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg", 
+                    genre: "Drama, Thriller, Crime" 
+                },
+                { 
+                    title: "Joker: Folie à Deux", 
+                    type: "Movie", 
+                    url: "joker2-detail.html", 
+                    image: "https://cdn.kinocheck.com/i/paucjss7ne.jpg", 
+                    genre: "Drama, Thriller, Crime" 
+                },
+                { 
+                    title: "John Wick", 
+                    type: "Movie", 
+                    url: "johnwick-detail.html", 
+                    image: "https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_.jpg", 
+                    genre: "Action, Thriller" 
+                },
+                { 
+                    title: "John Wick: Chapter 2", 
+                    type: "Movie", 
+                    url: "johnwick2-detail.html", 
+                    image: "https://m.media-amazon.com/images/M/MV5BMjE2NDkxNTY2M15BMl5BanBnXkFtZTgwMDc2NzE0MTI@._V1_.jpg", 
+                    genre: "Action, Thriller" 
+                },
+                { 
+                    title: "John Wick: Chapter 3 - Parabellum", 
+                    type: "Movie", 
+                    url: "johnwick3-detail.html", 
+                    image: "https://m.media-amazon.com/images/M/MV5BMDg2YzI0ODctYjliMy00NTU0LTkxODYtYTNkNjQwMzVmOTcxXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_FMjpg_UX1000_.jpg", 
+                    genre: "Action, Thriller" 
+                },
+                { 
+                    title: "John Wick: Chapter 4", 
+                    type: "Movie", 
+                    url: "johnwick4-detail.html", 
+                    image: "https://m.media-amazon.com/images/M/MV5BMDExZGMyOTMtMDgyYi00NGIwLWJhMTEtOTdkZGFjNmZiMTEwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_FMjpg_UX1000_.jpg", 
+                    genre: "Action, Thriller" 
+                },
+                { 
+                    title: "Hitman: Agent 47", 
+                    type: "Movie", 
+                    url: "hitman-detail.html", 
+                    image: "https://cdn.kinocheck.com/i/2ibqysun2s.jpg", 
+                    genre: "Action, Thriller" 
+                },
+                { 
+                    title: "Deadpool", 
+                    type: "Movie", 
+                    url: "deadpool-detail.html", 
+                    image: "https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg", 
+                    genre: "Action, Comedy" 
+                },
+                { 
+                    title: "Deadpool 2", 
+                    type: "Movie", 
+                    url: "deadpool2-detail.html", 
+                    image: "https://m.media-amazon.com/images/M/MV5BNjk1Njk3YjctMmMyYS00Y2I4LThhMzktN2U0MTMyZTFlYWQ5XkEyXkFqcGdeQXVyODM2ODEzMDA@._V1_.jpg", 
+                    genre: "Action, Comedy" 
+                },
+                { 
+                    title: "Deadpool & Wolverine", 
+                    type: "Movie", 
+                    url: "deadpool3-detail.html", 
+                    image: "https://cdn.kinocheck.com/i/d3mx9y2anl.jpg", 
+                    genre: "Action, Comedy, Adventure" 
+                },
+                {
+                    title: "Your Lie in April",
+                    type: "TV Show",
+                    url: "#",
+                    image: "https://aniworld.to/public/img/cover/your-lie-in-april-stream-cover-Dh4NQ6b0M2mKWei4c5hzugmntqN9WuYh_220x330.jpg",
+                    genre: "Anime, Drama, Music"
+                },
+                {
+                    title: "Tower of God",
+                    type: "TV Show",
+                    url: "#",
+                    image: "https://aniworld.to/public/img/cover/tower-of-god-stream-cover-8nCCJxa8YByM62sG2rhj2bG2LtGm6iRX_220x330.jpg",
+                    genre: "Anime, Adventure, Fantasy"
+                },
+                {
+                    title: "Steins;Gate",
+                    type: "TV Show",
+                    url: "#",
+                    image: "https://m.media-amazon.com/images/M/MV5BMjUxMzE4ZDctODNjMS00MzIwLThjNDktODkwYjc5YWU0MDc0XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_.jpg",
+                    genre: "Anime, Sci-Fi, Thriller"
+                },
+                {
+                    title: "Steins;Gate 0",
+                    type: "TV Show",
+                    url: "#",
+                    image: "https://aniworld.to/public/img/cover/steinsgate-0-stream-cover-79gtgs9qzc4BOZ4CH59YBsL7U5Dym0qz_220x330.jpg",
+                    genre: "Anime, Sci-Fi, Thriller"
+                },
+                {
+                    title: "Attack on Titan",
+                    type: "TV Show",
+                    url: "#",
+                    image: "https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg",
+                    genre: "Anime, Action, Fantasy"
+                }
+            ];
+
+            // Function to perform search and display results
+            function performSearch(query) {
+                if (!query || query.length < 2) {
+                    searchResults.classList.remove('active');
+                    return;
+                }
+
+                query = query.toLowerCase();
+                const matchingResults = allContent.filter(item => 
+                    item.title.toLowerCase().includes(query) || 
+                    item.genre.toLowerCase().includes(query) ||
+                    item.type.toLowerCase().includes(query)
+                );
+                
+                // Display results
+                searchResults.innerHTML = '';
+                
+                if (matchingResults.length === 0) {
+                    searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                } else {
+                    matchingResults.forEach(item => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'search-result-item';
+                        resultItem.innerHTML = `
+                            <img src="${item.image}" alt="${item.title}" class="search-result-thumb">
+                            <div class="search-result-info">
+                                <div class="search-result-title">${item.title}</div>
+                                <div class="search-result-meta">${item.type} • ${item.genre}</div>
+                            </div>
+                        `;
+                        
+                        // Add click event to redirect to content page
+                        resultItem.addEventListener('click', () => {
+                            window.location.href = item.url;
+                        });
+                        
+                        searchResults.appendChild(resultItem);
+                    });
+                }
+                
+                searchResults.classList.add('active');
+            }
+
+            // Search input event listeners
+            searchInput.addEventListener('input', () => {
+                performSearch(searchInput.value);
+            });
+
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.length >= 2) {
+                    performSearch(searchInput.value);
+                }
+            });
+
+            // Close search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.remove('active');
+                }
+            });
+
+            // Prevent the dropdown from closing when clicking inside it
+            searchResults.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>

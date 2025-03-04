@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadpool 2 - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="movie-styles.css">
+</head>
+<body>
+    <!-- Header (same as main page) -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#" class="active">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                    <i>🔍</i>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/32/32" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="movie-content">
+        <!-- Movie Hero Section -->
+        <section class="movie-hero">
+            <div class="movie-backdrop">
+                <!-- Backdrop image with overlay -->
+                <div class="backdrop-overlay"></div>
+            </div>
+            
+            <div class="movie-hero-content">
+                <div class="movie-poster">
+                    <img src="https://m.media-amazon.com/images/M/MV5BNjk1Njk3YjctMmMyYS00Y2I4LThhMzktN2U0MTMyZTFlYWQ5XkEyXkFqcGdeQXVyODM2ODEzMDA@._V1_.jpg" alt="Deadpool 2">
+                </div>
+                
+                <div class="movie-info">
+                    <h1>Deadpool 2</h1>
+                    <div class="movie-meta">
+                        <span class="year">2018</span>
+                        <span class="dot">•</span>
+                        <span class="rating">R</span>
+                        <span class="dot">•</span>
+                        <span class="duration">1h 59m</span>
+                        <span class="dot">•</span>
+                        <span class="genre">Action, Comedy, Adventure</span>
+                    </div>
+                    
+                    <div class="movie-rating">
+                        <div class="star-rating-display">
+                            <span class="rating-value">7.7</span>
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star half-filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <span class="rating-count">520K reviews</span>
+                        </div>
+                    </div>
+                    
+                    <div class="movie-actions">
+                        <button class="action-btn play-btn" id="playMovie">
+                            <i class="icon">▶</i>
+                            Watch Now
+                        </button>
+                        <button class="action-btn watchlist-btn">
+                            <i class="icon">➕</i>
+                            Add to Watchlist
+                        </button>
+                        <button class="action-btn trailer-btn">
+                            <i class="icon">▶</i>
+                            Watch Trailer
+                        </button>
+                    </div>
+                    
+                    <div class="movie-description">
+                        <h3>Overview</h3>
+                        <p>
+                            Wisecracking mercenary Deadpool meets Russell, an angry teenage mutant who lives at an orphanage. When Russell becomes the target of Cable -- a genetically enhanced soldier from the future -- Deadpool realizes that he'll need some help saving the boy from such a superior enemy. He soon joins forces with Bedlam, Shatterstar, Domino and other powerful mutants to protect young Russell from Cable and his advanced weaponry.
+                        </p>
+                        <p>
+                            After surviving a near-fatal bovine attack, a disfigured cafeteria chef (Wade Wilson) struggles to fulfill his dream of becoming Miami's hottest bartender, while also learning to cope with his lost sense of taste. Searching to regain his spice for life, as well as a flux capacitor, Wade must battle ninjas, the Yakuza, and a pack of sexually aggressive canines, as he journeys around the world to discover the importance of family, friendship, and flavor.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="movie-details">
+                    <div class="detail-block">
+                        <h3>Director</h3>
+                        <p>David Leitch</p>
+                    </div>
+                    
+                    <div class="detail-block">
+                        <h3>Cast</h3>
+                        <p>Ryan Reynolds, Josh Brolin, Morena Baccarin, Julian Dennison, Zazie Beetz</p>
+                    </div>
+                    
+                    <div class="detail-block">
+                        <h3>Release Date</h3>
+                        <p>May 18, 2018</p>
+                    </div>
+                    
+                    <div class="rating-container">
+                        <h3>Rate this:</h3>
+                        <div class="star-rating">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                            <span class="star" data-rating="6">★</span>
+                            <span class="star" data-rating="7">★</span>
+                            <span class="star" data-rating="8">★</span>
+                            <span class="star" data-rating="9">★</span>
+                            <span class="star" data-rating="10">★</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Video Player Modal -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Deadpool 2</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="video-container">
+                    <!-- Video player/iframe will be inserted here by JavaScript -->
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Click to watch the movie</p>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="language-selection">
+                        <span>Language: </span>
+                        <button class="language-btn active" id="langGerman" title="German Audio">
+                            <img src="https://flagcdn.com/24x18/de.png" alt="German" class="flag-icon">
+                        </button>
+                        <button class="language-btn" id="langEnglish" title="English Audio">
+                            <img src="https://flagcdn.com/24x18/us.png" alt="English" class="flag-icon">
+                        </button>
+                    </div>
+                    <div class="player-info">
+                        <span>Source: voe.sx</span>
+                        <select class="quality-selector">
+                            <option value="auto">Auto Quality</option>
+                            <option value="1080p">1080p</option>
+                            <option value="720p">720p</option>
+                            <option value="480p">480p</option>
+                            <option value="360p">360p</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="deadpool2-script.js"></script>
+</body>
+</html>

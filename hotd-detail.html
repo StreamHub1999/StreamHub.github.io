@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House of the Dragon - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="detail-styles.css">
+</head>
+<body>
+    <!-- Header (same as main page) -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#" class="active">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                    <i>🔍</i>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/32/32" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="detail-content">
+        <!-- Series Info Section -->
+        <section class="series-info-container">
+            <div class="series-poster">
+                <img src="https://s.to/public/img/cover/house-of-the-dragon-stream-cover-kMWFFbMXzuL0fM6Jpq4BXQNA6duokG3q_220x330.jpg" alt="House of the Dragon">
+            </div>
+            
+            <div class="series-description">
+                <h1>House of the Dragon</h1>
+                <div class="series-meta">
+                    <span class="year">2022-Present</span>
+                    <span class="dot">•</span>
+                    <span class="rating">TV-MA</span>
+                    <span class="dot">•</span>
+                    <span class="seasons">2 Seasons</span>
+                    <span class="dot">•</span>
+                    <span class="genre">Fantasy, Drama, Action</span>
+                </div>
+                <p class="synopsis">
+                    The reign of House Targaryen begins with this prequel to the popular HBO series Game of Thrones. Based on George R.R. Martin's "Fire & Blood," House of the Dragon is set 200 years before the events of Game of Thrones and tells the story of House Targaryen. The series explores the events that led to the devastating war of succession, known as the Dance of the Dragons, which began the downfall of House Targaryen.
+                </p>
+                <div class="cast">
+                    <h3>Cast:</h3>
+                    <p>Matt Smith, Emma D'Arcy, Olivia Cooke, Paddy Considine, Rhys Ifans, Steve Toussaint, Eve Best</p>
+                </div>
+                <div class="creators">
+                    <h3>Creators:</h3>
+                    <p>Ryan Condal, George R.R. Martin</p>
+                </div>
+            </div>
+            
+            <div class="series-actions">
+                <button class="action-btn subscribe-btn">
+                    <i class="icon">🔔</i>
+                    Subscribe to Series
+                </button>
+                <button class="action-btn watchlist-btn">
+                    <i class="icon">➕</i>
+                    Add to Watchlist
+                </button>
+                <button class="action-btn trailer-btn">
+                    <i class="icon">▶</i>
+                    Watch Trailer
+                </button>
+                <div class="rating-container">
+                    <h3>Rate this:</h3>
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                        <span class="star" data-rating="6">★</span>
+                        <span class="star" data-rating="7">★</span>
+                        <span class="star" data-rating="8">★</span>
+                        <span class="star" data-rating="9">★</span>
+                        <span class="star" data-rating="10">★</span>
+                    </div>
+                    <div class="avg-rating">
+                        Average: <span>8.5</span>/10
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seasons & Episodes Section -->
+        <section class="episodes-section">
+            <div class="seasons-selector">
+                <h2>Seasons</h2>
+                <div class="season-boxes">
+                    <div class="season-box active" data-season="1">1</div>
+                    <div class="season-box" data-season="2">2</div>
+                </div>
+            </div>
+            
+            <div class="episodes-container">
+                <h2>Episodes - Season 1</h2>
+                
+                <div class="episodes-list" id="season1-episodes">
+                    <!-- Episode 1 -->
+                    <div class="episode-item" data-episode="1">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"The Heirs of the Dragon"</div>
+                            <div class="episode-duration">66 min</div>
+                            <div class="episode-info">Aired: Aug 21, 2022</div>
+                            <div class="episode-description">
+                                Viserys hosts a tournament to celebrate the birth of his second child. Rhaenyra welcomes her uncle Daemon back to the Red Keep.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 2 -->
+                    <div class="episode-item" data-episode="2">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"The Rogue Prince"</div>
+                            <div class="episode-duration">54 min</div>
+                            <div class="episode-info">Aired: Aug 28, 2022</div>
+                            <div class="episode-description">
+                                Rhaenyra oversteps at the Small Council. Viserys is urged to secure the succession through marriage. Daemon announces his intentions.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 3 -->
+                    <div class="episode-item" data-episode="3">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"Second of His Name"</div>
+                            <div class="episode-duration">58 min</div>
+                            <div class="episode-info">Aired: Sep 4, 2022</div>
+                            <div class="episode-description">
+                                Daemon and the Sea Snake battle the Crabfeeder. The realm celebrates Aegon's second nameday. Rhaenyra faces the prospect of marriage.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 4 -->
+                    <div class="episode-item" data-episode="4">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"King of the Narrow Sea"</div>
+                            <div class="episode-duration">62 min</div>
+                            <div class="episode-info">Aired: Sep 11, 2022</div>
+                            <div class="episode-description">
+                                Rhaenyra continues her search for a suitable match. Daemon returns to Kings Landing and stirs more trouble for the King. Rhaenyra learns a valuable lesson.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 5 -->
+                    <div class="episode-item" data-episode="5">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"We Light the Way"</div>
+                            <div class="episode-duration">59 min</div>
+                            <div class="episode-info">Aired: Sep 18, 2022</div>
+                            <div class="episode-description">
+                                Daemon visits his wife in the Vale. Viserys and Rhaenyra broker agreements with the Velaryons. Alicent seeks the truth about the princess.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 6 -->
+                    <div class="episode-item" data-episode="6">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"The Princess and the Queen"</div>
+                            <div class="episode-duration">67 min</div>
+                            <div class="episode-info">Aired: Sep 25, 2022</div>
+                            <div class="episode-description">
+                                Ten years later. Rhaenyra navigates Alicent's continued speculation about her children, while Daemon and Laena weigh an offer in Pentos.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 7 -->
+                    <div class="episode-item" data-episode="7">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"Driftmark"</div>
+                            <div class="episode-duration">59 min</div>
+                            <div class="episode-info">Aired: Oct 2, 2022</div>
+                            <div class="episode-description">
+                                As the families gather on Driftmark for a funeral, Viserys calls for an end to infighting and Alicent demands justice.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 8 -->
+                    <div class="episode-item" data-episode="8">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 8">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 8</div>
+                            <div class="episode-title">"The Lord of the Tides"</div>
+                            <div class="episode-duration">68 min</div>
+                            <div class="episode-info">Aired: Oct 9, 2022</div>
+                            <div class="episode-description">
+                                Six years later. With the Driftmark succession suddenly critical, Rhaenyra attempts to strike a bargain with Rhaenys.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 9 -->
+                    <div class="episode-item" data-episode="9">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 9">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 9</div>
+                            <div class="episode-title">"The Green Council"</div>
+                            <div class="episode-duration">59 min</div>
+                            <div class="episode-info">Aired: Oct 16, 2022</div>
+                            <div class="episode-description">
+                                While Alicent enlists Cole and Aemond to track down Aegon, Otto gathers the great houses of Westeros to affirm their allegiance.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 10 -->
+                    <div class="episode-item" data-episode="10">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 10">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 10</div>
+                            <div class="episode-title">"The Black Queen"</div>
+                            <div class="episode-duration">59 min</div>
+                            <div class="episode-info">Aired: Oct 23, 2022</div>
+                            <div class="episode-description">
+                                While mourning a tragic loss, Rhaenyra tries to hold the realm together, and Daemon prepares for war.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="episodes-list hidden" id="season2-episodes">
+                    <!-- Episode 1 -->
+                    <div class="episode-item" data-episode="1">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"A Son for a Son"</div>
+                            <div class="episode-duration">59 min</div>
+                            <div class="episode-info">Aired: Jun 16, 2024</div>
+                            <div class="episode-description">
+                                As Alicent grows concerned by Aegon's Small Council, Rhaenyra arrives at a fateful decision.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 2 -->
+                    <div class="episode-item" data-episode="2">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"Rhaenyra the Cruel"</div>
+                            <div class="episode-duration">58 min</div>
+                            <div class="episode-info">Aired: Jun 23, 2024</div>
+                            <div class="episode-description">
+                                As Otto schemes to turn the public against her, Rhaenyra questions Daemon's loyalty. Meanwhile, Ser Criston Cole concocts a misguided plan for revenge.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 3 -->
+                    <div class="episode-item" data-episode="3">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"The Burning Mill"</div>
+                            <div class="episode-duration">62 min</div>
+                            <div class="episode-info">Aired: Jun 30, 2024</div>
+                            <div class="episode-description">
+                                As ancient grudges resurface, Rhaenys suggests that Alicent may see reason while the men around her seek bloodshed. Ser Criston proposes a bold scheme. Daemon arrives at Harrenhal to raise an army for the Blacks.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 4 -->
+                    <div class="episode-item" data-episode="4">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"The Red Dragon and the Gold"</div>
+                            <div class="episode-duration">65 min</div>
+                            <div class="episode-info">Aired: Jul 7, 2024</div>
+                            <div class="episode-description">
+                                In Rhaenyra's absence and with no word from Daemon, Rhaenys tries to keep the peace on the Black Council as Cole mounts a campaign into the Crownlands. In King's Landing, Aemond continues to undermine Aegon's fragile hold on authority.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 5 -->
+                    <div class="episode-item" data-episode="5">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"Regent"</div>
+                            <div class="episode-duration">59 min</div>
+                            <div class="episode-info">Aired: Jul 14, 2024</div>
+                            <div class="episode-description">
+                                Amid whispers of bad omens, the Greens consider how to fill a void on Aegon's Council. Jacaerys sets out on a rogue mission to strike a deal. Daemon enlists Lord Willem Blackwood to help persuade the Brackens to bend the knee.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 6 -->
+                    <div class="episode-item" data-episode="6">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"Smallfolk"</div>
+                            <div class="episode-duration">54 min</div>
+                            <div class="episode-info">Aired: Jul 21, 2024</div>
+                            <div class="episode-description">
+                                With few options left, Rhaenyra embarks on a risky venture while Aemond takes steps to reshape the Green Council.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 7 -->
+                    <div class="episode-item" data-episode="7">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"The Red Sowing"</div>
+                            <div class="episode-duration">68 min</div>
+                            <div class="episode-info">Aired: Jul 28, 2024</div>
+                            <div class="episode-description">
+                                The war for the Iron Throne escalates, and Queen Rhaenyra Targaryen, in a crucial gamble, is prepared to risk everything in her urgent quest for dragon riders.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 8 -->
+                    <div class="episode-item" data-episode="8">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 8">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 8</div>
+                            <div class="episode-title">"The Queen Who Ever Was"</div>
+                            <div class="episode-duration">72 min</div>
+                            <div class="episode-info">Aired: Aug 4, 2024</div>
+                            <div class="episode-description">
+                                As Aemond becomes more volatile, Larys plots an escape, while Rhaenyra looks to press her advantage.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Video Player Modal -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">House of the Dragon - S1:E1 The Heirs of the Dragon</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="video-container">
+                    <!-- Video player/iframe will be inserted here by JavaScript -->
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Select an episode to watch</p>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="language-selection">
+                        <span>Language: </span>
+                        <button class="language-btn active" id="langGerman" title="German Audio">
+                            <img src="https://flagcdn.com/24x18/de.png" alt="German" class="flag-icon">
+                        </button>
+                        <button class="language-btn" id="langEnglish" title="English Audio">
+                            <img src="https://flagcdn.com/24x18/us.png" alt="English" class="flag-icon">
+                        </button>
+                    </div>
+                    <div class="player-info">
+                        <span>Source: voe.sx</span>
+                        <select class="quality-selector">
+                            <option value="auto">Auto Quality</option>
+                            <option value="1080p">1080p</option>
+                            <option value="720p">720p</option>
+                            <option value="480p">480p</option>
+                            <option value="360p">360p</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="hotd-script.js"></script>
+</body>
+</html>
