@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Movies page specific styles */
+        .page-banner {
+            height: 300px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                        url('https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_1280.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        .page-banner h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .page-banner p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-container {
+            background-color: var(--background-darker);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 60px;
+            z-index: 900;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-right: 5px;
+        }
+
+        .filter-select, .sort-select {
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .filter-select:focus, .sort-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .view-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .view-btn.active {
+            color: var(--primary-color);
+            background-color: rgba(229, 9, 20, 0.1);
+        }
+
+        /* Grid View Styles */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            padding: 30px 5%;
+        }
+
+        @media (max-width: 768px) {
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+                padding: 20px 5%;
+            }
+        }
+
+        /* List View Styles */
+        .movies-list {
+            padding: 30px 5%;
+            display: none; /* Hidden by default, toggled by JavaScript */
+        }
+
+        .movie-list-item {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .movie-list-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .movie-list-poster {
+            width: 120px;
+            min-width: 120px;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .movie-list-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-list-details {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .movie-list-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .movie-list-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .movie-list-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .movie-list-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .list-action-btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .watch-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .watch-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .info-btn {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding: 30px 0;
+            gap: 5px;
+        }
+
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--background-lighter);
+            color: var(--text-primary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-btn:hover {
+            background-color: var(--card-hover);
+        }
+
+        .pagination-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .pagination-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        .no-results button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .no-results button:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html" class="active">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i>🔍</i>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login-page.html" class="btn-small btn-login">Login</a>
+                    <a href="simplified-register-page.html" class="btn-small btn-signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <h1>Movies</h1>
+        <p>Explore our vast collection of movies from classic hits to the latest blockbusters. Filter by genre, year, or rating to find your next favorite film.</p>
+    </section>
+
+    <!-- Filter Bar -->
+    <div class="filter-container">
+        <div class="filter-options">
+            <span class="filter-label">Filter by:</span>
+            <select class="filter-select" id="genreFilter">
+                <option value="all">All Genres</option>
+                <option value="action">Action</option>
+                <option value="adventure">Adventure</option>
+                <option value="animation">Animation</option>
+                <option value="comedy">Comedy</option>
+                <option value="crime">Crime</option>
+                <option value="documentary">Documentary</option>
+                <option value="drama">Drama</option>
+                <option value="fantasy">Fantasy</option>
+                <option value="horror">Horror</option>
+                <option value="mystery">Mystery</option>
+                <option value="romance">Romance</option>
+                <option value="sci-fi">Sci-Fi</option>
+                <option value="thriller">Thriller</option>
+            </select>
+            
+            <select class="filter-select" id="yearFilter">
+                <option value="all">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2010s">2010s</option>
+                <option value="2000s">2000s</option>
+                <option value="1990s">1990s</option>
+                <option value="older">Older</option>
+            </select>
+            
+            <select class="filter-select" id="ratingFilter">
+                <option value="all">All Ratings</option>
+                <option value="9+">9+ ★</option>
+                <option value="8+">8+ ★</option>
+                <option value="7+">7+ ★</option>
+                <option value="6+">6+ ★</option>
+                <option value="5+">5+ ★</option>
+            </select>
+        </div>
+        
+        <div class="view-options">
+            <span class="filter-label">Sort by:</span>
+            <select class="sort-select" id="sortBy">
+                <option value="popular">Most Popular</option>
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="rating-high">Highest Rated</option>
+                <option value="rating-low">Lowest Rated</option>
+                <option value="a-z">A-Z</option>
+                <option value="z-a">Z-A</option>
+            </select>
+            
+            <button class="view-btn active" id="gridViewBtn" title="Grid View">
+                <i>▦</i>
+            </button>
+            <button class="view-btn" id="listViewBtn" title="List View">
+                <i>☰</i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Movies Grid View (Default) -->
+    <div class="movies-grid" id="moviesGrid">
+        <!-- Oppenheimer -->
+        <a href="oppenheimer-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="biography,drama,history" data-year="2023" data-rating="8.8">
+                <img src="https://m.media-amazon.com/images/I/61nEhs3kAVL._AC_SL1500_.jpg" alt="Oppenheimer">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Oppenheimer</h3>
+                    <div class="movie-meta">
+                        <span>Biography, Drama • 2023</span>
+                        <div class="rating">
+                            <i>★</i> 8.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Joker -->
+        <a href="joker-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,thriller,crime" data-year="2019" data-rating="8.4">
+                <img src="https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg" alt="Joker">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Joker</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Thriller, Crime • 2019</span>
+                        <div class="rating">
+                            <i>★</i> 8.4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Joker: Folie à Deux -->
+        <a href="joker2-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,thriller,crime" data-year="2024" data-rating="8.1">
+                <img src="https://cdn.kinocheck.com/i/paucjss7ne.jpg" alt="Joker: Folie à Deux">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Joker: Folie à Deux</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Thriller, Crime • 2024</span>
+                        <div class="rating">
+                            <i>★</i> 8.1
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- John Wick -->
+        <a href="johnwick-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,thriller" data-year="2014" data-rating="7.4">
+                <img src="https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_.jpg" alt="John Wick">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">John Wick</h3>
+                    <div class="movie-meta">
+                        <span>Action, Thriller • 2014</span>
+                        <div class="rating">
+                            <i>★</i> 7.4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- John Wick 2 -->
+        <a href="johnwick2-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,thriller" data-year="2017" data-rating="7.5">
+                <img src="https://m.media-amazon.com/images/M/MV5BMjE2NDkxNTY2M15BMl5BanBnXkFtZTgwMDc2NzE0MTI@._V1_.jpg" alt="John Wick 2">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">John Wick: Chapter 2</h3>
+                    <div class="movie-meta">
+                        <span>Action, Thriller • 2017</span>
+                        <div class="rating">
+                            <i>★</i> 7.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- John Wick 3 -->
+        <a href="johnwick3-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,thriller" data-year="2019" data-rating="7.4">
+                <img src="https://m.media-amazon.com/images/M/MV5BMDg2YzI0ODctYjliMy00NTU0LTkxODYtYTNkNjQwMzVmOTcxXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_FMjpg_UX1000_.jpg" alt="John Wick 3">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">John Wick: Chapter 3</h3>
+                    <div class="movie-meta">
+                        <span>Action, Thriller • 2019</span>
+                        <div class="rating">
+                            <i>★</i> 7.4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- John Wick 4 -->
+        <a href="johnwick4-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,thriller" data-year="2023" data-rating="7.8">
+                <img src="https://m.media-amazon.com/images/M/MV5BMDExZGMyOTMtMDgyYi00NGIwLWJhMTEtOTdkZGFjNmZiMTEwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_FMjpg_UX1000_.jpg" alt="John Wick 4">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">John Wick: Chapter 4</h3>
+                    <div class="movie-meta">
+                        <span>Action, Thriller • 2023</span>
+                        <div class="rating">
+                            <i>★</i> 7.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Hitman: Agent 47 -->
+        <a href="hitman-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,thriller,crime" data-year="2015" data-rating="5.7">
+                <img src="https://cdn.kinocheck.com/i/2ibqysun2s.jpg" alt="Hitman: Agent 47">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Hitman: Agent 47</h3>
+                    <div class="movie-meta">
+                        <span>Action, Thriller, Crime • 2015</span>
+                        <div class="rating">
+                            <i>★</i> 5.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Deadpool -->
+        <a href="deadpool-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,comedy,adventure" data-year="2016" data-rating="8.0">
+                <img src="https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg" alt="Deadpool">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Deadpool</h3>
+                    <div class="movie-meta">
+                        <span>Action, Comedy, Adventure • 2016</span>
+                        <div class="rating">
+                            <i>★</i> 8.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Deadpool 2 -->
+        <a href="deadpool2-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,comedy,adventure" data-year="2018" data-rating="7.7">
+                <img src="https://m.media-amazon.com/images/M/MV5BNjk1Njk3YjctMmMyYS00Y2I4LThhMzktN2U0MTMyZTFlYWQ5XkEyXkFqcGdeQXVyODM2ODEzMDA@._V1_.jpg" alt="Deadpool 2">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Deadpool 2</h3>
+                    <div class="movie-meta">
+                        <span>Action, Comedy, Adventure • 2018</span>
+                        <div class="rating">
+                            <i>★</i> 7.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Deadpool & Wolverine -->
+        <a href="deadpool3-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,comedy,adventure" data-year="2024" data-rating="8.3">
+                <img src="https://cdn.kinocheck.com/i/d3mx9y2anl.jpg" alt="Deadpool & Wolverine">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Deadpool & Wolverine</h3>
+                    <div class="movie-meta">
+                        <span>Action, Comedy, Adventure • 2024</span>
+                        <div class="rating">
+                            <i>★</i> 8.3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Dark Knight -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,crime,drama" data-year="2008" data-rating="9.0">
+                <img src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg" alt="The Dark Knight">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Dark Knight</h3>
+                    <div class="movie-meta">
+                        <span>Action, Crime, Drama • 2008</span>
+                        <div class="rating">
+                            <i>★</i> 9.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Inception -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,adventure,sci-fi" data-year="2010" data-rating="8.8">
+                <img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg" alt="Inception">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Inception</h3>
+                    <div class="movie-meta">
+                        <span>Action, Adventure, Sci-Fi • 2010</span>
+                        <div class="rating">
+                            <i>★</i> 8.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Interstellar -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="adventure,drama,sci-fi" data-year="2014" data-rating="8.7">
+                <img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="Interstellar">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Interstellar</h3>
+                    <div class="movie-meta">
+                        <span>Adventure, Drama, Sci-Fi • 2014</span>
+                        <div class="rating">
+                            <i>★</i> 8.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Matrix -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,sci-fi" data-year="1999" data-rating="8.7">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg" alt="The Matrix">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Matrix</h3>
+                    <div class="movie-meta">
+                        <span>Action, Sci-Fi • 1999</span>
+                        <div class="rating">
+                            <i>★</i> 8.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Shawshank Redemption -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama" data-year="1994" data-rating="9.3">
+<img src="https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_FMjpg_UX1000_.jpg" alt="The Shawshank Redemption">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Shawshank Redemption</h3>
+                    <div class="movie-meta">
+                        <span>Drama • 1994</span>
+                        <div class="rating">
+                            <i>★</i> 9.3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Pulp Fiction -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="crime,drama" data-year="1994" data-rating="8.9">
+                <img src="https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg" alt="Pulp Fiction">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Pulp Fiction</h3>
+                    <div class="movie-meta">
+                        <span>Crime, Drama • 1994</span>
+                        <div class="rating">
+                            <i>★</i> 8.9
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Fight Club -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama" data-year="1999" data-rating="8.8">
+                <img src="https://m.media-amazon.com/images/M/MV5BNDIzNDU0YzEtYzE5Ni00ZjlkLTk5ZjgtNjM3NWE4YzA3Nzk3XkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_.jpg" alt="Fight Club">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Fight Club</h3>
+                    <div class="movie-meta">
+                        <span>Drama • 1999</span>
+                        <div class="rating">
+                            <i>★</i> 8.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Forrest Gump -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,romance" data-year="1994" data-rating="8.8">
+                <img src="https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg" alt="Forrest Gump">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Forrest Gump</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Romance • 1994</span>
+                        <div class="rating">
+                            <i>★</i> 8.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Add more movie cards as needed -->
+    </div>
+
+    <!-- Movies List View (Hidden by default, toggled by JavaScript) -->
+    <div class="movies-list" id="moviesList">
+        <!-- Oppenheimer -->
+        <div class="movie-list-item" data-categories="biography,drama,history" data-year="2023" data-rating="8.8">
+            <div class="movie-list-poster">
+                <img src="https://m.media-amazon.com/images/I/61nEhs3kAVL._AC_SL1500_.jpg" alt="Oppenheimer">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Oppenheimer</h3>
+                <div class="movie-list-meta">
+                    <span>Biography, Drama, History</span>
+                    <span>•</span>
+                    <span>2023</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.8</span>
+                    <span>•</span>
+                    <span>3h 10m</span>
+                </div>
+                <p class="movie-list-desc">
+                    The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb. During World War II, Lt. Gen. Leslie Groves Jr. appoints physicist J. Robert Oppenheimer to work on the top-secret Manhattan Project, forever changing the course of history.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="oppenheimer-detail.html" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="oppenheimer-detail.html" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Joker -->
+        <div class="movie-list-item" data-categories="drama,thriller,crime" data-year="2019" data-rating="8.4">
+            <div class="movie-list-poster">
+                <img src="https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg" alt="Joker">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Joker</h3>
+                <div class="movie-list-meta">
+                    <span>Drama, Thriller, Crime</span>
+                    <span>•</span>
+                    <span>2019</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.4</span>
+                    <span>•</span>
+                    <span>2h 2m</span>
+                </div>
+                <p class="movie-list-desc">
+                    A mentally troubled stand-up comedian embarks on a downward spiral that leads to the creation of an iconic villain. In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society, leading to his downward spiral and eventual transformation into the criminal mastermind known as the Joker.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="joker-detail.html" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="joker-detail.html" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Joker: Folie à Deux -->
+        <div class="movie-list-item" data-categories="drama,thriller,crime" data-year="2024" data-rating="8.1">
+            <div class="movie-list-poster">
+                <img src="https://cdn.kinocheck.com/i/paucjss7ne.jpg" alt="Joker: Folie à Deux">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Joker: Folie à Deux</h3>
+                <div class="movie-list-meta">
+                    <span>Drama, Thriller, Crime</span>
+                    <span>•</span>
+                    <span>2024</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.1</span>
+                    <span>•</span>
+                    <span>2h 18m</span>
+                </div>
+                <p class="movie-list-desc">
+                    The sequel to the psychological thriller Joker, focusing on Arthur Fleck's continued descent into madness. Arthur Fleck, now incarcerated at Arkham State Hospital for his crimes as the Joker, navigates his complicated relationship with Harley Quinn while his inner demons continue to haunt him.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="joker2-detail.html" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="joker2-detail.html" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- More list items would follow in the same format -->
+        <!-- Only showing three examples for brevity, but in production you'd have all movies listed in both views -->
+    </div>
+
+    <!-- No Results Message (Hidden by default, shown when filters return no movies) -->
+    <div class="no-results" id="noResults" style="display: none;">
+        <h3>No movies match your filters</h3>
+        <p>Try adjusting your filter criteria or try a different combination of genres, years, or ratings.</p>
+        <button id="resetFiltersBtn">Reset All Filters</button>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination">
+        <button class="pagination-btn disabled" id="prevPage">❮</button>
+        <button class="pagination-btn active">1</button>
+        <button class="pagination-btn">2</button>
+        <button class="pagination-btn">3</button>
+        <button class="pagination-btn">4</button>
+        <button class="pagination-btn">5</button>
+        <button class="pagination-btn">...</button>
+        <button class="pagination-btn">10</button>
+        <button class="pagination-btn" id="nextPage">❯</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#" data-filter="action">Action</a></li>
+                    <li><a href="#" data-filter="comedy">Comedy</a></li>
+                    <li><a href="#" data-filter="drama">Drama</a></li>
+                    <li><a href="#" data-filter="sci-fi">Sci-Fi</a></li>
+                    <li><a href="#" data-filter="horror">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="movies.js"></script>
+</body>
+</html>

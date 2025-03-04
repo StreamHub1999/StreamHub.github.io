@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steins;Gate - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="detail-styles.css">
+</head>
+<body>
+    <!-- Header (same as main page) -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#" class="active">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                    <i>🔍</i>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/32/32" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="detail-content">
+        <!-- Series Info Section -->
+        <section class="series-info-container">
+            <div class="series-poster">
+                <img src="https://m.media-amazon.com/images/M/MV5BMjUxMzE4ZDctODNjMS00MzIwLThjNDktODkwYjc5YWU0MDc0XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_.jpg" alt="Steins;Gate">
+            </div>
+            
+            <div class="series-description">
+                <h1>Steins;Gate</h1>
+                <div class="series-meta">
+                    <span class="year">2011</span>
+                    <span class="dot">•</span>
+                    <span class="rating">TV-14</span>
+                    <span class="dot">•</span>
+                    <span class="seasons">1 Season</span>
+                    <span class="dot">•</span>
+                    <span class="genre">Anime, Sci-Fi, Thriller, Drama, Mystery</span>
+                </div>
+                <p class="synopsis">
+                    Self-proclaimed mad scientist Rintaro Okabe rents out a room in a rickety old building in Akihabara, where he indulges himself in his hobby of inventing prospective "future gadgets" with fellow lab members: Mayuri Shiina, his air-headed childhood friend, and Hashida Itaru, a perverted hacker nicknamed "Daru."
+                </p>
+                <p class="synopsis">
+                    The three pass the time by tinkering with their most promising contraption yet, a machine dubbed the "Phone Microwave," which performs the strange function of morphing bananas into piles of green gel. Though miraculous in itself, the phenomenon doesn't provide anything concrete in Okabe's search for a scientific breakthrough; that is, until the lab members are spurred into action by a string of mysterious happenings before stumbling upon an unexpected success—the Phone Microwave can send emails to the past, altering the flow of history.
+                </p>
+                <p class="synopsis">
+                    Adapted from the critically acclaimed visual novel by 5pb. and Nitroplus, Steins;Gate takes Okabe through the depths of scientific theory and practicality. Forced across the diverging threads of past and present, Okabe must shoulder the burdens that come with holding the key to the realm of time.
+                </p>
+                <div class="cast">
+                    <h3>Cast:</h3>
+                    <p>Mamoru Miyano, Asami Imai, Kana Hanazawa, Tomokazu Seki, Yukari Tamura, Yu Kobayashi, Saori Goto</p>
+                </div>
+                <div class="creators">
+                    <h3>Director:</h3>
+                    <p>Hiroshi Hamasaki, Takuya Satō</p>
+                </div>
+            </div>
+            
+            <div class="series-actions">
+                <button class="action-btn subscribe-btn">
+                    <i class="icon">🔔</i>
+                    Subscribe to Series
+                </button>
+                <button class="action-btn watchlist-btn">
+                    <i class="icon">➕</i>
+                    Add to Watchlist
+                </button>
+                <button class="action-btn trailer-btn">
+                    <i class="icon">▶</i>
+                    Watch Trailer
+                </button>
+                <div class="rating-container">
+                    <h3>Rate this:</h3>
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                        <span class="star" data-rating="6">★</span>
+                        <span class="star" data-rating="7">★</span>
+                        <span class="star" data-rating="8">★</span>
+                        <span class="star" data-rating="9">★</span>
+                        <span class="star" data-rating="10">★</span>
+                    </div>
+                    <div class="avg-rating">
+                        Average: <span>9.0</span>/10
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seasons & Episodes Section -->
+        <section class="episodes-section">
+            <div class="seasons-selector">
+                <h2>Seasons</h2>
+                <div class="season-boxes">
+                    <div class="season-box active" data-season="1">1</div>
+                </div>
+            </div>
+            
+            <div class="episodes-container">
+                <h2>Episodes - Season 1</h2>
+                
+                <div class="episodes-list" id="season1-episodes">
+                    <!-- Episode 1 -->
+                    <div class="episode-item" data-episode="1">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/3/38/Sg-ep1.jpg" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"Prologue of the Beginning and End"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Apr 6, 2011</div>
+                            <div class="episode-description">
+                                Self-proclaimed mad scientist Rintaro Okabe attends a time travel conference where he finds the body of neuroscientist Kurisu Makise. He sends a text message about the incident to his friend Daru and discovers that the message arrived before he sent it, changing the past.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 2 -->
+                    <div class="episode-item" data-episode="2">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/6/68/Sg-ep2.jpg" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"Time Travel Paranoia"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Apr 13, 2011</div>
+                            <div class="episode-description">
+                                Okabe discovers that Kurisu is mysteriously alive. He finds that using the "Phone Microwave" device he created with Daru can send messages to the past, which they dub "D-mails." As they experiment, they attract the attention of SERN, an organization researching time travel.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 3 -->
+                    <div class="episode-item" data-episode="3">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/1/18/Sg-ep3.jpg" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"Parallel World Paranoia"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Apr 20, 2011</div>
+                            <div class="episode-description">
+                                Kurisu begins working with Okabe's lab to understand the Phone Microwave's capabilities. They discover that sending messages to the past can alter reality, creating shifts to different "world lines." Okabe seems to be the only one who can remember the previous timelines.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 4 -->
+                    <div class="episode-item" data-episode="4">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/d/dc/Sg-ep4.jpg" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"Interpreter Rendezvous"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Apr 27, 2011</div>
+                            <div class="episode-description">
+                                The lab members send a D-mail to help their friend Ruka, which inadvertently changes reality in unexpected ways. Meanwhile, Okabe becomes increasingly concerned about mysterious figures who seem to be monitoring their activities.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 5 -->
+                    <div class="episode-item" data-episode="5">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/8/89/Sg-ep5.jpg" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"Starmine Rendezvous"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: May 4, 2011</div>
+                            <div class="episode-description">
+                                The lab members send a D-mail for teenage genius Faris, dramatically altering Akihabara's culture. Okabe begins to realize the serious consequences of changing the past as the city he knows transforms around him.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 6 -->
+                    <div class="episode-item" data-episode="6">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/9/93/Sg-ep6.jpg" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"Butterfly Effect's Divergence"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: May 11, 2011</div>
+                            <div class="episode-description">
+                                Okabe receives a mysterious threat from a person named "FB" through part-time soldier Moeka. He learns about the "divergence meter," a device that measures differences between world lines, as the consequences of their time experiments grow more serious.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 7 -->
+                    <div class="episode-item" data-episode="7">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/f/f2/Sg-ep7.jpg" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"Divergence Singularity"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: May 18, 2011</div>
+                            <div class="episode-description">
+                                The lab discovers that time travel research has potentially deadly consequences. Suzuha Amane reveals herself to be a time traveler from the year 2036, where SERN has established a dystopian regime after monopolizing time travel technology.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 8 -->
+                    <div class="episode-item" data-episode="8">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/c/c1/Sg-ep8.jpg" alt="Episode 8">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 8</div>
+                            <div class="episode-title">"Chaos Theory Homeostasis I"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: May 25, 2011</div>
+                            <div class="episode-description">
+                                The lab members realize they're trapped in a world line where SERN discovers their time travel experiments. Suzuha's mission to change the past comes into focus as she reveals more about the dystopian future she comes from.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 9 -->
+                    <div class="episode-item" data-episode="9">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/2/26/Sg-ep9.jpg" alt="Episode 9">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 9</div>
+                            <div class="episode-title">"Chaos Theory Homeostasis II"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jun 1, 2011</div>
+                            <div class="episode-description">
+                                Okabe and the lab members help Suzuha find her father, who might be key to preventing the dystopian future. When they discover her true identity, it leads to a crucial turning point in their understanding of time travel.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 10 -->
+                    <div class="episode-item" data-episode="10">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/3/34/Sg-ep10.jpg" alt="Episode 10">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 10</div>
+                            <div class="episode-title">"Chaos Theory Homeostasis III"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jun 8, 2011</div>
+                            <div class="episode-description">
+                                Dealing with the aftermath of Suzuha's mission, Okabe sends another D-mail that dramatically alters the past. He begins to realize the increasing personal cost of manipulating time as relationships and memories shift with each change.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 11 -->
+                    <div class="episode-item" data-episode="11">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/a/a9/Sg-ep11.jpg" alt="Episode 11">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 11</div>
+                            <div class="episode-title">"Dogma in Event Horizon"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jun 15, 2011</div>
+                            <div class="episode-description">
+                                The Phone Microwave evolves to transport physical matter through time, not just information. Okabe and Kurisu theorize about physical time travel, but their experiments are interrupted when SERN's agents start closing in on the lab.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 12 -->
+                    <div class="episode-item" data-episode="12">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/7/7a/Sg-ep12.jpg" alt="Episode 12">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 12</div>
+                            <div class="episode-title">"Dogma in Ergosphere"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jun 22, 2011</div>
+                            <div class="episode-description">
+                                Okabe witnesses a tragic event that fundamentally changes his perspective on time travel. Determined to undo the damage, he resolves to find a way to leap through time physically rather than just sending messages to the past.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 13 -->
+                    <div class="episode-item" data-episode="13">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/1/1e/Sg-ep13.jpg" alt="Episode 13">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 13</div>
+                            <div class="episode-title">"Metaphysics Necrosis"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jun 29, 2011</div>
+                            <div class="episode-description">
+                                Okabe successfully achieves physical time travel, allowing his consciousness to leap back to the past. He begins a desperate series of attempts to change the timeline and save his friends from their fates, experiencing the same days repeatedly.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 14 -->
+                    <div class="episode-item" data-episode="14">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/2/27/Sg-ep14.jpg" alt="Episode 14">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 14</div>
+                            <div class="episode-title">"Physical Necrosis"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jul 6, 2011</div>
+                            <div class="episode-description">
+                                Okabe discovers the identity of FB and confronts Moeka about her role in the tragedy. He makes progress in undoing the D-mails they sent, slowly returning to the original timeline while dealing with the emotional toll of repeated failure.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 15 -->
+                    <div class="episode-item" data-episode="15">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/c/c4/Sg-ep15.jpg" alt="Episode 15">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 15</div>
+                            <div class="episode-title">"Missing Link Necrosis"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jul 13, 2011</div>
+                            <div class="episode-description">
+                                Continuing his quest to undo the D-mails, Okabe confronts Faris about her message, which dramatically changed Akihabara. He learns more about how small changes in the past can have massive consequences for everyone's lives.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 16 -->
+                    <div class="episode-item" data-episode="16">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/1/12/Sg-ep16.jpg" alt="Episode 16">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 16</div>
+                            <div class="episode-title">"Sacrificial Necrosis"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jul 20, 2011</div>
+                            <div class="episode-description">
+                                Okabe faces a painful choice with Ruka, whose entire identity was changed by a D-mail. The emotional consequences of manipulating time become increasingly difficult as he must convince his friends to sacrifice their happiness to restore the original timeline.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 17 -->
+                    <div class="episode-item" data-episode="17">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/0/08/Sg-ep17.jpg" alt="Episode 17">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 17</div>
+                            <div class="episode-title">"Made in Complex"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jul 27, 2011</div>
+                            <div class="episode-description">
+                                Nearly at the end of his journey to undo all D-mails, Okabe confronts the final and most difficult change: Kurisu's D-mail, which saved her life but put them on a path to dystopia. He must make an impossible choice between Mayuri and Kurisu's survival.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 18 -->
+                    <div class="episode-item" data-episode="18">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/7/77/Sg-ep18.jpg" alt="Episode 18">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 18</div>
+                            <div class="episode-title">"Fractal Androgynous"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Aug 3, 2011</div>
+                            <div class="episode-description">
+                                As Okabe struggles with the decision to sacrifice Kurisu, he receives a message from his future self about a way to reach a world line where both Kurisu and Mayuri can be saved: the elusive "Steins Gate" timeline.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 19 -->
+                    <div class="episode-item" data-episode="19">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/9/90/Sg-ep19.jpg" alt="Episode 19">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 19</div>
+                            <div class="episode-title">"Endless Apoptosis"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Aug 10, 2011</div>
+                            <div class="episode-description">
+                                Okabe travels to the original world line where Kurisu died, determined to save her without changing the established fact of her death in this timeline. He follows elaborate instructions from his future self to deceive the world.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 20 -->
+                    <div class="episode-item" data-episode="20">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/a/a6/Sg-ep20.jpg" alt="Episode 20">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 20</div>
+                            <div class="episode-title">"Finalize Apoptosis"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Aug 17, 2011</div>
+                            <div class="episode-description">
+                                In a tragic turn of events, Okabe's first attempt to save Kurisu fails dramatically. Devastated, he receives a video message from his future self that provides crucial insights for a successful second attempt.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 21 -->
+                    <div class="episode-item" data-episode="21">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/a/ac/Sg-ep21.jpg" alt="Episode 21">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 21</div>
+                            <div class="episode-title">"Paradox Meltdown"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Aug 24, 2011</div>
+                            <div class="episode-description">
+                                Armed with new knowledge, Okabe makes a final attempt to reach Steins Gate by faking Kurisu's death while actually saving her. He must overcome both the limitations of time travel and his own trauma to succeed.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 22 -->
+                    <div class="episode-item" data-episode="22">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/e/e5/Sg-ep22.jpg" alt="Episode 22">
+<div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 22</div>
+                            <div class="episode-title">"Being Meltdown"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Aug 31, 2011</div>
+                            <div class="episode-description">
+                                Having reached the Steins Gate world line, Okabe adapts to a world where both Mayuri and Kurisu are alive and SERN's dystopia is averted. However, he struggles with the memories of all he experienced across multiple timelines.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 23 -->
+                    <div class="episode-item" data-episode="23">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/2/2e/Sg-ep23.jpg" alt="Episode 23">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 23</div>
+                            <div class="episode-title">"Open The Steins Gate"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Sep 7, 2011</div>
+                            <div class="episode-description">
+                                As the lab members adjust to the new world line, Okabe attempts to reconnect with Kurisu, who has no memories of their time together in other timelines. Despite this, there appears to be a lingering connection between them.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 24 -->
+                    <div class="episode-item" data-episode="24">
+                        <div class="episode-thumbnail">
+                            <img src="https://static.wikia.nocookie.net/steins-gate/images/0/08/Sg-ep24.jpg" alt="Episode 24">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 24</div>
+                            <div class="episode-title">"Achievement Point"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Sep 14, 2011</div>
+                            <div class="episode-description">
+                                In the series finale, Okabe finally finds closure with the events he experienced across multiple world lines. A chance encounter with Kurisu leads to a touching reunion that suggests some memories transcend even the boundaries of time and world lines.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Video Player Modal -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Steins;Gate - S1:E1 Prologue of the Beginning and End</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="video-container">
+                    <!-- Video player/iframe will be inserted here by JavaScript -->
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Select an episode to watch</p>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="language-selection">
+                        <span>Language: </span>
+                        <button class="language-btn active" id="langJapanese" title="Japanese Audio">
+                            <img src="https://flagcdn.com/24x18/jp.png" alt="Japanese" class="flag-icon">
+                        </button>
+                        <button class="language-btn" id="langEnglish" title="English Audio">
+                            <img src="https://flagcdn.com/24x18/us.png" alt="English" class="flag-icon">
+                        </button>
+                    </div>
+                    <div class="player-info">
+                        <span>Source: voe.sx</span>
+                        <select class="quality-selector">
+                            <option value="auto">Auto Quality</option>
+                            <option value="1080p">1080p</option>
+                            <option value="720p">720p</option>
+                            <option value="480p">480p</option>
+                            <option value="360p">360p</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Anime</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="steins-gate-script.js"></script>
+</body>
+</html>
