@@ -299,8 +299,8 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="movies.html" class="active">Movies</a></li>
-                    <li><a href="tvshows.html">TV Shows</a></li>
-                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="tv-shows.html">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
                     <li><a href="#">My List</a></li>
                 </ul>
             </nav>
@@ -623,47 +623,47 @@
             </div>
         </a>
         
-        <!-- The Dark Knight -->
-        <a href="#" style="text-decoration: none;">
-            <div class="movie-card" data-categories="action,crime,drama" data-year="2008" data-rating="9.0">
-                <img src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg" alt="The Dark Knight">
+        <!-- Mufasa: The King of Tigers (replacing The Dark Knight) -->
+        <a href="mufasa-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="animation,adventure,drama,family" data-year="2024" data-rating="8.2">
+                <img src="https://lumiere-a.akamaihd.net/v1/images/image_4061b01c.jpeg?region=0%2C0%2C540%2C810" alt="Mufasa: The King of Tigers">
                 <div class="overlay">
                     <div class="play-btn">
                         <div class="triangle"></div>
                     </div>
                 </div>
                 <div class="movie-info">
-                    <h3 class="movie-title">The Dark Knight</h3>
+                    <h3 class="movie-title">Mufasa: The King of Tigers</h3>
                     <div class="movie-meta">
-                        <span>Action, Crime, Drama • 2008</span>
+                        <span>Animation, Adventure • 2024</span>
                         <div class="rating">
-                            <i>★</i> 9.0
+                            <i>★</i> 8.2
                         </div>
                     </div>
                 </div>
             </div>
         </a>
         
-        <!-- Inception -->
-        <a href="#" style="text-decoration: none;">
-            <div class="movie-card" data-categories="action,adventure,sci-fi" data-year="2010" data-rating="8.8">
-                <img src="https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg" alt="Inception">
-                <div class="overlay">
-                    <div class="play-btn">
-                        <div class="triangle"></div>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3 class="movie-title">Inception</h3>
-                    <div class="movie-meta">
-                        <span>Action, Adventure, Sci-Fi • 2010</span>
-                        <div class="rating">
-                            <i>★</i> 8.8
-                        </div>
-                    </div>
+<!-- Jurassic World Rebirth -->
+<a href="jurassic-world-rebirth-detail.html" style="text-decoration: none;">
+    <div class="movie-card" data-categories="action,adventure,sci-fi" data-year="2024" data-rating="8.5">
+        <img src="https://upload.wikimedia.org/wikipedia/en/a/a5/Jurassic_World_Rebirth_poster.jpg" alt="Jurassic World Rebirth">
+        <div class="overlay">
+            <div class="play-btn">
+                <div class="triangle"></div>
+            </div>
+        </div>
+        <div class="movie-info">
+            <h3 class="movie-title">Jurassic World Rebirth</h3>
+            <div class="movie-meta">
+                <span>Action, Adventure, Sci-Fi • 2024</span>
+                <div class="rating">
+                    <i>★</i> 8.5
                 </div>
             </div>
-        </a>
+        </div>
+    </div>
+</a>
         
         <!-- Interstellar -->
         <a href="#" style="text-decoration: none;">
@@ -790,8 +790,6 @@
                 </div>
             </div>
         </a>
-        
-        <!-- Add more movie cards as needed -->
     </div>
 
     <!-- Movies List View (Hidden by default, toggled by JavaScript) -->
@@ -874,8 +872,31 @@
             </div>
         </div>
         
-        <!-- More list items would follow in the same format -->
-        <!-- Only showing three examples for brevity, but in production you'd have all movies listed in both views -->
+        <!-- Mufasa: The King of Tigers -->
+        <div class="movie-list-item" data-categories="animation,adventure,drama,family" data-year="2024" data-rating="8.2">
+            <div class="movie-list-poster">
+                <img src="https://lumiere-a.akamaihd.net/v1/images/image_4061b01c.jpeg?region=0%2C0%2C540%2C810" alt="Mufasa: The King of Tigers">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Mufasa: The King of Tigers</h3>
+                <div class="movie-list-meta">
+                    <span>Animation, Adventure, Drama, Family</span>
+                    <span>•</span>
+                    <span>2024</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.2</span>
+                    <span>•</span>
+                    <span>1h 55m</span>
+                </div>
+                <p class="movie-list-desc">
+                    Mufasa: The King of Tigers explores the origins of the iconic character and his rise to become the powerful ruler of the Pride Lands. The story follows Mufasa as a young, orphaned cub who forms an unlikely bond with his brother Taka (later Scar) as they find their way through a world where tigers govern the wilderness.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="mufasa-detail.html" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="mufasa-detail.html" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- No Results Message (Hidden by default, shown when filters return no movies) -->
@@ -917,8 +938,8 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="movies.html">Movies</a></li>
-                    <li><a href="tvshows.html">TV Shows</a></li>
-                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="tv-shows.html">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
                     <li><a href="#">My List</a></li>
                 </ul>
             </div>
@@ -952,6 +973,6 @@
     </footer>
 
     <script src="script.js"></script>
-    <script src="movies.js"></script>
+    <script src="movies-js.js"></script>
 </body>
 </html>

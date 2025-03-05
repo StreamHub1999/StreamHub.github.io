@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurassic World Rebirth - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="movie-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html" class="active">Movies</a></li>
+                    <li><a href="tv-shows.html">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i>🔍</i>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login-page.html" class="btn-small btn-login">Login</a>
+                    <a href="simplified-register-page.html" class="btn-small btn-signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="movie-content">
+        <!-- Movie Hero Section -->
+        <section class="movie-hero">
+            <!-- Backdrop Image -->
+            <div class="movie-backdrop"></div>
+            <div class="backdrop-overlay"></div>
+            
+            <!-- Movie Content -->
+            <div class="movie-hero-content">
+                <!-- Movie Poster -->
+                <div class="movie-poster">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/a5/Jurassic_World_Rebirth_poster.jpg" alt="Jurassic World Rebirth Poster">
+                </div>
+                
+                <!-- Movie Information -->
+                <div class="movie-info">
+                    <h1>Jurassic World Rebirth</h1>
+                    
+                    <div class="movie-meta">
+                        <span>2024</span>
+                        <span class="dot">•</span>
+                        <span>PG-13</span>
+                        <span class="dot">•</span>
+                        <span>2h 15m</span>
+                        <span class="dot">•</span>
+                        <span>Action, Adventure, Sci-Fi</span>
+                    </div>
+                    
+                    <div class="movie-rating">
+                        <div class="star-rating-display">
+                            <span class="rating-value">8.5</span>
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star half-filled">★</span>
+                            </div>
+                            <span class="rating-count">12,345 ratings</span>
+                        </div>
+                    </div>
+                    
+                    <div class="movie-actions">
+                        <button class="action-btn play-btn" id="playMovie">
+                            <i class="icon">▶</i> Play
+                        </button>
+                        
+                        <button class="action-btn trailer-btn">
+                            <i class="icon">🎬</i> Trailer
+                        </button>
+                        
+                        <button class="action-btn watchlist-btn">
+                            <i class="icon">➕</i> Add to Watchlist
+                        </button>
+                    </div>
+                    
+                    <div class="movie-description">
+                        <h3>Overview</h3>
+                        <p>
+                            Twenty years after the fall of Jurassic World, dinosaurs now live and hunt alongside humans all over the world. This fragile balance will reshape the future and determine, once and for all, whether human beings are to remain the apex predators on a planet they now share with history's most fearsome creatures.
+                        </p>
+                        <p>
+                            When a secret research facility goes dark, a new team of adventurers must venture into uncharted territory to face both ancient threats and cutting-edge science gone wrong. The line between control and chaos has never been thinner in this thrilling new chapter of the Jurassic saga.
+                        </p>
+                    </div>
+                    
+                    <div class="language-selection">
+                        <span>Language:</span>
+                        <div class="language-btn active" id="langEnglish">
+                            <img class="flag-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flag_of_the_United_Kingdom_(1-2).svg/1200px-Flag_of_the_United_Kingdom_(1-2).svg.png" alt="English">
+                        </div>
+                        <div class="language-btn" id="langGerman">
+                            <img class="flag-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" alt="German">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Movie Details -->
+                <div class="movie-details">
+                    <div class="detail-block">
+                        <h3>Director</h3>
+                        <p>Colin Trevorrow</p>
+                    </div>
+                    
+                    <div class="detail-block">
+                        <h3>Writers</h3>
+                        <p>Emily Carmichael, Colin Trevorrow</p>
+                    </div>
+                    
+                    <div class="detail-block">
+                        <h3>Stars</h3>
+                        <p>Chris Pratt, Bryce Dallas Howard, Sam Neill, Laura Dern, Jeff Goldblum</p>
+                    </div>
+                    
+                    <div class="detail-block">
+                        <h3>Genre</h3>
+                        <p>Action, Adventure, Sci-Fi</p>
+                    </div>
+                    
+                    <div class="detail-block">
+                        <h3>Release Date</h3>
+                        <p>April 12, 2024</p>
+                    </div>
+                    
+                    <div class="rating-container">
+                        <h3>Rate This</h3>
+                        <div class="star-rating">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                            <span class="star" data-rating="6">★</span>
+                            <span class="star" data-rating="7">★</span>
+                            <span class="star" data-rating="8">★</span>
+                            <span class="star" data-rating="9">★</span>
+                            <span class="star" data-rating="10">★</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Jurassic World Rebirth</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            
+            <div class="video-container"></div>
+            
+            <div class="player-controls">
+                <div class="player-info">
+                    Streaming in: <strong id="currentQuality">High Quality</strong>
+                    <select class="quality-selector">
+                        <option value="hq">High Quality</option>
+                        <option value="mq">Medium Quality</option>
+                        <option value="lq">Low Quality</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tv-shows.html">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#" data-filter="action">Action</a></li>
+                    <li><a href="#" data-filter="comedy">Comedy</a></li>
+                    <li><a href="#" data-filter="drama">Drama</a></li>
+                    <li><a href="#" data-filter="sci-fi">Sci-Fi</a></li>
+                    <li><a href="#" data-filter="horror">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set backdrop image for Jurassic World Rebirth
+            document.querySelector('.movie-backdrop').style.backgroundImage = "url('https://cdn.mos.cms.futurecdn.net/VJBtjcgUK9noCeZmmwCkSV.jpg')";
+            
+            // Movie video URLs in different languages
+            const movieVideos = {
+                "en": "https://voe.sx/e/joobypqlwj3q", // English version
+                "de": "" // German version (placeholder for future)
+            };
+            
+            // Trailer URL
+            const trailerUrl = "https://www.youtube.com/embed/fb5ELWi-ekk"; // Placeholder trailer URL
+            
+            // Current language setting
+            let currentLanguage = "en"; // Default language is English
+            
+            // Video player related elements
+            const videoModal = document.getElementById('videoModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const videoContainer = document.querySelector('.video-container');
+            const closeModal = document.querySelector('.close-modal');
+            const playMovieBtn = document.getElementById('playMovie');
+            
+            // Play movie button handler
+            playMovieBtn.addEventListener('click', function() {
+                loadAndPlayMovie(currentLanguage);
+            });
+            
+            // Function to load and play the movie with language selection
+            function loadAndPlayMovie(language) {
+                // Set the modal title with language indicator
+                const langText = language === 'de' ? 'German' : 'English';
+                modalTitle.textContent = `Jurassic World Rebirth (${langText})`;
+                
+                // Get the correct video source based on language
+                const videoSrc = movieVideos[language];
+                
+                // Create video player if video source is available
+                if (videoSrc) {
+                    // Clear previous content
+                    videoContainer.innerHTML = '';
+                    
+                    // Create and append the iframe
+                    const iframe = document.createElement('iframe');
+                    iframe.src = videoSrc;
+                    iframe.width = '100%';
+                    iframe.height = '100%';
+                    iframe.style.position = 'absolute';
+                    iframe.style.top = '0';
+                    iframe.style.left = '0';
+                    iframe.frameBorder = '0';
+                    iframe.scrolling = 'no';
+                    iframe.allowFullscreen = true;
+                    
+                    videoContainer.appendChild(iframe);
+                } else {
+                    // Show placeholder message (especially for German version not yet available)
+                    videoContainer.innerHTML = `
+                        <div class="video-placeholder">
+                            <div class="play-button">▶</div>
+                            <p>${language === 'en' ? 'Loading video...' : 'German version coming soon'}</p>
+                        </div>
+                    `;
+                }
+                
+                // Show the modal
+                videoModal.style.display = 'flex';
+                
+                console.log(`Playing movie in ${language}`);
+            }
+            
+            // Language selection handlers
+            document.getElementById('langGerman').addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+                currentLanguage = 'de';
+                
+                // Update active state of language buttons
+                document.getElementById('langEnglish').classList.remove('active');
+                this.classList.add('active');
+                
+                // If the modal is already open, update the video
+                if (videoModal.style.display === 'flex') {
+                    loadAndPlayMovie(currentLanguage);
+                }
+            });
+            
+            document.getElementById('langEnglish').addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+                currentLanguage = 'en';
+                
+                // Update active state of language buttons
+                document.getElementById('langGerman').classList.remove('active');
+                this.classList.add('active');
+                
+                // If the modal is already open, update the video
+                if (videoModal.style.display === 'flex') {
+                    loadAndPlayMovie(currentLanguage);
+                }
+            });
+            
+            // Trailer button handler
+            document.querySelector('.trailer-btn').addEventListener('click', function() {
+                // Set the modal title for trailer
+                modalTitle.textContent = 'Jurassic World Rebirth - Official Trailer';
+                
+                // Clear previous content
+                videoContainer.innerHTML = '';
+                
+                // Create and append the iframe for trailer
+                const trailerIframe = document.createElement('iframe');
+                trailerIframe.src = trailerUrl;
+                trailerIframe.width = '100%';
+                trailerIframe.height = '100%';
+                trailerIframe.style.position = 'absolute';
+                trailerIframe.style.top = '0';
+                trailerIframe.style.left = '0';
+                trailerIframe.frameBorder = '0';
+                trailerIframe.allowFullscreen = true;
+                
+                videoContainer.appendChild(trailerIframe);
+                
+                // Show the modal
+                videoModal.style.display = 'flex';
+                console.log('Playing movie trailer');
+            });
+            
+            // Close modal when clicking the X
+            closeModal.addEventListener('click', () => {
+                videoModal.style.display = 'none';
+                // Stop any playing videos by clearing the container
+                videoContainer.innerHTML = '';
+            });
+            
+            // Close modal when clicking outside the content
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    videoModal.style.display = 'none';
+                    // Stop any playing videos by clearing the container
+                    videoContainer.innerHTML = '';
+                }
+            });
+            
+            // Star rating functionality
+            const stars = document.querySelectorAll('.star-rating .star');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    
+                    // Clear all active stars
+                    stars.forEach(s => s.classList.remove('active'));
+                    
+                    // Set active stars up to the clicked one
+                    stars.forEach(s => {
+                        if (parseInt(s.dataset.rating) <= rating) {
+                            s.classList.add('active');
+                        }
+                    });
+                    
+                    console.log(`User rated the movie ${rating}/10`);
+                });
+            });
+            
+            // Watchlist button functionality
+            const watchlistBtn = document.querySelector('.watchlist-btn');
+            
+            watchlistBtn.addEventListener('click', () => {
+                // Toggle watchlist status
+                const isInWatchlist = watchlistBtn.classList.toggle('in-watchlist');
+                
+                if (isInWatchlist) {
+                    watchlistBtn.innerHTML = '<i class="icon">✓</i> In Watchlist';
+                    watchlistBtn.style.backgroundColor = '#1565C0';
+                } else {
+                    watchlistBtn.innerHTML = '<i class="icon">➕</i> Add to Watchlist';
+                    watchlistBtn.style.backgroundColor = '#2196F3';
+                }
+                
+                console.log(`User ${isInWatchlist ? 'added movie to' : 'removed movie from'} watchlist`);
+            });
+            
+            // Quality selector (for demonstration - would need real implementation)
+            const qualitySelector = document.querySelector('.quality-selector');
+            qualitySelector.addEventListener('change', function() {
+                console.log(`Quality changed to: ${this.value}`);
+                // In a real implementation, this would change the video quality
+            });
+        });
+    </script>
+</body>
+</html>

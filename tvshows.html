@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamHub - TV Shows</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Hero section styles for TV Shows page */
+        .page-hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://wallpapercave.com/wp/wp11699888.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 5%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .page-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #ccc;
+        }
+        
+        /* Filter section styles */
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 5%;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filter-dropdown {
+            position: relative;
+            min-width: 150px;
+        }
+        
+        .filter-dropdown select {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: var(--background-lighter);
+            color: var(--text-primary);
+            border: 1px solid #333;
+            border-radius: 4px;
+            appearance: none;
+            cursor: pointer;
+        }
+        
+        .filter-dropdown::after {
+            content: "▼";
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+        
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .view-toggle button {
+            background-color: var(--background-lighter);
+            border: 1px solid #333;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-toggle button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        /* Shows grid styles */
+        .shows-container {
+            padding: 0 5%;
+        }
+        
+        .shows-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .show-card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .show-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            background-color: var(--card-hover);
+        }
+        
+        .show-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .show-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .show-info {
+            padding: 15px;
+        }
+        
+        .show-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .show-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .show-meta span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70%;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .rating i {
+            color: var(--primary-color);
+            margin-right: 5px;
+        }
+        
+        .show-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .show-card:hover .show-overlay {
+            opacity: 1;
+        }
+        
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .play-btn:hover {
+            background-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        .triangle {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 20px;
+            border-color: transparent transparent transparent white;
+            margin-left: 5px;
+        }
+        
+        /* Section dividers */
+        .section-divider {
+            margin: 60px 0;
+            border-top: 1px solid #333;
+        }
+        
+        /* Genre badges */
+        .genre-badge {
+            display: inline-block;
+            background-color: rgba(128, 128, 128, 0.2);
+            color: var(--text-secondary);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        /* Category tabs styling */
+        .category-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-tab {
+            padding: 10px 20px;
+            background-color: var(--background-lighter);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .category-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            gap: 10px;
+        }
+        
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--background-lighter);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .pagination-btn:hover:not(.active) {
+            background-color: var(--card-hover);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html" class="active">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i>🔍</i>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login-page.html" class="btn-small btn-login">Login</a>
+                    <a href="simplified-register-page.html" class="btn-small btn-signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero Section -->
+    <section class="page-hero">
+        <h1>Discover TV Shows</h1>
+        <p>From award-winning dramas to captivating anime series, find your next binge-worthy show on StreamHub.</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="filter-options">
+                <div class="filter-dropdown">
+                    <select id="genre-filter">
+                        <option value="all">All Genres</option>
+                        <option value="drama">Drama</option>
+                        <option value="action">Action</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="sci-fi">Sci-Fi</option>
+                        <option value="horror">Horror</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="anime">Anime</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="mystery">Mystery</option>
+                    </select>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="year-filter">
+                        <option value="all">All Years</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="older">2019 & Older</option>
+                    </select>
+                </div>
+                <div class="filter-dropdown">
+                    <select id="rating-filter">
+                        <option value="all">All Ratings</option>
+                        <option value="9+">9+ Rating</option>
+                        <option value="8+">8+ Rating</option>
+                        <option value="7+">7+ Rating</option>
+                        <option value="6+">6+ Rating</option>
+                    </select>
+                </div>
+            </div>
+            <div class="sort-options">
+                <div class="filter-dropdown">
+                    <select id="sort-filter">
+                        <option value="popularity">Popularity</option>
+                        <option value="rating">Rating</option>
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="az">A-Z</option>
+                        <option value="za">Z-A</option>
+                    </select>
+                </div>
+                <div class="view-toggle">
+                    <button id="grid-view" class="active">Grid</button>
+                    <button id="list-view">List</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Tabs -->
+        <section class="shows-container">
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all">All Shows</div>
+                <div class="category-tab" data-category="drama">Drama</div>
+                <div class="category-tab" data-category="action">Action</div>
+                <div class="category-tab" data-category="comedy">Comedy</div>
+                <div class="category-tab" data-category="sci-fi">Sci-Fi</div>
+                <div class="category-tab" data-category="fantasy">Fantasy</div>
+                <div class="category-tab" data-category="anime">Anime</div>
+                <div class="category-tab" data-category="thriller">Thriller</div>
+                <div class="category-tab" data-category="mystery">Mystery</div>
+                <div class="category-tab" data-category="horror">Horror</div>
+            </div>
+
+            <!-- TV Shows Grid -->
+            <div class="shows-grid">
+                <!-- Popular TV Shows -->
+                <!-- House of the Dragon -->
+                <a href="hotd-detail.html" style="text-decoration: none;">
+                    <div class="show-card" data-categories="fantasy,drama" data-rating="8.5" data-year="2022">
+                        <img src="https://gzhls.at/i/67/74/2866774-n0.jpg" alt="House of the Dragon">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">House of the Dragon</h3>
+                            <div class="show-meta">
+                                <span>Fantasy, Drama</span>
+                                <div class="rating">
+                                    <i>★</i> 8.5
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- FROM -->
+                <a href="series-detail.html" style="text-decoration: none;">
+                    <div class="show-card" data-categories="drama,horror,mystery" data-rating="9.2" data-year="2022">
+                        <img src="https://images.justwatch.com/poster/321587621/s166/From.avif" alt="FROM">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">FROM</h3>
+                            <div class="show-meta">
+                                <span>Drama, Horror, Mystery</span>
+                                <div class="rating">
+                                    <i>★</i> 9.2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Torchwood -->
+                <a href="torchwood-detail.html" style="text-decoration: none;">
+                    <div class="show-card" data-categories="sci-fi,adventure" data-rating="8.7" data-year="2006">
+                        <img src="https://www.doctorwhotv.co.uk/wp-content/uploads/torchwood-miracle-day-promo-pics0.jpg" alt="Torchwood">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Torchwood</h3>
+                            <div class="show-meta">
+                                <span>Sci-Fi, Adventure</span>
+                                <div class="rating">
+                                    <i>★</i> 8.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Game of Thrones -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="fantasy,drama,action" data-rating="9.2" data-year="2011">
+                        <img src="https://m.media-amazon.com/images/M/MV5BN2IzYzBiOTQtNGZmMi00NDI5LTgxMzMtN2EzZjA1NjhlOGMxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg" alt="Game of Thrones">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Game of Thrones</h3>
+                            <div class="show-meta">
+                                <span>Fantasy, Drama, Action</span>
+                                <div class="rating">
+                                    <i>★</i> 9.2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Breaking Bad -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="drama,crime,thriller" data-rating="9.5" data-year="2008">
+                        <img src="https://m.media-amazon.com/images/M/MV5BNDkyZThhNmMtZDBjYS00NDBmLTlkMjgtNWM2ZWYzZDQxZWU1XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg" alt="Breaking Bad">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Breaking Bad</h3>
+                            <div class="show-meta">
+                                <span>Drama, Crime, Thriller</span>
+                                <div class="rating">
+                                    <i>★</i> 9.5
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Better Call Saul -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="drama,crime" data-rating="9.0" data-year="2015">
+                        <img src="https://m.media-amazon.com/images/M/MV5BZDA4YmE0OTYtMmRmNS00Mzk2LTlhM2MtNjk4NzBjZGE1MmIyXkEyXkFqcGdeQXVyMTMzNDExODE5._V1_.jpg" alt="Better Call Saul">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Better Call Saul</h3>
+                            <div class="show-meta">
+                                <span>Drama, Crime</span>
+                                <div class="rating">
+                                    <i>★</i> 9.0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Popular Anime Series -->
+                <!-- Your Lie in April -->
+                <a href="your-lie-in-april-detail.html" style="text-decoration: none;">
+                    <div class="show-card" data-categories="anime,drama,music" data-rating="8.6" data-year="2014">
+                        <img src="https://aniworld.to/public/img/cover/your-lie-in-april-stream-cover-Dh4NQ6b0M2mKWei4c5hzugmntqN9WuYh_220x330.jpg" alt="Your Lie in April">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Your Lie in April</h3>
+                            <div class="show-meta">
+                                <span>Anime, Drama, Music</span>
+                                <div class="rating">
+                                    <i>★</i> 8.6
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Tower of God -->
+                <a href="tower-of-god-detail.html" style="text-decoration: none;">
+                    <div class="show-card" data-categories="anime,adventure,fantasy" data-rating="7.6" data-year="2020">
+                        <img src="https://aniworld.to/public/img/cover/tower-of-god-stream-cover-8nCCJxa8YByM62sG2rhj2bG2LtGm6iRX_220x330.jpg" alt="Tower of God">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Tower of God</h3>
+                            <div class="show-meta">
+                                <span>Anime, Adventure, Fantasy</span>
+                                <div class="rating">
+                                    <i>★</i> 7.6
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Steins;Gate -->
+                <a href="steins-gate-detail.html" style="text-decoration: none;">
+                    <div class="show-card" data-categories="anime,sci-fi,thriller" data-rating="9.0" data-year="2011">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMjUxMzE4ZDctODNjMS00MzIwLThjNDktODkwYjc5YWU0MDc0XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_.jpg" alt="Steins;Gate">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Steins;Gate</h3>
+                            <div class="show-meta">
+                                <span>Anime, Sci-Fi, Thriller</span>
+                                <div class="rating">
+                                    <i>★</i> 9.0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Steins;Gate 0 -->
+                <a href="steins-gate-0-detail.html" style="text-decoration: none;">
+                    <div class="show-card" data-categories="anime,sci-fi,thriller" data-rating="8.5" data-year="2018">
+                        <img src="https://aniworld.to/public/img/cover/steinsgate-0-stream-cover-79gtgs9qzc4BOZ4CH59YBsL7U5Dym0qz_220x330.jpg" alt="Steins;Gate 0">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Steins;Gate 0</h3>
+                            <div class="show-meta">
+                                <span>Anime, Sci-Fi, Thriller</span>
+                                <div class="rating">
+                                    <i>★</i> 8.5
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Attack on Titan -->
+                <a href="attack-on-titan-detail.html" style="text-decoration: none;">
+                    <div class="show-card" data-categories="anime,action,fantasy" data-rating="9.0" data-year="2013">
+                        <img src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg" alt="Attack on Titan">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Attack on Titan</h3>
+                            <div class="show-meta">
+                                <span>Anime, Action, Fantasy</span>
+                                <div class="rating">
+                                    <i>★</i> 9.0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Another -->
+                <a href="another-detail-html.html" style="text-decoration: none;">
+                    <div class="show-card" data-categories="anime,horror,mystery" data-rating="7.7" data-year="2012">
+                        <img src="https://aniworld.to/public/img/cover/another-stream-cover-b6AzljvYW1fg6QclAXZGsjGCa3mxvzn1_220x330.jpg" alt="Another">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Another</h3>
+                            <div class="show-meta">
+                                <span>Anime, Horror, Mystery</span>
+                                <div class="rating">
+                                    <i>★</i> 7.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- More TV Shows -->
+                <!-- The Last of Us -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="drama,action,horror" data-rating="8.8" data-year="2023">
+                        <img src="https://m.media-amazon.com/images/M/MV5BZGUzYTI3M2EtZmM0Yy00NGUyLWI4ODEtN2Q3ZGJlYzhhZjU3XkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_.jpg" alt="The Last of Us">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">The Last of Us</h3>
+                            <div class="show-meta">
+                                <span>Drama, Action, Horror</span>
+                                <div class="rating">
+                                    <i>★</i> 8.8
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Stranger Things -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="drama,fantasy,horror" data-rating="8.7" data-year="2016">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMDZkYmVhNjMtNWU4MC00MDQxLWE3MjYtZGMzZWI1ZjhlOWJmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg" alt="Stranger Things">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Stranger Things</h3>
+                            <div class="show-meta">
+                                <span>Drama, Fantasy, Horror</span>
+                                <div class="rating">
+                                    <i>★</i> 8.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- The Boys -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="action,comedy,crime" data-rating="8.7" data-year="2019">
+                        <img src="https://m.media-amazon.com/images/M/MV5BOTEyNDJhMDAtY2U5ZS00OTMzLTkwODEtMWY5ZjEyNzgzZWYzXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg" alt="The Boys">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">The Boys</h3>
+                            <div class="show-meta">
+                                <span>Action, Comedy, Crime</span>
+                                <div class="rating">
+                                    <i>★</i> 8.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Succession -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="drama" data-rating="8.9" data-year="2018">
+                        <img src="https://m.media-amazon.com/images/M/MV5BNWYwODRhYmUtNDcwNy00YzAwLWJjNTUtYTNlMTc4MzIxOWYxXkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg" alt="Succession">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Succession</h3>
+                            <div class="show-meta">
+                                <span>Drama</span>
+                                <div class="rating">
+                                    <i>★</i> 8.9
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- The Office -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="comedy" data-rating="9.0" data-year="2005">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMDNkOTE4NDQtMTNmYi00MWE0LWE4ZTktYTc0NzhhNWIzNzJiXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_.jpg" alt="The Office">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">The Office</h3>
+                            <div class="show-meta">
+                                <span>Comedy</span>
+                                <div class="rating">
+                                    <i>★</i> 9.0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Demon Slayer -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="anime,action,fantasy" data-rating="8.7" data-year="2019">
+                        <img src="https://m.media-amazon.com/images/M/MV5BZjZjNzI5MDctY2Y4YS00NmM4LTljMmItZTFkOTExNGI3ODRhXkEyXkFqcGdeQXVyNjc3MjQzNTI@._V1_.jpg" alt="Demon Slayer">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Demon Slayer</h3>
+                            <div class="show-meta">
+                                <span>Anime, Action, Fantasy</span>
+                                <div class="rating">
+                                    <i>★</i> 8.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Jujutsu Kaisen -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card" data-categories="anime,action,fantasy" data-rating="8.7" data-year="2020">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMTMwMDM3NjQtODFjNi00ZGRhLTg4ZmYtNzQ3Y2FmZTIyNzM2XkEyXkFqcGdeQXVyMTA1OTcyNDQ4._V1_.jpg" alt="Jujutsu Kaisen">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Jujutsu Kaisen</h3>
+                            <div class="show-meta">
+                                <span>Anime, Action, Fantasy</span>
+                                <div class="rating">
+                                    <i>★</i> 8.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="pagination-btn active">1</div>
+                <div class="pagination-btn">2</div>
+                <div class="pagination-btn">3</div>
+                <div class="pagination-btn">4</div>
+                <div class="pagination-btn">5</div>
+                <div class="pagination-btn">→</div>
+            </div>
+        </section>
+
+        <!-- Trending Shows Section -->
+        <section class="section-divider"></section>
+        <section class="shows-container">
+            <div class="section-title">
+                <h2>Trending Shows This Week</h2>
+            </div>
+            <div class="shows-grid">
+                <!-- House of the Dragon -->
+                <a href="hotd-detail.html" style="text-decoration: none;">
+                    <div class="show-card">
+                        <img src="https://gzhls.at/i/67/74/2866774-n0.jpg" alt="House of the Dragon">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">House of the Dragon</h3>
+                            <div class="show-meta">
+                                <span>Fantasy, Drama</span>
+                                <div class="rating">
+                                    <i>★</i> 8.5
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- The Last of Us -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BZGUzYTI3M2EtZmM0Yy00NGUyLWI4ODEtN2Q3ZGJlYzhhZjU3XkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_.jpg" alt="The Last of Us">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">The Last of Us</h3>
+                            <div class="show-meta">
+                                <span>Drama, Action, Horror</span>
+                                <div class="rating">
+                                    <i>★</i> 8.8
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- FROM -->
+                <a href="series-detail.html" style="text-decoration: none;">
+                    <div class="show-card">
+                        <img src="https://images.justwatch.com/poster/321587621/s166/From.avif" alt="FROM">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">FROM</h3>
+                            <div class="show-meta">
+                                <span>Drama, Horror, Mystery</span>
+                                <div class="rating">
+                                    <i>★</i> 9.2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Jujutsu Kaisen -->
+                <a href="#" style="text-decoration: none;">
+                    <div class="show-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMTMwMDM3NjQtODFjNi00ZGRhLTg4ZmYtNzQ3Y2FmZTIyNzM2XkEyXkFqcGdeQXVyMTA1OTcyNDQ4._V1_.jpg" alt="Jujutsu Kaisen">
+                        <div class="show-overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="show-info">
+                            <h3 class="show-title">Jujutsu Kaisen</h3>
+                            <div class="show-meta">
+                                <span>Anime, Action, Fantasy</span>
+                                <div class="rating">
+                                    <i>★</i> 8.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter functionality for category tabs
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const showCards = document.querySelectorAll('.show-card');
+            
+            // Function to filter shows by category
+            function filterShows(category) {
+                showCards.forEach(card => {
+                    const categories = card.getAttribute('data-categories') || '';
+                    
+                    if (category === 'all' || categories.includes(category)) {
+                        card.closest('a').style.display = 'block';
+                    } else {
+                        card.closest('a').style.display = 'none';
+                    }
+                });
+            }
+            
+            // Set up event listeners for category tabs
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Get the category
+                    const category = this.getAttribute('data-category');
+                    
+                    // Filter shows based on the selected category
+                    filterShows(category);
+                });
+            });
+            
+            // Genre dropdown filter
+            const genreFilter = document.getElementById('genre-filter');
+            genreFilter.addEventListener('change', function() {
+                const selectedGenre = this.value;
+                filterShows(selectedGenre);
+                
+                // Update active tab
+                categoryTabs.forEach(tab => {
+                    if (tab.getAttribute('data-category') === selectedGenre) {
+                        tab.classList.add('active');
+                    } else {
+                        tab.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Year filter
+            const yearFilter = document.getElementById('year-filter');
+            yearFilter.addEventListener('change', function() {
+                const selectedYear = this.value;
+                
+                showCards.forEach(card => {
+                    const year = parseInt(card.getAttribute('data-year')) || 0;
+                    
+                    if (selectedYear === 'all') {
+                        card.closest('a').style.display = 'block';
+                    } else if (selectedYear === 'older' && year < 2020) {
+                        card.closest('a').style.display = 'block';
+                    } else if (selectedYear !== 'older' && year === parseInt(selectedYear)) {
+                        card.closest('a').style.display = 'block';
+                    } else {
+                        card.closest('a').style.display = 'none';
+                    }
+                });
+            });
+            
+            // Rating filter
+            const ratingFilter = document.getElementById('rating-filter');
+            ratingFilter.addEventListener('change', function() {
+                const selectedRating = this.value;
+                
+                showCards.forEach(card => {
+                    const rating = parseFloat(card.getAttribute('data-rating')) || 0;
+                    
+                    if (selectedRating === 'all') {
+                        card.closest('a').style.display = 'block';
+                    } else if (selectedRating === '9+' && rating >= 9.0) {
+                        card.closest('a').style.display = 'block';
+                    } else if (selectedRating === '8+' && rating >= 8.0) {
+                        card.closest('a').style.display = 'block';
+                    } else if (selectedRating === '7+' && rating >= 7.0) {
+                        card.closest('a').style.display = 'block';
+                    } else if (selectedRating === '6+' && rating >= 6.0) {
+                        card.closest('a').style.display = 'block';
+                    } else {
+                        card.closest('a').style.display = 'none';
+                    }
+                });
+            });
+            
+            // Sort functionality
+            const sortFilter = document.getElementById('sort-filter');
+            sortFilter.addEventListener('change', function() {
+                const selectedSort = this.value;
+                const showsGrid = document.querySelector('.shows-grid');
+                const shows = Array.from(showsGrid.children);
+                
+                shows.sort(function(a, b) {
+                    const cardA = a.querySelector('.show-card');
+                    const cardB = b.querySelector('.show-card');
+                    
+                    if (selectedSort === 'rating') {
+                        const ratingA = parseFloat(cardA.getAttribute('data-rating')) || 0;
+                        const ratingB = parseFloat(cardB.getAttribute('data-rating')) || 0;
+                        return ratingB - ratingA; // Higher rating first
+                    } else if (selectedSort === 'newest') {
+                        const yearA = parseInt(cardA.getAttribute('data-year')) || 0;
+                        const yearB = parseInt(cardB.getAttribute('data-year')) || 0;
+                        return yearB - yearA; // Newer first
+                    } else if (selectedSort === 'oldest') {
+                        const yearA = parseInt(cardA.getAttribute('data-year')) || 0;
+                        const yearB = parseInt(cardB.getAttribute('data-year')) || 0;
+                        return yearA - yearB; // Older first
+                    } else if (selectedSort === 'az') {
+                        const titleA = cardA.querySelector('.show-title').textContent;
+                        const titleB = cardB.querySelector('.show-title').textContent;
+                        return titleA.localeCompare(titleB); // A to Z
+                    } else if (selectedSort === 'za') {
+                        const titleA = cardA.querySelector('.show-title').textContent;
+                        const titleB = cardB.querySelector('.show-title').textContent;
+                        return titleB.localeCompare(titleA); // Z to A
+                    }
+                    
+                    return 0; // Default: no change
+                });
+                
+                // Reappend the sorted shows
+                shows.forEach(function(show) {
+                    showsGrid.appendChild(show);
+                });
+            });
+            
+            // View toggle functionality
+            const gridViewBtn = document.getElementById('grid-view');
+            const listViewBtn = document.getElementById('list-view');
+            const showsGrid = document.querySelector('.shows-grid');
+            
+            gridViewBtn.addEventListener('click', function() {
+                showsGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
+                gridViewBtn.classList.add('active');
+                listViewBtn.classList.remove('active');
+            });
+            
+            listViewBtn.addEventListener('click', function() {
+                showsGrid.style.gridTemplateColumns = '1fr';
+                listViewBtn.classList.add('active');
+                gridViewBtn.classList.remove('active');
+                
+                // Optional: Adjust card layout for list view
+                document.querySelectorAll('.show-card').forEach(card => {
+                    card.style.display = 'flex';
+                    card.style.flexDirection = 'row';
+                    card.querySelector('img').style.width = '120px';
+                    card.querySelector('img').style.height = '180px';
+                    card.querySelector('.show-info').style.padding = '15px 20px';
+                });
+            });
+            
+            // Reset to grid view when switching back
+            gridViewBtn.addEventListener('click', function() {
+                document.querySelectorAll('.show-card').forEach(card => {
+                    card.style.display = '';
+                    card.style.flexDirection = '';
+                    card.querySelector('img').style.width = '';
+                    card.querySelector('img').style.height = '';
+                    card.querySelector('.show-info').style.padding = '';
+                });
+            });
+            
+            // Pagination functionality
+            const paginationBtns = document.querySelectorAll('.pagination-btn');
+            
+            paginationBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all pagination buttons
+                    paginationBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // In a real implementation, you would fetch and load the data for the selected page
+                    // For now, we'll just scroll to the top of the shows grid
+                    window.scrollTo({
+                        top: document.querySelector('.shows-container').offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Search functionality (similar to what's in index.html)
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            
+            // Collection of all content (movies and shows)
+            const allContent = [
+                { 
+                    title: "House of the Dragon", 
+                    type: "TV Show", 
+                    url: "hotd-detail.html", 
+                    image: "https://gzhls.at/i/67/74/2866774-n0.jpg", 
+                    genre: "Fantasy, Drama" 
+                },
+                { 
+                    title: "FROM", 
+                    type: "TV Show", 
+                    url: "series-detail.html", 
+                    image: "https://images.justwatch.com/poster/321587621/s166/From.avif", 
+                    genre: "Drama, Horror, Mystery" 
+                },
+                { 
+                    title: "Torchwood", 
+                    type: "TV Show", 
+                    url: "torchwood-detail.html", 
+                    image: "https://www.doctorwhotv.co.uk/wp-content/uploads/torchwood-miracle-day-promo-pics0.jpg", 
+                    genre: "Sci-Fi, Adventure" 
+                },
+                {
+                    title: "Your Lie in April",
+                    type: "TV Show",
+                    url: "your-lie-in-april-detail.html",
+                    image: "https://aniworld.to/public/img/cover/your-lie-in-april-stream-cover-Dh4NQ6b0M2mKWei4c5hzugmntqN9WuYh_220x330.jpg",
+                    genre: "Anime, Drama, Music"
+                },
+                {
+                    title: "Tower of God",
+                    type: "TV Show",
+                    url: "tower-of-god-detail.html",
+                    image: "https://aniworld.to/public/img/cover/tower-of-god-stream-cover-8nCCJxa8YByM62sG2rhj2bG2LtGm6iRX_220x330.jpg",
+                    genre: "Anime, Adventure, Fantasy"
+                },
+                {
+                    title: "Steins;Gate",
+                    type: "TV Show",
+                    url: "steins-gate-detail.html",
+                    image: "https://m.media-amazon.com/images/M/MV5BMjUxMzE4ZDctODNjMS00MzIwLThjNDktODkwYjc5YWU0MDc0XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_.jpg",
+                    genre: "Anime, Sci-Fi, Thriller"
+                },
+                {
+                    title: "Steins;Gate 0",
+                    type: "TV Show",
+                    url: "steins-gate-0-detail.html",
+                    image: "https://aniworld.to/public/img/cover/steinsgate-0-stream-cover-79gtgs9qzc4BOZ4CH59YBsL7U5Dym0qz_220x330.jpg",
+                    genre: "Anime, Sci-Fi, Thriller"
+                },
+                {
+                    title: "Attack on Titan",
+                    type: "TV Show",
+                    url: "attack-on-titan-detail.html",
+                    image: "https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg",
+                    genre: "Anime, Action, Fantasy"
+                },
+                {
+                    title: "Another",
+                    type: "TV Show",
+                    url: "another-detail-html.html",
+                    image: "https://aniworld.to/public/img/cover/another-stream-cover-b6AzljvYW1fg6QclAXZGsjGCa3mxvzn1_220x330.jpg",
+                    genre: "Anime, Horror, Mystery"
+                }
+            ];
+            
+            // Function to perform search and display results
+            function performSearch(query) {
+                if (!query || query.length < 2) {
+                    searchResults.classList.remove('active');
+                    return;
+                }
+
+                query = query.toLowerCase();
+                const matchingResults = allContent.filter(item => 
+                    item.title.toLowerCase().includes(query) || 
+                    item.genre.toLowerCase().includes(query) ||
+                    item.type.toLowerCase().includes(query)
+                );
+                
+                // Display results
+                searchResults.innerHTML = '';
+                
+                if (matchingResults.length === 0) {
+                    searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                } else {
+                    matchingResults.forEach(item => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'search-result-item';
+                        resultItem.innerHTML = `
+                            <img src="${item.image}" alt="${item.title}" class="search-result-thumb">
+                            <div class="search-result-info">
+                                <div class="search-result-title">${item.title}</div>
+                                <div class="search-result-meta">${item.type} • ${item.genre}</div>
+                            </div>
+                        `;
+                        
+                        // Add click event to redirect to content page
+                        resultItem.addEventListener('click', () => {
+                            window.location.href = item.url;
+                        });
+                        
+                        searchResults.appendChild(resultItem);
+                    });
+                }
+                
+                searchResults.classList.add('active');
+            }
+
+            // Search input event listeners
+            searchInput.addEventListener('input', () => {
+                performSearch(searchInput.value);
+            });
+
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.length >= 2) {
+                    performSearch(searchInput.value);
+                }
+            });
+
+            // Close search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.remove('active');
+                }
+            });
+
+            // Prevent the dropdown from closing when clicking inside it
+            searchResults.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
+    </script>
+</body>
+</html>
