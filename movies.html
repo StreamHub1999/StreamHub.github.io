@@ -100,19 +100,26 @@
             background-color: rgba(229, 9, 20, 0.1);
         }
 
-        /* Grid View Styles */
+        /* Grid View Styles - UPDATED */
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-            padding: 30px 5%;
+            grid-template-columns: repeat(11, 1fr);
+            gap: 15px;
+            padding: 20px 5%;
         }
 
-        @media (max-width: 768px) {
+        .movie-card {
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 1400px) {
             .movies-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 15px;
-                padding: 20px 5%;
+                grid-template-columns: repeat(11, 1fr);
+                gap: 10px;
+            }
+            
+            .movie-card img {
+                height: auto;
             }
         }
 
@@ -226,6 +233,7 @@
             justify-content: center;
             padding: 30px 0;
             gap: 5px;
+            margin-top: 20px;
         }
 
         .pagination-btn {
@@ -392,6 +400,615 @@
 
     <!-- Movies Grid View (Default) -->
     <div class="movies-grid" id="moviesGrid">
+        <!-- Bone Cold: Ghost -->
+        <a href="bone-cold-ghost-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,thriller,horror" data-year="2025" data-rating="9.2">
+                <img src="https://cdn.kinocheck.com/i/6o6cofvxdo.jpg" alt="Bone Cold: Ghost">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Bone Cold: Ghost</h3>
+                    <div class="movie-meta">
+                        <span>Action, Thriller, Horror • 2025</span>
+                        <div class="rating">
+                            <i>★</i> 9.2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Burn - Hell of a Night -->
+        <a href="burn-hell-night-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="thriller" data-year="2022" data-rating="8.5">
+                <img src="https://cdn.kinocheck.com/i/plcc76y2gj.jpg" alt="Burn - Hell of a Night">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Burn - Hell of a Night</h3>
+                    <div class="movie-meta">
+                        <span>Thriller • 2022</span>
+                        <div class="rating">
+                            <i>★</i> 8.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Bullet Train -->
+        <a href="bullet-train-down.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,thriller,comedy" data-year="2022" data-rating="8.0">
+                <img src="https://cdn.kinocheck.com/i/wmgfudnjlo.jpg" alt="Bullet Train">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Bullet Train</h3>
+                    <div class="movie-meta">
+                        <span>Action, Thriller, Comedy • 2022</span>
+                        <div class="rating">
+                            <i>★</i> 8.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- WICKED -->
+        <a href="wicked.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,fantasy,lovestory,music" data-year="2025" data-rating="9.3">
+                <img src="https://cdn.kinocheck.com/i/brpsqmu4uw.jpg" alt="WICKED">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">WICKED</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Fantasy, Music • 2025</span>
+                        <div class="rating">
+                            <i>★</i> 9.3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Titanic -->
+        <a href="titanic.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,lovestory" data-year="1998" data-rating="8.9">
+                <img src="https://cdn.kinocheck.com/i/su2fj7r455.jpg" alt="Titanic">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Titanic</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Romance • 1998</span>
+                        <div class="rating">
+                            <i>★</i> 8.9
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Venom -->
+        <a href="Venom.html" style="text-decoration: none;">
+            <div class="movie-card" data-categories="sci-fi,action,superhero" data-year="2018" data-rating="8.7">
+                <img src="https://cdn.kinocheck.com/i/uo4wx8usqi.jpg" alt="Venom">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Venom</h3>
+                    <div class="movie-meta">
+                        <span>Sci-Fi, Action, Superhero • 2018</span>
+                        <div class="rating">
+                            <i>★</i> 8.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Venom 2: Let There Be Carnage -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,sci-fi,superhero" data-year="2021" data-rating="8.6">
+                <img src="https://cdn.kinocheck.com/i/dajn1e9ijq.jpg" alt="Venom 2: Let There Be Carnage">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Venom 2: Let There Be Carnage</h3>
+                    <div class="movie-meta">
+                        <span>Action, Sci-Fi, Superhero • 2021</span>
+                        <div class="rating">
+                            <i>★</i> 8.6
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Venom 3: The Last Dance -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,adventure,sci-fi,superhero" data-year="2024" data-rating="8.0">
+                <img src="https://cdn.kinocheck.com/i/tuaajk5pq8.jpg" alt="Venom 3: The Last Dance">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Venom 3: The Last Dance</h3>
+                    <div class="movie-meta">
+                        <span>Action, Adventure, Sci-Fi • 2024</span>
+                        <div class="rating">
+                            <i>★</i> 8.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Wolf of Wall Street -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,biography,comedy,crime" data-year="2014" data-rating="8.0">
+                <img src="https://cdn.kinocheck.com/i/r1rrzn7u18.jpg" alt="The Wolf of Wall Street">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Wolf of Wall Street</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Biography, Crime • 2014</span>
+                        <div class="rating">
+                            <i>★</i> 8.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Fall Guy -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,adventure,thriller" data-year="2024" data-rating="9.2">
+                <img src="https://cdn.kinocheck.com/i/z21r9jk5ai.jpg" alt="The Fall Guy">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Fall Guy</h3>
+                    <div class="movie-meta">
+                        <span>Action, Adventure, Thriller • 2024</span>
+                        <div class="rating">
+                            <i>★</i> 9.2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Crow -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,fantasy,thriller" data-year="2024" data-rating="8.6">
+                <img src="https://cdn.kinocheck.com/i/bdwqyrbbdh.jpg" alt="The Crow">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Crow</h3>
+                    <div class="movie-meta">
+                        <span>Action, Fantasy, Thriller • 2024</span>
+                        <div class="rating">
+                            <i>★</i> 8.6
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Beekeeper -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,thriller" data-year="2024" data-rating="8.6">
+                <img src="https://cdn.kinocheck.com/i/rojupqzf05.jpg" alt="The Beekeeper">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Beekeeper</h3>
+                    <div class="movie-meta">
+                        <span>Action, Thriller • 2024</span>
+                        <div class="rating">
+                            <i>★</i> 8.6
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Subservience -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="thriller,horror,sci-fi" data-year="2025" data-rating="8.5">
+                <img src="https://cdn.kinocheck.com/i/0jiotaq6ex.jpg" alt="Subservience">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Subservience</h3>
+                    <div class="movie-meta">
+                        <span>Thriller, Horror, Sci-Fi • 2025</span>
+                        <div class="rating">
+                            <i>★</i> 8.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Spider-Man: No Way Home -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,adventure,sci-fi,superhero" data-year="2021" data-rating="8.8">
+                <img src="https://cdn.kinocheck.com/i/thdvfkntby.jpg" alt="Spider-Man: No Way Home">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Spider-Man: No Way Home</h3>
+                    <div class="movie-meta">
+                        <span>Action, Adventure, Sci-Fi • 2021</span>
+                        <div class="rating">
+                            <i>★</i> 8.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Sonic The Hedgehog 2 -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="animation,action,comedy" data-year="2022" data-rating="8.8">
+                <img src="https://cdn.kinocheck.com/i/owuza9ktjw.jpg" alt="Sonic The Hedgehog 2">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Sonic The Hedgehog 2</h3>
+                    <div class="movie-meta">
+                        <span>Animation, Action, Comedy • 2022</span>
+                        <div class="rating">
+                            <i>★</i> 8.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Spirited Away -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="animation,adventure,family" data-year="2001" data-rating="8.6">
+                <img src="https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="Spirited Away">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Spirited Away</h3>
+                    <div class="movie-meta">
+                        <span>Animation, Adventure, Family • 2001</span>
+                        <div class="rating">
+                            <i>★</i> 8.6
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Goodfellas -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="biography,crime,drama" data-year="1990" data-rating="8.7">
+                <img src="https://m.media-amazon.com/images/M/MV5BY2NkZjEzMDgtN2RjYy00YzM1LWI4ZmQtMjIwYjFjNmI3ZGEwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg" alt="Goodfellas">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Goodfellas</h3>
+                    <div class="movie-meta">
+                        <span>Biography, Crime, Drama • 1990</span>
+                        <div class="rating">
+                            <i>★</i> 8.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Grand Budapest Hotel -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="adventure,comedy,crime" data-year="2014" data-rating="8.1">
+                <img src="https://m.media-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_.jpg" alt="The Grand Budapest Hotel">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Grand Budapest Hotel</h3>
+                    <div class="movie-meta">
+                        <span>Adventure, Comedy, Crime • 2014</span>
+                        <div class="rating">
+                            <i>★</i> 8.1
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Gladiator -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,adventure,drama" data-year="2000" data-rating="8.5">
+                <img src="https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg" alt="Gladiator">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Gladiator</h3>
+                    <div class="movie-meta">
+                        <span>Action, Adventure, Drama • 2000</span>
+                        <div class="rating">
+                            <i>★</i> 8.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Truman Show -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="comedy,drama" data-year="1998" data-rating="8.1">
+                <img src="https://m.media-amazon.com/images/M/MV5BMDIzODcyY2EtMmY2MC00ZWVlLTgwMzAtMjQwOWUyNmJjNTYyXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_.jpg" alt="The Truman Show">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Truman Show</h3>
+                    <div class="movie-meta">
+                        <span>Comedy, Drama • 1998</span>
+                        <div class="rating">
+                            <i>★</i> 8.1
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Dark Knight -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,crime,drama" data-year="2008" data-rating="9.0">
+                <img src="https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg" alt="The Dark Knight">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Dark Knight</h3>
+                    <div class="movie-meta">
+                        <span>Action, Crime, Drama • 2008</span>
+                        <div class="rating">
+                            <i>★</i> 9.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Forrest Gump -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,romance" data-year="1994" data-rating="8.8">
+                <img src="https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg" alt="Forrest Gump">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Forrest Gump</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Romance • 1994</span>
+                        <div class="rating">
+                            <i>★</i> 8.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Whiplash -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,music" data-year="2014" data-rating="8.5">
+                <img src="https://m.media-amazon.com/images/M/MV5BOTA5NDZlZGUtMjAxOS00YTRkLTkwYmMtYWQ0NWEwZDZiNjEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="Whiplash">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Whiplash</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Music • 2014</span>
+                        <div class="rating">
+                            <i>★</i> 8.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Amélie -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="comedy,romance" data-year="2001" data-rating="8.3">
+                <img src="https://m.media-amazon.com/images/M/MV5BNDg4NjM1YjMtYmNhZC00MjM0LWFiZmYtNGY1YjA3MzZmODc5XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_.jpg" alt="Amélie">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Amélie</h3>
+                    <div class="movie-meta">
+                        <span>Comedy, Romance • 2001</span>
+                        <div class="rating">
+                            <i>★</i> 8.3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Saving Private Ryan -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,war" data-year="1998" data-rating="8.6">
+                <img src="https://m.media-amazon.com/images/M/MV5BZjhkMDM4MWItZTVjOC00ZDRhLThmYTAtM2I5NzBmNmNlMzI1XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_.jpg" alt="Saving Private Ryan">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Saving Private Ryan</h3>
+                    <div class="movie-meta">
+                        <span>Drama, War • 1998</span>
+                        <div class="rating">
+                            <i>★</i> 8.6
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Avengers: Endgame -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,adventure,drama" data-year="2019" data-rating="8.4">
+                <img src="https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg" alt="Avengers: Endgame">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Avengers: Endgame</h3>
+                    <div class="movie-meta">
+                        <span>Action, Adventure, Drama • 2019</span>
+                        <div class="rating">
+                            <i>★</i> 8.4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Your Name -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="animation,drama,fantasy" data-year="2016" data-rating="8.4">
+                <img src="https://m.media-amazon.com/images/M/MV5BODRmZDVmNzUtZDA4ZC00NjhkLWI2M2UtN2M0ZDIzNDcxYThjL2ltYWdlXkEyXkFqcGdeQXVyNTk0MzMzODA@._V1_.jpg" alt="Your Name">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Your Name</h3>
+                    <div class="movie-meta">
+                        <span>Animation, Drama, Fantasy • 2016</span>
+                        <div class="rating">
+                            <i>★</i> 8.4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- The Green Mile -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="crime,drama,fantasy" data-year="1999" data-rating="8.6">
+                <img src="https://m.media-amazon.com/images/M/MV5BMTUxMzQyNjA5MF5BMl5BanBnXkFtZTYwOTU2NTY3._V1_.jpg" alt="The Green Mile">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Green Mile</h3>
+                    <div class="movie-meta">
+                        <span>Crime, Drama, Fantasy • 1999</span>
+                        <div class="rating">
+                            <i>★</i> 8.6
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- Coco -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="animation,adventure,family" data-year="2017" data-rating="8.4">
+                <img src="https://lumiere-a.akamaihd.net/v1/images/p_coco_19736_fd5fa537.jpeg" alt="Coco">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Coco</h3>
+                    <div class="movie-meta">
+                        <span>Animation, Adventure, Family • 2017</span>
+                        <div class="rating">
+                            <i>★</i> 8.4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
         <!-- Oppenheimer -->
         <a href="oppenheimer-detail.html" style="text-decoration: none;">
             <div class="movie-card" data-categories="biography,drama,history" data-year="2023" data-rating="8.8">
@@ -794,6 +1411,214 @@
 
     <!-- Movies List View (Hidden by default, toggled by JavaScript) -->
     <div class="movies-list" id="moviesList">
+        <!-- Bone Cold: Ghost -->
+        <div class="movie-list-item" data-categories="action,thriller,horror" data-year="2025" data-rating="9.2">
+            <div class="movie-list-poster">
+                <img src="https://cdn.kinocheck.com/i/6o6cofvxdo.jpg" alt="Bone Cold: Ghost">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Bone Cold: Ghost</h3>
+                <div class="movie-list-meta">
+                    <span>Action, Thriller, Horror</span>
+                    <span>•</span>
+                    <span>2025</span>
+                    <span>•</span>
+                    <span><i>★</i> 9.2</span>
+                    <span>•</span>
+                    <span>1h 48m</span>
+                </div>
+                <p class="movie-list-desc">
+                    Former special forces operative Jack Frost earned his nickname for his ice-cold precision and deadly skills. After leaving active duty, he attempts to live a quiet life until a mysterious organization begins hunting down his former team members.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="bone-cold-ghost-detail.html" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="bone-cold-ghost-detail.html" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Burn - Hell of a Night -->
+        <div class="movie-list-item" data-categories="thriller" data-year="2022" data-rating="8.5">
+            <div class="movie-list-poster">
+                <img src="https://cdn.kinocheck.com/i/plcc76y2gj.jpg" alt="Burn - Hell of a Night">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Burn - Hell of a Night</h3>
+                <div class="movie-list-meta">
+                    <span>Thriller</span>
+                    <span>•</span>
+                    <span>2022</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.5</span>
+                    <span>•</span>
+                    <span>2h 12m</span>
+                </div>
+                <p class="movie-list-desc">
+                    Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan in this thriller that explores the extremes of survival.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="#" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="#" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bullet Train -->
+        <div class="movie-list-item" data-categories="action,thriller,comedy" data-year="2022" data-rating="8.0">
+            <div class="movie-list-poster">
+                <img src="https://cdn.kinocheck.com/i/wmgfudnjlo.jpg" alt="Bullet Train">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Bullet Train</h3>
+                <div class="movie-list-meta">
+                    <span>Action, Thriller, Comedy</span>
+                    <span>•</span>
+                    <span>2022</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.0</span>
+                    <span>•</span>
+                    <span>2h 19m</span>
+                </div>
+                <p class="movie-list-desc">
+                    Five assassins aboard a swiftly-moving bullet train find out that their missions have something in common. This fast-paced action comedy follows their intertwined fates as they battle for survival and truth.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="#" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="#" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- WICKED -->
+        <div class="movie-list-item" data-categories="drama,fantasy,lovestory,music" data-year="2025" data-rating="9.3">
+            <div class="movie-list-poster">
+                <img src="https://cdn.kinocheck.com/i/brpsqmu4uw.jpg" alt="WICKED">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">WICKED</h3>
+                <div class="movie-list-meta">
+                    <span>Drama, Fantasy, Music</span>
+                    <span>•</span>
+                    <span>2025</span>
+                    <span>•</span>
+                    <span><i>★</i> 9.3</span>
+                    <span>•</span>
+                    <span>2h 22m</span>
+                </div>
+                <p class="movie-list-desc">
+                    The untold story of the witches of Oz. Long before Dorothy arrives, two other girls meet in the land of Oz. One, born with emerald-green skin, is smart, fiery, and misunderstood. The other is beautiful, ambitious, and very popular.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="#" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="#" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Titanic -->
+        <div class="movie-list-item" data-categories="drama,lovestory" data-year="1998" data-rating="8.9">
+            <div class="movie-list-poster">
+                <img src="https://cdn.kinocheck.com/i/su2fj7r455.jpg" alt="Titanic">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Titanic</h3>
+                <div class="movie-list-meta">
+                    <span>Drama, Romance</span>
+                    <span>•</span>
+                    <span>1998</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.9</span>
+                    <span>•</span>
+                    <span>3h 14m</span>
+                </div>
+                <p class="movie-list-desc">
+                    A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic. Their romance transcends class differences but faces the ultimate test when disaster strikes.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="#" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="#" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Venom -->
+        <div class="movie-list-item" data-categories="sci-fi,action,superhero" data-year="2018" data-rating="8.7">
+            <div class="movie-list-poster">
+                <img src="https://cdn.kinocheck.com/i/uo4wx8usqi.jpg" alt="Venom">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Venom</h3>
+                <div class="movie-list-meta">
+                    <span>Sci-Fi, Action, Superhero</span>
+                    <span>•</span>
+                    <span>2018</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.7</span>
+                    <span>•</span>
+                    <span>1h 52m</span>
+                </div>
+                <p class="movie-list-desc">
+                    Journalist Eddie Brock is trying to take down Carlton Drake, the notorious founder of the Life Foundation. While investigating one of Drake's experiments, Eddie's body merges with the alien Venom – leaving him with superhuman strength and power.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="#" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="#" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Venom 2: Let There Be Carnage -->
+        <div class="movie-list-item" data-categories="action,sci-fi,superhero" data-year="2021" data-rating="8.6">
+            <div class="movie-list-poster">
+                <img src="https://cdn.kinocheck.com/i/dajn1e9ijq.jpg" alt="Venom 2: Let There Be Carnage">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Venom 2: Let There Be Carnage</h3>
+                <div class="movie-list-meta">
+                    <span>Action, Sci-Fi, Superhero</span>
+                    <span>•</span>
+                    <span>2021</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.6</span>
+                    <span>•</span>
+                    <span>1h 37m</span>
+                </div>
+                <p class="movie-list-desc">
+                    Eddie Brock attempts to reignite his career by interviewing serial killer Cletus Kasady, who becomes the host of the symbiote Carnage and escapes prison after a failed execution.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="#" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="#" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Coco -->
+        <div class="movie-list-item" data-categories="animation,adventure,family" data-year="2017" data-rating="8.4">
+            <div class="movie-list-poster">
+                <img src="https://lumiere-a.akamaihd.net/v1/images/p_coco_19736_fd5fa537.jpeg" alt="Coco">
+            </div>
+            <div class="movie-list-details">
+                <h3 class="movie-list-title">Coco</h3>
+                <div class="movie-list-meta">
+                    <span>Animation, Adventure, Family</span>
+                    <span>•</span>
+                    <span>2017</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.4</span>
+                    <span>•</span>
+                    <span>1h 45m</span>
+                </div>
+                <p class="movie-list-desc">
+                    Aspiring musician Miguel, confronted with his family's ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather, a legendary singer. His journey leads to unexpected family revelations and a deeper understanding of the importance of memory.
+                </p>
+                <div class="movie-list-actions">
+                    <a href="#" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="#" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
+                </div>
+            </div>
+        </div>
+        
         <!-- Oppenheimer -->
         <div class="movie-list-item" data-categories="biography,drama,history" data-year="2023" data-rating="8.8">
             <div class="movie-list-poster">
@@ -972,591 +1797,170 @@
     </footer>
 
     <script src="script.js"></script>
-    <script src="movies-js.js"></script>
-    
-   <!-- Pagination Extension JS - Fixed Version -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Configuration for pagination
-    const totalPages = 6; // Total number of pages
-    
-    // Get DOM elements
-    const paginationContainer = document.getElementById('pagination');
-    const moviesGrid = document.getElementById('moviesGrid');
-    const moviesList = document.getElementById('moviesList');
-    const prevPageBtn = document.getElementById('prevPage');
-    const nextPageBtn = document.getElementById('nextPage');
-    
-    // Store original page 1 content as HTML strings instead of node references
-    // This fixes the issue with thumbnails disappearing
-    const originalGridHTML = moviesGrid.innerHTML;
-    const originalListHTML = moviesList.innerHTML;
-    
-    // Current page (from URL or default to 1)
-    let currentPage = 1;
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('page')) {
-        const pageParam = parseInt(urlParams.get('page'));
-        if (!isNaN(pageParam) && pageParam > 0 && pageParam <= totalPages) {
-            currentPage = pageParam;
-        }
-    }
-    
-    // Rebuild pagination buttons
-    function rebuildPagination() {
-        // Clear existing page number buttons
-        const oldButtons = paginationContainer.querySelectorAll('.pagination-btn:not(#prevPage):not(#nextPage)');
-        oldButtons.forEach(btn => btn.remove());
-        
-        // Add page number buttons
-        for (let i = 1; i <= totalPages; i++) {
-            const pageBtn = document.createElement('button');
-            pageBtn.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
-            pageBtn.textContent = i;
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configuration
+            const moviesPerPage = 22; // Exactly 2 rows of 11 movies
             
-            // Insert before the next button
-            paginationContainer.insertBefore(pageBtn, nextPageBtn);
-        }
-        
-        // Update prev/next buttons
-        prevPageBtn.classList.toggle('disabled', currentPage <= 1);
-        nextPageBtn.classList.toggle('disabled', currentPage >= totalPages);
-    }
-    
-    // Movie and TV show data for pagination
-    const movieData = [
-        // Bone Cold - Ghost (position 21)
-        {
-            title: "Bone Cold - Ghost",
-            posterUrl: "https://cdn.kinocheck.com/i/6o6cofvxdo.jpg",
-            categories: "Action,Horror,Thriller",
-            year: "2025",
-            rating: "9.2",
-            duration: "2h 5m",
-            description: "Die beiden Elite-Scharfschützen"
-        },
-        // Position 22
-        {
-            title: "Burn - Hell of a Night",
-            posterUrl: "https://cdn.kinocheck.com/i/plcc76y2gj.jpg",
-            categories: "Thriller",
-            year: "2022",
-            rating: "8.5",
-            duration: "2h 12m",
-            description: "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan in this Oscar-winning thriller from director Bong Joon Ho."
-        },
-        // Position 23
-        {
-            title: "Bullet Train",
-            posterUrl: "https://cdn.kinocheck.com/i/wmgfudnjlo.jpg",
-            categories: "Action,Thriller,Comedy",
-            year: "2022",
-            rating: "8.0",
-            duration: "2h 19m",
-            description: "A middle-aged Chinese immigrant is swept up in an insane adventure where she alone can save existence by exploring other universes and connecting with the lives she could have led."
-        },
-        // Position 24
-        {
-            title: "WICKED",
-            posterUrl: "https://cdn.kinocheck.com/i/brpsqmu4uw.jpg",
-            categories: "Drama,Fantasy,Lovestory,Music",
-            year: "2025",
-            rating: "9.3",
-            duration: "2h 22m",
-            description: "Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion and hope in the harsh environment of Shawshank prison."
-        },
-        // Position 25
-        {
-            title: "Titanic",
-            posterUrl: "https://cdn.kinocheck.com/i/su2fj7r455.jpg",
-            categories: "Drama,Lovestory",
-            year: "1998",
-            rating: "8.9",
-            duration: "2h 34m",
-            description: "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption in this groundbreaking non-linear narrative from Quentin Tarantino."
-        },
-        // Position 26
-        {
-            title: "Venom",
-            posterUrl: "https://cdn.kinocheck.com/i/uo4wx8usqi.jpg",
-            categories: "Sci-Fi,Action,Superhero",
-            year: "2018",
-            rating: "8.7",
-            duration: "2h 16m",
-            description: "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers. Neo must confront the machines that have enslaved humanity in a virtual reality."
-        },
-        // Position 27
-        {
-            title: "Venom 2: Let There Be Carnage",
-            posterUrl: "https://cdn.kinocheck.com/i/dajn1e9ijq.jpg",
-            categories: "Action, Science Fiction & Superhero",
-            year: "2021",
-            rating: "8.6",
-            duration: "2h 49m",
-            description: "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival as Earth faces an ecological crisis. Time becomes their most precious resource in this epic journey across galaxies."
-        },
-        // Position 28
-        {
-            title: "Venom 3: The Last Dance",
-            posterUrl: "https://cdn.kinocheck.com/i/tuaajk5pq8.jpg",
-            categories: "Action, Abenteuer, Science Fiction & Superhero",
-            year: "2024",
-            rating: "8.0",
-            duration: "2h 44m",
-            description: "A new blade runner unearths a long-buried secret that has the potential to plunge what's left of society into chaos. His discovery leads him on a quest to find Rick Deckard, a former blade runner who's been missing for 30 years."
-        },
-        // Position 29
-        {
-            title: "The Wolf of Wall Street",
-            posterUrl: "https://cdn.kinocheck.com/i/r1rrzn7u18.jpg",
-            categories: "Drama, Biografie, Komödie & Krimi",
-            year: "2014",
-            rating: "8.0",
-            duration: "1h 40m",
-            description: "After landing the gig of a lifetime, a New York jazz pianist suddenly finds himself trapped in a strange land between Earth and the afterlife. Joe Gardner must find his way back to his body while discovering what it truly means to have soul."
-        },
-        // Position 30
-        {
-            title: "The Fall Guy",
-            posterUrl: "https://cdn.kinocheck.com/i/z21r9jk5ai.jpg",
-            categories: "Action, Abenteuer & Thriller",
-            year: "2024",
-            rating: "9.2",
-            duration: "2h 55m",
-            description: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son. This epic tale of family, loyalty, and power has defined the gangster genre for generations."
-        },
-        // Position 31
-        {
-            title: "The Crow",
-            posterUrl: "https://cdn.kinocheck.com/i/bdwqyrbbdh.jpg",
-            categories: "Action, Fantasy & Thriller",
-            year: "2024",
-            rating: "8.6",
-            duration: "1h 58m",
-            description: "A young FBI cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer who skins his victims. The psychological cat-and-mouse game becomes increasingly personal."
-        },
-        // Position 32
-        {
-            title: "The Beekeeper",
-            posterUrl: "https://cdn.kinocheck.com/i/rojupqzf05.jpg",
-            categories: "Action & Thriller",
-            year: "2024",
-            rating: "8.6",
-            duration: "2h 1m",
-            description: "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia."
-        },
-        // Position 33
-        {
-            title: "Subservience",
-            posterUrl: "https://cdn.kinocheck.com/i/0jiotaq6ex.jpg",
-            categories: "Thriller, Horror & Science Fiction",
-            year: "2025",
-            rating: "8.5",
-            duration: "1h 28m",
-            description: "After the murder of his father, a young lion prince flees his kingdom only to learn the true meaning of responsibility and bravery. Simba's journey from carefree cub to King of Pride Rock is a timeless tale."
-        },
-        // Position 34
-        {
-            title: "Spider-Man: No Way Home",
-            posterUrl: "https://cdn.kinocheck.com/i/thdvfkntby.jpg",
-            categories: "Action, Abenteuer, Science Fiction & Superhero",
-            year: "2021",
-            rating: "8.8",
-            duration: "2h 19m",
-            description: "An insomniac office worker and a devil-may-care soapmaker form an underground fight club that evolves into something much, much more. Their perfect partnership spirals into something neither expected."
-        },
-        // Position 35
-        {
-            title: "Sonic The Hedgehog 2",
-            posterUrl: "https://cdn.kinocheck.com/i/owuza9ktjw.jpg",
-            categories: "Animation, Action & Komödie",
-            year: "2022",
-            rating: "8.8",
-            duration: "2h 28m",
-            description: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O. The concept of reality becomes increasingly blurred as the mission deepens."
-        },
-        // Position 36
-        {
-            title: "Spirited Away",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
-            categories: "animation,adventure,family",
-            year: "2001",
-            rating: "8.6",
-            duration: "2h 5m",
-            description: "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, and where humans are changed into beasts. She must find her way back to the human world."
-        },
-        // Position 37
-        {
-            title: "Goodfellas",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BY2NkZjEzMDgtN2RjYy00YzM1LWI4ZmQtMjIwYjFjNmI3ZGEwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
-            categories: "biography,crime,drama",
-            year: "1990",
-            rating: "8.7",
-            duration: "2h 26m",
-            description: "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate."
-        },
-        // Position 38
-        {
-            title: "The Grand Budapest Hotel",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_.jpg",
-            categories: "adventure,comedy,crime",
-            year: "2014",
-            rating: "8.1",
-            duration: "1h 39m",
-            description: "A writer encounters the owner of an aging high-class hotel, who tells him of his early years serving as a lobby boy in the hotel's glorious years under an exceptional concierge. A visually stunning comedic adventure."
-        },
-        // Position 39
-        {
-            title: "Gladiator",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
-            categories: "action,adventure,drama",
-            year: "2000",
-            rating: "8.5",
-            duration: "2h 35m",
-            description: "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery. His journey takes him from slave to gladiator, winning the crowd but risking everything."
-        },
-        // Position 40
-        {
-            title: "The Truman Show",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BMDIzODcyY2EtMmY2MC00ZWVlLTgwMzAtMjQwOWUyNmJjNTYyXkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_.jpg",
-            categories: "comedy,drama",
-            year: "1998",
-            rating: "8.1",
-            duration: "1h 43m",
-            description: "An insurance salesman discovers his entire life is actually a reality TV show. Truman Burbank's seemingly perfect life is revealed to be an elaborate construct designed for global entertainment."
-        },
-        // More movies for pages 3-6
-        // Page 3 (41-60)
-        {
-            title: "The Dark Knight",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg",
-            categories: "action,crime,drama",
-            year: "2008",
-            rating: "9.0",
-            duration: "2h 32m",
-            description: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice."
-        },
-        {
-            title: "Forrest Gump",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
-            categories: "drama,romance",
-            year: "1994",
-            rating: "8.8",
-            duration: "2h 22m",
-            description: "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate and other historical events unfold from the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart."
-        },
-        {
-            title: "Whiplash",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BOTA5NDZlZGUtMjAxOS00YTRkLTkwYmMtYWQ0NWEwZDZiNjEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg",
-            categories: "drama,music",
-            year: "2014",
-            rating: "8.5",
-            duration: "1h 46m",
-            description: "A promising young drummer enrolls at a cut-throat music conservatory where his dreams of greatness are mentored by an instructor who will stop at nothing to realize a student's potential."
-        },
-        {
-            title: "Amélie",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BNDg4NjM1YjMtYmNhZC00MjM0LWFiZmYtNGY1YjA3MzZmODc5XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_.jpg",
-            categories: "comedy,romance",
-            year: "2001",
-            rating: "8.3",
-            duration: "2h 2m",
-            description: "Amélie is an innocent and naive girl in Paris with her own sense of justice. She decides to help those around her and, along the way, discovers love."
-        },
-        {
-            title: "Saving Private Ryan",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BZjhkMDM4MWItZTVjOC00ZDRhLThmYTAtM2I5NzBmNmNlMzI1XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_.jpg",
-            categories: "drama,war",
-            year: "1998",
-            rating: "8.6",
-            duration: "2h 49m",
-            description: "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action."
-        },
-        {
-            title: "Avengers: Endgame",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg",
-            categories: "action,adventure,drama",
-            year: "2019",
-            rating: "8.4",
-            duration: "3h 1m",
-            description: "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe."
-        },
-        {
-            title: "Your Name",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BODRmZDVmNzUtZDA4ZC00NjhkLWI2M2UtN2M0ZDIzNDcxYThjL2ltYWdlXkEyXkFqcGdeQXVyNTk0MzMzODA@._V1_.jpg",
-            categories: "animation,drama,fantasy",
-            year: "2016",
-            rating: "8.4",
-            duration: "1h 46m",
-            description: "Two strangers find themselves linked in a bizarre way. When a connection forms, will distance be the only thing to keep them apart?"
-        },
-        {
-            title: "The Wolf of Wall Street",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_.jpg",
-            categories: "biography,comedy,crime",
-            year: "2013",
-            rating: "8.2",
-            duration: "3h",
-            description: "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government."
-        },
-        {
-            title: "The Green Mile",
-            posterUrl: "https://m.media-amazon.com/images/M/MV5BMTUxMzQyNjA5MF5BMl5BanBnXkFtZTYwOTU2NTY3._V1_.jpg",
-            categories: "crime,drama,fantasy",
-            year: "1999",
-            rating: "8.6",
-            duration: "3h 9m",
-            description: "The lives of guards on Death Row are affected by one of their charges: a black man accused of child murder and rape, yet who has a mysterious gift."
-        },
-        {
-            title: "Coco",
-            posterUrl: "https://lumiere-a.akamaihd.net/v1/images/p_coco_19736_fd5fa537.jpeg",
-            categories: "animation,adventure,family",
-            year: "2017",
-            rating: "8.4",
-            duration: "1h 45m",
-            description: "Aspiring musician Miguel, confronted with his family's ancestral ban on music, enters the Land of the Dead to find his great-great-grandfather, a legendary singer."
-        }
-    ];
-    
-    // Function to load page content
-    function loadPage(pageNumber) {
-        // For page 1, restore original content from HTML strings
-        if (pageNumber === 1) {
-            moviesGrid.innerHTML = originalGridHTML;
-            moviesList.innerHTML = originalListHTML;
-            return;
-        }
-        
-        // For pages 2-6, display movie cards from our data
-        // Clear existing movies
-        moviesGrid.innerHTML = '';
-        moviesList.innerHTML = '';
-        
-        // Number of movies per page
-        const moviesPerPage = 20;
-        
-        // Calculate start index for this page
-        const startIndex = (pageNumber - 1) * moviesPerPage - 20; // Subtract 20 as page 1 has 20 items already
-        
-        // Generate movie cards for this page
-        for (let i = 0; i < moviesPerPage; i++) {
-            const dataIndex = startIndex + i;
+            // Get all movie cards
+            const allMovieCards = document.querySelectorAll('.movie-card');
+            const totalMovies = allMovieCards.length;
+            const totalPages = Math.ceil(totalMovies / moviesPerPage);
             
-            // Check if we have data for this index
-            if (dataIndex >= 0 && dataIndex < movieData.length) {
-                const movie = movieData[dataIndex];
-                
-                // Add grid view item
-                const movieCard = document.createElement('a');
-                movieCard.href = "#"; // Placeholder link
-                movieCard.style.textDecoration = 'none';
-                
-                movieCard.innerHTML = `
-                    <div class="movie-card" data-categories="${movie.categories}" data-year="${movie.year}" data-rating="${movie.rating}">
-                        <img src="${movie.posterUrl}" alt="${movie.title}">
-                        <div class="overlay">
-                            <div class="play-btn">
-                                <div class="triangle"></div>
-                            </div>
-                        </div>
-                        <div class="movie-info">
-                            <h3 class="movie-title">${movie.title}</h3>
-                            <div class="movie-meta">
-                                <span>${movie.categories.replace(/,/g, ', ').replace(/,(?=[^,]*$)/, ' •')} ${movie.year}</span>
-                                <div class="rating">
-                                    <i>★</i> ${movie.rating}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                moviesGrid.appendChild(movieCard);
-                
-                // Add list view item
-                const listItem = document.createElement('div');
-                listItem.className = 'movie-list-item';
-                listItem.dataset.categories = movie.categories;
-                listItem.dataset.year = movie.year;
-                listItem.dataset.rating = movie.rating;
-                
-                listItem.innerHTML = `
-                    <div class="movie-list-poster">
-                        <img src="${movie.posterUrl}" alt="${movie.title}">
-                    </div>
-                    <div class="movie-list-details">
-                        <h3 class="movie-list-title">${movie.title}</h3>
-                        <div class="movie-list-meta">
-                            <span>${movie.categories.replace(/,/g, ', ')}</span>
-                            <span>•</span>
-                            <span>${movie.year}</span>
-                            <span>•</span>
-                            <span><i>★</i> ${movie.rating}</span>
-                            <span>•</span>
-                            <span>${movie.duration}</span>
-                        </div>
-                        <p class="movie-list-desc">
-                            ${movie.description}
-                        </p>
-                        <div class="movie-list-actions">
-                            <a href="#" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
-                            <a href="#" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
-                        </div>
-                    </div>
-                `;
-                
-                moviesList.appendChild(listItem);
-            } else {
-                // If we don't have data, create a placeholder
-                const movieNumber = (pageNumber - 1) * moviesPerPage + i + 1;
-                
-                // Add grid view item
-                const movieCard = document.createElement('a');
-                movieCard.href = "#"; // Placeholder link
-                movieCard.style.textDecoration = 'none';
-                
-                movieCard.innerHTML = `
-                    <div class="movie-card" data-categories="placeholder" data-year="0000" data-rating="0.0">
-                        <img src="https://via.placeholder.com/200x300?text=Movie+${movieNumber}" alt="Placeholder Movie">
-                        <div class="overlay">
-                            <div class="play-btn">
-                                <div class="triangle"></div>
-                            </div>
-                        </div>
-                        <div class="movie-info">
-                            <h3 class="movie-title">Movie Title ${movieNumber}</h3>
-                            <div class="movie-meta">
-                                <span>Genre • Year</span>
-                                <div class="rating">
-                                    <i>★</i> 0.0
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                moviesGrid.appendChild(movieCard);
-                
-                // Add list view item
-                const listItem = document.createElement('div');
-                listItem.className = 'movie-list-item';
-                listItem.dataset.categories = 'placeholder';
-                listItem.dataset.year = '0000';
-                listItem.dataset.rating = '0.0';
-                
-                listItem.innerHTML = `
-                    <div class="movie-list-poster">
-                        <img src="https://via.placeholder.com/200x300?text=Movie+${movieNumber}" alt="Placeholder Movie">
-                    </div>
-                    <div class="movie-list-details">
-                        <h3 class="movie-list-title">Movie Title ${movieNumber}</h3>
-                        <div class="movie-list-meta">
-                            <span>Genre</span>
-                            <span>•</span>
-                            <span>Year</span>
-                            <span>•</span>
-                            <span><i>★</i> 0.0</span>
-                            <span>•</span>
-                            <span>0h 00m</span>
-                        </div>
-                        <p class="movie-list-desc">
-                            This is a placeholder description for Movie ${movieNumber}. Replace this text with the actual movie description.
-                        </p>
-                        <div class="movie-list-actions">
-                            <a href="#" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
-                            <a href="#" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
-                        </div>
-                    </div>
-                `;
-                
-                moviesList.appendChild(listItem);
+            // Get DOM elements
+            const paginationContainer = document.getElementById('pagination');
+            const moviesGrid = document.getElementById('moviesGrid');
+            const moviesList = document.getElementById('moviesList');
+            const prevPageBtn = document.getElementById('prevPage');
+            const nextPageBtn = document.getElementById('nextPage');
+            
+            // Current page (from URL or default to 1)
+            let currentPage = 1;
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('page')) {
+                const pageParam = parseInt(urlParams.get('page'));
+                if (!isNaN(pageParam) && pageParam > 0 && pageParam <= totalPages) {
+                    currentPage = pageParam;
+                }
             }
-        }
-    }
-    
-    // Function to navigate to a page
-    function navigateToPage(pageNumber) {
-        if (pageNumber < 1 || pageNumber > totalPages || pageNumber === currentPage) return;
-        
-        // Update URL with page parameter
-        const url = new URL(window.location);
-        if (pageNumber === 1) {
-            url.searchParams.delete('page');
-        } else {
-            url.searchParams.set('page', pageNumber);
-        }
-        window.history.pushState({}, '', url);
-        
-        // Update current page
-        currentPage = pageNumber;
-        
-        // Load page content
-        loadPage(currentPage);
-        
-        // Update pagination UI
-        rebuildPagination();
-        
-        // Scroll to top
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+            
+            // Function to show only the movies for the current page
+            function showMoviesForPage(pageNumber) {
+                const startIndex = (pageNumber - 1) * moviesPerPage;
+                const endIndex = Math.min(startIndex + moviesPerPage, totalMovies);
+                
+                // Hide all movies first
+                Array.from(allMovieCards).forEach((card, index) => {
+                    const movieCard = card.closest('a');
+                    if (movieCard) {
+                        if (index >= startIndex && index < endIndex) {
+                            movieCard.style.display = 'block';
+                        } else {
+                            movieCard.style.display = 'none';
+                        }
+                    }
+                });
+                
+                // Also update list view if it exists
+                const listItems = document.querySelectorAll('.movie-list-item');
+                Array.from(listItems).forEach((item, index) => {
+                    if (index >= startIndex && index < endIndex) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Build pagination buttons
+            function buildPagination() {
+                // Clear existing page number buttons
+                const oldButtons = paginationContainer.querySelectorAll('.pagination-btn:not(#prevPage):not(#nextPage)');
+                oldButtons.forEach(btn => btn.remove());
+                
+                // Add page number buttons
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
+                    pageBtn.textContent = i;
+                    
+                    // Insert before the next button
+                    paginationContainer.insertBefore(pageBtn, nextPageBtn);
+                }
+                
+                // Update prev/next buttons
+                prevPageBtn.classList.toggle('disabled', currentPage <= 1);
+                nextPageBtn.classList.toggle('disabled', currentPage >= totalPages);
+            }
+            
+            // Function to navigate to a page
+            function navigateToPage(pageNumber) {
+                if (pageNumber < 1 || pageNumber > totalPages || pageNumber === currentPage) return;
+                
+                // Update URL
+                const url = new URL(window.location);
+                url.searchParams.set('page', pageNumber);
+                window.history.pushState({}, '', url);
+                
+                // Update current page
+                currentPage = pageNumber;
+                
+                // Update UI
+                showMoviesForPage(currentPage);
+                buildPagination();
+                
+                // Scroll to top
+                window.scrollTo({
+                    top: document.querySelector('.filter-container').offsetTop - 10,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Set up event delegation for pagination buttons
+            paginationContainer.addEventListener('click', function(e) {
+                const button = e.target.closest('.pagination-btn');
+                if (!button) return;
+                
+                if (button.classList.contains('disabled')) return;
+                
+                if (button.id === 'prevPage') {
+                    navigateToPage(currentPage - 1);
+                } else if (button.id === 'nextPage') {
+                    navigateToPage(currentPage + 1);
+                } else {
+                    const pageNum = parseInt(button.textContent);
+                    if (!isNaN(pageNum)) {
+                        navigateToPage(pageNum);
+                    }
+                }
+            });
+            
+            // Handle browser back/forward
+            window.addEventListener('popstate', function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                let newPage = 1;
+                
+                if (urlParams.has('page')) {
+                    const pageParam = parseInt(urlParams.get('page'));
+                    if (!isNaN(pageParam) && pageParam > 0 && pageParam <= totalPages) {
+                        newPage = pageParam;
+                    }
+                }
+                
+                currentPage = newPage;
+                showMoviesForPage(currentPage);
+                buildPagination();
+            });
+            
+            // Initialize
+            buildPagination();
+            showMoviesForPage(currentPage);
+            
+            // Ensure view toggle buttons work with pagination
+            const gridViewBtn = document.getElementById('gridViewBtn');
+            const listViewBtn = document.getElementById('listViewBtn');
+            
+            if (gridViewBtn && listViewBtn) {
+                gridViewBtn.addEventListener('click', function() {
+                    showMoviesForPage(currentPage);
+                });
+                
+                listViewBtn.addEventListener('click', function() {
+                    showMoviesForPage(currentPage);
+                });
+            }
+            
+            // Make sure filter resets respect pagination
+            const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+            if (resetFiltersBtn) {
+                resetFiltersBtn.addEventListener('click', function() {
+                    // After filters are reset, reapply page limits
+                    setTimeout(() => {
+                        showMoviesForPage(currentPage);
+                    }, 100);
+                });
+            }
         });
-    }
-    
-    // Set up event delegation for pagination buttons
-    paginationContainer.addEventListener('click', function(e) {
-        // Find closest button if clicked on icon inside button
-        const button = e.target.closest('.pagination-btn');
-        if (!button) return;
-        
-        // Don't process disabled buttons
-        if (button.classList.contains('disabled')) return;
-        
-        // Previous button
-        if (button.id === 'prevPage') {
-            navigateToPage(currentPage - 1);
-        }
-        // Next button 
-        else if (button.id === 'nextPage') {
-            navigateToPage(currentPage + 1);
-        }
-        // Page number buttons
-        else {
-            const pageNum = parseInt(button.textContent);
-            if (!isNaN(pageNum)) {
-                navigateToPage(pageNum);
-            }
-        }
-    });
-    
-    // Handle browser back/forward buttons
-    window.addEventListener('popstate', function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        let newPage = 1;
-        
-        if (urlParams.has('page')) {
-            const pageParam = parseInt(urlParams.get('page'));
-            if (!isNaN(pageParam) && pageParam > 0 && pageParam <= totalPages) {
-                newPage = pageParam;
-            }
-        }
-        
-        if (newPage !== currentPage) {
-            currentPage = newPage;
-            loadPage(currentPage);
-            rebuildPagination();
-        }
-    });
-    
-    // Only initialize if we're not on page 1
-    if (currentPage > 1) {
-        // Initialize pagination on non-first pages
-        rebuildPagination();
-        loadPage(currentPage);
-    } else {
-        // Just rebuild pagination on page 1, don't touch content
-        rebuildPagination();
-    }
-});
-</script>
+    </script>
+</body>
+</html>

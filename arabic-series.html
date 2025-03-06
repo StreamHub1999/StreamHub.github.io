@@ -101,23 +101,22 @@
             background-color: rgba(229, 9, 20, 0.1);
         }
 
-        /* Content grid styles like movies.html */
+        /* Grid View Styles - UPDATED for 11 columns */
         .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-            padding: 30px 5%;
+            grid-template-columns: repeat(11, 1fr);
+            gap: 15px;
+            padding: 20px 5%;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1400px) {
             .content-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 15px;
-                padding: 20px 5%;
+                grid-template-columns: repeat(11, 1fr);
+                gap: 10px;
             }
         }
 
-        /* Movie card styles from movies.html */
+        /* Movie card styles */
         .movie-card {
             position: relative;
             border-radius: 8px;
@@ -126,6 +125,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             height: 100%;
             background-color: var(--card-bg);
+            margin-bottom: 25px;
         }
 
         .movie-card:hover {
@@ -223,66 +223,27 @@
             font-size: 0.9rem;
         }
 
-        /* Content type and labels */
-        .content-type, .trending-label, .new-label {
+        /* Content type tag */
+        .content-type {
             position: absolute;
+            top: 10px;
+            left: 10px;
             padding: 5px 10px;
             border-radius: 4px;
             font-size: 0.8rem;
             font-weight: 500;
             z-index: 2;
-        }
-
-        .content-type {
-            top: 10px;
-            left: 10px;
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
         }
 
-        .trending-label, .new-label {
-            top: 10px;
-            right: 10px;
-        }
-
-        .trending-label {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .new-label {
-            background-color: #e50914;
-            color: white;
-        }
-
-        /* Section divider */
-        .section-divider {
-            margin: 40px 5%;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Section title */
-        .section-title {
-            padding: 0 5%;
-            margin-top: 40px;
-            font-size: 1.8rem;
-            color: var(--text-primary);
-        }
-
-        /* Added date info */
-        .added-date {
-            display: block;
-            margin-top: 5px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        /* Pagination Styles from movies.html */
+        /* Pagination Styles */
         .pagination {
             display: flex;
             justify-content: center;
             padding: 30px 0;
             gap: 5px;
+            margin-top: 20px;
         }
 
         .pagination-btn {
@@ -311,6 +272,143 @@
         .pagination-btn.disabled {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+            display: none;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        .no-results button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .no-results button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* List View Styles */
+        .series-list {
+            padding: 30px 5%;
+            display: none; /* Hidden by default, toggled by JavaScript */
+        }
+
+        .series-list-item {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .series-list-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .series-list-poster {
+            width: 120px;
+            min-width: 120px;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .series-list-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .series-list-details {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .series-list-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .series-list-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .series-list-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .series-list-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .list-action-btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .watch-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .watch-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .info-btn {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
@@ -344,28 +442,45 @@
         </div>
     </header>
 
-    <!-- Page Banner (styled like movies.html) -->
+    <!-- Page Banner -->
     <section class="page-banner">
         <h1>Arabic Series</h1>
-        <p>Discover the latest releases and trending content. Stay up-to-date with what everyone's watching right now.</p>
+        <p>Explore our collection of Egyptian and Arabic drama series, from classic hits to the latest releases. Filter by genre, year, or rating to find your next favorite show.</p>
     </section>
 
-    <!-- Filter Container (styled like movies.html) -->
+    <!-- Filter Container -->
     <div class="filter-container">
         <div class="filter-options">
             <span class="filter-label">Filter by:</span>
-            <select class="filter-select" id="contentFilter">
-                <option value="all">All Content</option>
-                <option value="movies">Movies</option>
-                <option value="tv-shows">TV Shows</option>
-                <option value="anime">Anime</option>
+            <select class="filter-select" id="genreFilter">
+                <option value="all">All Genres</option>
+                <option value="drama">Drama</option>
+                <option value="comedy">Comedy</option>
+                <option value="action">Action</option>
+                <option value="thriller">Thriller</option>
+                <option value="romance">Romance</option>
+                <option value="historical">Historical</option>
+                <option value="social">Social</option>
             </select>
             
-            <select class="filter-select" id="timeFilter">
-                <option value="trending">Trending Now</option>
-                <option value="week">This Week</option>
-                <option value="month">This Month</option>
-                <option value="year">This Year</option>
+            <select class="filter-select" id="yearFilter">
+                <option value="all">All Years</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="older">Older</option>
+            </select>
+            
+            <select class="filter-select" id="ratingFilter">
+                <option value="all">All Ratings</option>
+                <option value="9+">9+ ★</option>
+                <option value="8+">8+ ★</option>
+                <option value="7+">7+ ★</option>
+                <option value="6+">6+ ★</option>
+                <option value="5+">5+ ★</option>
             </select>
         </div>
         
@@ -374,19 +489,27 @@
             <select class="sort-select" id="sortBy">
                 <option value="popular">Most Popular</option>
                 <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
                 <option value="rating-high">Highest Rated</option>
+                <option value="rating-low">Lowest Rated</option>
                 <option value="a-z">A-Z</option>
+                <option value="z-a">Z-A</option>
             </select>
+            
+            <button class="view-btn active" id="gridViewBtn" title="Grid View">
+                <i>▦</i>
+            </button>
+            <button class="view-btn" id="listViewBtn" title="List View">
+                <i>☰</i>
+            </button>
         </div>
     </div>
 
-    <!-- What's Popular Section -->
-    <h2 class="section-title">What's Popular</h2>
-    <div class="content-grid" id="trending-content">
+    <!-- Main Content Grid -->
+    <div class="content-grid" id="seriesGrid">
         <!-- El Atawla -->
         <a href="al-atawla-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
+            <div class="movie-card" data-categories="drama,thriller" data-year="2025" data-rating="8.5">
                 <img src="https://i.imgur.com/HsUTeiH.jpeg" alt="El Atawla">
                 <div class="overlay">
                     <div class="play-btn">
@@ -395,9 +518,8 @@
                 </div>
                 <div class="movie-info">
                     <h3 class="movie-title">El Atawla</h3>
-                    <span class="added-date">Added: February 25, 2025</span>
                     <div class="movie-meta">
-                        <span></span>
+                        <span>Drama, Thriller • 2025</span>
                         <div class="rating">
                             <i>★</i> 8.5
                         </div>
@@ -408,8 +530,7 @@
 
         <!-- Ashghal Shaqa -->
         <a href="ashghal-shaqa-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="movie">
-                <span class="content-type">TV Show</span>
+            <div class="movie-card" data-categories="comedy,social" data-year="2025" data-rating="8.8">
                 <img src="https://media0070.elcinema.com/uploads/_640x_ba82444ceabe95b53cdede60a29ccc9f20340fb4a7c95368f9b497b94a4b8def.jpg" alt="Ashghal Shaqa">
                 <div class="overlay">
                     <div class="play-btn">
@@ -418,9 +539,8 @@
                 </div>
                 <div class="movie-info">
                     <h3 class="movie-title">Ashghal Shaqa</h3>
-                    <span class="added-date">Added: February 20, 2025</span>
                     <div class="movie-meta">
-                        <span></span>
+                        <span>Comedy, Social • 2025</span>
                         <div class="rating">
                             <i>★</i> 8.8
                         </div>
@@ -431,8 +551,7 @@
 
         <!-- Wa Tqabil Habeeb -->
         <a href="wa-tqabil-habeeb-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
+            <div class="movie-card" data-categories="drama,romance" data-year="2025" data-rating="9.2">
                 <img src="https://www.el-shai.com/wp-content/uploads/2025/03/word-image-50549-1.png.webp" alt="Wa Tqabil Habeeb">
                 <div class="overlay">
                     <div class="play-btn">
@@ -441,9 +560,8 @@
                 </div>
                 <div class="movie-info">
                     <h3 class="movie-title">Wa Tqabil Habeeb</h3>
-                    <span class="added-date">Added: March 1, 2025</span>
                     <div class="movie-meta">
-                        <span>/span>
+                        <span>Drama, Romance • 2025</span>
                         <div class="rating">
                             <i>★</i> 9.2
                         </div>
@@ -454,8 +572,7 @@
 
         <!-- Fahd el Batal -->
         <a href="fahd-el-batal-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="movie">
-                <span class="content-type">Tv Show</span>
+            <div class="movie-card" data-categories="action,thriller" data-year="2025" data-rating="8.3">
                 <img src="https://media0070.elcinema.com/uploads/_640x_df6f23bad4fbb1231845da544881037070edcc2c422bbb3bee603a68ce532c54.jpg" alt="Fahd el Batal">
                 <div class="overlay">
                     <div class="play-btn">
@@ -464,9 +581,8 @@
                 </div>
                 <div class="movie-info">
                     <h3 class="movie-title">Fahd El Batal</h3>
-                    <span class="added-date">Added: February 15, 2025</span>
                     <div class="movie-meta">
-                        <span></span>
+                        <span>Action, Thriller • 2025</span>
                         <div class="rating">
                             <i>★</i> 8.3
                         </div>
@@ -477,8 +593,7 @@
 
         <!-- Taht Sabe' Ard -->
         <a href="taht-sabe-ard-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
+            <div class="movie-card" data-categories="drama,thriller" data-year="2025" data-rating="8.7">
                 <img src="http://i.epvpimg.com/HHelgab.jpg" alt="Taht Sabe' Ard">
                 <div class="overlay">
                     <div class="play-btn">
@@ -487,8 +602,8 @@
                 </div>
                 <div class="movie-info">
                     <h3 class="movie-title">Taht Sabe' Ard</h3>
-                    <span class="added-date">Added: February 10, 2025</span>
                     <div class="movie-meta">
+                        <span>Drama, Thriller • 2025</span>
                         <div class="rating">
                             <i>★</i> 8.7
                         </div>
@@ -499,8 +614,7 @@
 
         <!-- Albi Wa Moftaahu -->
         <a href="albi-wa-moftaahu-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="movie">
-                <span class="content-type">TV Show</span>
+            <div class="movie-card" data-categories="romance,drama" data-year="2025" data-rating="7.8">
                 <img src="http://i.epvpimg.com/PBYSeab.jpg" alt="Albi Wa Moftaahu">
                 <div class="overlay">
                     <div class="play-btn">
@@ -509,9 +623,8 @@
                 </div>
                 <div class="movie-info">
                     <h3 class="movie-title">Albi Wa Moftaahu</h3>
-                    <span class="added-date">Added: February 5, 2025</span>
                     <div class="movie-meta">
-                        <span>Action, Thriller</span>
+                        <span>Romance, Drama • 2025</span>
                         <div class="rating">
                             <i>★</i> 7.8
                         </div>
@@ -519,54 +632,188 @@
                 </div>
             </div>
         </a>
-    </div>
 
-    <!-- Section Divider -->
-    <div class="section-divider"></div>
-
-    <!-- New Releases Section -->
-    <h2 class="section-title">New Releases</h2>
-    <div class="content-grid" id="new-content">
-        <!-- Joker 2: Folie à Deux -->
-        <a href="joker2-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="movie">
-                <span class="content-type">Movie</span>
-                <span class="new-label">New</span>
-                <img src="https://cdn.kinocheck.com/i/paucjss7ne.jpg" alt="Joker 2">
+        <!-- Al Kabeer Awy -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="comedy" data-year="2024" data-rating="9.1">
+                <img src="https://m.media-amazon.com/images/M/MV5BOTViNjk3ZDYtYzg3Yi00YjI4LWJiMTQtZDJlNzUwN2YzYTMxXkEyXkFqcGdeQXVyMTA5NzUzODY4._V1_.jpg" alt="Al Kabeer Awy">
                 <div class="overlay">
                     <div class="play-btn">
                         <div class="triangle"></div>
                     </div>
                 </div>
                 <div class="movie-info">
-                    <h3 class="movie-title">Joker 2: Folie à Deux</h3>
-                    <span class="added-date">Added: March 4, 2025</span>
+                    <h3 class="movie-title">Al Kabeer Awy</h3>
                     <div class="movie-meta">
-                        <span>Drama, Thriller, Crime</span>
+                        <span>Comedy • 2024</span>
                         <div class="rating">
-                            <i>★</i> 8.1
+                            <i>★</i> 9.1
                         </div>
                     </div>
                 </div>
             </div>
         </a>
 
-        <!-- The Last of Us -->
+        <!-- Le'bet Newton -->
         <a href="#" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
-                <span class="new-label">New</span>
-                <img src="https://m.media-amazon.com/images/M/MV5BZGUzYTI3M2EtZmM0Yy00NGUyLWI4ODEtN2Q3ZGJlYzhhZjU3XkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_.jpg" alt="The Last of Us">
+            <div class="movie-card" data-categories="thriller,drama" data-year="2023" data-rating="8.9">
+                <img src="https://m.media-amazon.com/images/M/MV5BNDQyZGRhMDgtZjIxOC00MjU2LTliMWEtYjNkN2QwOGI5ODc3XkEyXkFqcGdeQXVyMTI0NzQ5OTk4._V1_.jpg" alt="Le'bet Newton">
                 <div class="overlay">
                     <div class="play-btn">
                         <div class="triangle"></div>
                     </div>
                 </div>
                 <div class="movie-info">
-                    <h3 class="movie-title">The Last of Us</h3>
-                    <span class="added-date">Added: March 3, 2025</span>
+                    <h3 class="movie-title">Le'bet Newton</h3>
                     <div class="movie-meta">
-                        <span>Drama, Action, Horror</span>
+                        <span>Thriller, Drama • 2023</span>
+                        <div class="rating">
+                            <i>★</i> 8.9
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- El Ekhteyar -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,drama,historical" data-year="2022" data-rating="9.3">
+                <img src="https://media.elcinema.com/uploads/_315x420_a23975338c0a6f90757a2e81917ed29b36ae6d9bfd41a9da01d9322cf19771a4.jpg" alt="El Ekhteyar">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">El Ekhteyar</h3>
+                    <div class="movie-meta">
+                        <span>Action, Drama, Historical • 2022</span>
+                        <div class="rating">
+                            <i>★</i> 9.3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Ard El Nefaq -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="comedy,social" data-year="2021" data-rating="8.4">
+                <img src="https://i.ytimg.com/vi/xH_ZrA728Oo/sddefault.jpg" alt="Ard El Nefaq">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Ard El Nefaq</h3>
+                    <div class="movie-meta">
+                        <span>Comedy, Social • 2021</span>
+                        <div class="rating">
+                            <i>★</i> 8.4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Layali Eugenie -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="historical,drama,romance" data-year="2020" data-rating="8.2">
+                <img src="https://upload.wikimedia.org/wikipedia/ar/6/64/Layaly_Eugenie_%28Arabic%29.png" alt="Layali Eugenie">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Layali Eugenie</h3>
+                    <div class="movie-meta">
+                        <span>Historical, Drama, Romance • 2020</span>
+                        <div class="rating">
+                            <i>★</i> 8.2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Khali Balak Men Zizi -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="comedy,social" data-year="2023" data-rating="7.9">
+                <img src="https://m.media-amazon.com/images/M/MV5BZTNlNDdkNjYtYjc5YS00YzE2LWFiOWQtNDI1MzNlZjk5NTdkXkEyXkFqcGdeQXVyMTA5NzUzODY4._V1_.jpg" alt="Khali Balak Men Zizi">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Khali Balak Men Zizi</h3>
+                    <div class="movie-meta">
+                        <span>Comedy, Social • 2023</span>
+                        <div class="rating">
+                            <i>★</i> 7.9
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- El Nihaiya -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="sci-fi,drama" data-year="2022" data-rating="8.6">
+                <img src="https://media.elcinema.com/uploads/_315x420_3cd361de3d13806e59b6d2b8e690e4f9371456eb97c416ff96dfd1fbcf42ae57.jpg" alt="El Nihaiya">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">El Nihaiya</h3>
+                    <div class="movie-meta">
+                        <span>Sci-Fi, Drama • 2022</span>
+                        <div class="rating">
+                            <i>★</i> 8.6
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Hekayat Banat -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,social" data-year="2021" data-rating="7.5">
+                <img src="https://m.media-amazon.com/images/M/MV5BMWZjMTk5NGMtMTE3NC00YTllLWJhMDQtYzE4OGM0N2I5MGU1XkEyXkFqcGdeQXVyNTM2NTg3Nzg@._V1_.jpg" alt="Hekayat Banat">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Hekayat Banat</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Social • 2021</span>
+                        <div class="rating">
+                            <i>★</i> 7.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- B 100 Wesh -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="comedy,action" data-year="2022" data-rating="8.8">
+                <img src="https://m.media-amazon.com/images/M/MV5BN2NkM2Y4NTYtMTgwMi00N2Y0LThjZGQtYjk4ZjRhM2QxMTcyXkEyXkFqcGdeQXVyMTA5NzUzODY4._V1_.jpg" alt="B 100 Wesh">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">B 100 Wesh</h3>
+                    <div class="movie-meta">
+                        <span>Comedy, Action • 2022</span>
                         <div class="rating">
                             <i>★</i> 8.8
                         </div>
@@ -575,22 +822,40 @@
             </div>
         </a>
 
-        <!-- Attack on Titan -->
-        <a href="attack-on-titan-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
-                <span class="new-label">New Season</span>
-                <img src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg" alt="Attack on Titan">
+        <!-- Al Nems -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="action,thriller" data-year="2024" data-rating="7.9">
+                <img src="https://alresalah.co/file/article/2024/3/4/bdb12b2a0.jpg" alt="Al Nems">
                 <div class="overlay">
                     <div class="play-btn">
                         <div class="triangle"></div>
                     </div>
                 </div>
                 <div class="movie-info">
-                    <h3 class="movie-title">Attack on Titan</h3>
-                    <span class="added-date">Added: March 2, 2025</span>
+                    <h3 class="movie-title">Al Nems</h3>
                     <div class="movie-meta">
-                        <span>Anime, Action, Fantasy</span>
+                        <span>Action, Thriller • 2024</span>
+                        <div class="rating">
+                            <i>★</i> 7.9
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Al Malik -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="historical,drama" data-year="2023" data-rating="9.0">
+                <img src="https://upload.wikimedia.org/wikipedia/ar/0/0d/El_Malek_TV_series_poster.png" alt="Al Malik">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Al Malik</h3>
+                    <div class="movie-meta">
+                        <span>Historical, Drama • 2023</span>
                         <div class="rating">
                             <i>★</i> 9.0
                         </div>
@@ -599,46 +864,40 @@
             </div>
         </a>
 
-        <!-- Tower of God -->
-        <a href="tower-of-god-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
-                <span class="new-label">New Season</span>
-                <img src="https://aniworld.to/public/img/cover/tower-of-god-stream-cover-8nCCJxa8YByM62sG2rhj2bG2LtGm6iRX_220x330.jpg" alt="Tower of God">
+        <!-- Haret El Yahud -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="historical,drama" data-year="2020" data-rating="8.5">
+                <img src="https://m.media-amazon.com/images/M/MV5BMTQ0OTQyMjQyNl5BMl5BanBnXkFtZTgwMDUzNDEzNzE@._V1_.jpg" alt="Haret El Yahud">
                 <div class="overlay">
                     <div class="play-btn">
                         <div class="triangle"></div>
                     </div>
                 </div>
                 <div class="movie-info">
-                    <h3 class="movie-title">Tower of God</h3>
-                    <span class="added-date">Added: February 28, 2025</span>
+                    <h3 class="movie-title">Haret El Yahud</h3>
                     <div class="movie-meta">
-                        <span>Anime, Adventure, Fantasy</span>
+                        <span>Historical, Drama • 2020</span>
                         <div class="rating">
-                            <i>★</i> 7.6
+                            <i>★</i> 8.5
                         </div>
                     </div>
                 </div>
             </div>
         </a>
 
-        <!-- The Boys -->
+        <!-- Al Qahira Kabul -->
         <a href="#" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
-                <span class="new-label">New Season</span>
-                <img src="https://m.media-amazon.com/images/M/MV5BOTEyNDJhMDAtY2U5ZS00OTMzLTkwODEtMWY5ZjEyNzgzZWYzXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg" alt="The Boys">
+            <div class="movie-card" data-categories="action,thriller" data-year="2024" data-rating="8.7">
+                <img src="https://media.elcinema.com/uploads/_315x420_6f6fe37a4f3dfc7d7d626bc5a7b96c2bace1a5c2e0224885f611d4f5cfc9dfc7.jpg" alt="Al Qahira Kabul">
                 <div class="overlay">
                     <div class="play-btn">
                         <div class="triangle"></div>
                     </div>
                 </div>
                 <div class="movie-info">
-                    <h3 class="movie-title">The Boys</h3>
-                    <span class="added-date">Added: February 26, 2025</span>
+                    <h3 class="movie-title">Al Qahira Kabul</h3>
                     <div class="movie-meta">
-                        <span>Action, Comedy, Crime</span>
+                        <span>Action, Thriller • 2024</span>
                         <div class="rating">
                             <i>★</i> 8.7
                         </div>
@@ -647,24 +906,84 @@
             </div>
         </a>
 
-        <!-- Hitman - Agent 47 -->
-        <a href="hitman-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="movie">
-                <span class="content-type">Movie</span>
-                <span class="new-label">New</span>
-                <img src="https://cdn.kinocheck.com/i/2ibqysun2s.jpg" alt="Hitman - Agent 47">
+        <!-- Zodiak -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="thriller,mystery" data-year="2024" data-rating="8.3">
+                <img src="https://m.media-amazon.com/images/M/MV5BMzg4ODA0MTMtZWY4NC00MjljLThjYjQtYzEzZGY1YTRkODY3XkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_.jpg" alt="Zodiak">
                 <div class="overlay">
                     <div class="play-btn">
                         <div class="triangle"></div>
                     </div>
                 </div>
                 <div class="movie-info">
-                    <h3 class="movie-title">Hitman - Agent 47</h3>
-                    <span class="added-date">Added: February 24, 2025</span>
+                    <h3 class="movie-title">Zodiak</h3>
                     <div class="movie-meta">
-                        <span>Action, Thriller</span>
+                        <span>Thriller, Mystery • 2024</span>
                         <div class="rating">
-                            <i>★</i> 5.7
+                            <i>★</i> 8.3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- El A'arraf -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="mystery,thriller" data-year="2023" data-rating="8.4">
+                <img src="https://media.elcinema.com/uploads/_315x420_c3a3f5fde5134b9a9d00b58fa0b0faedb16e4a4c7f27b66d026dbea5026a0a5d.jpg" alt="El A'arraf">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">El A'arraf</h3>
+                    <div class="movie-meta">
+                        <span>Mystery, Thriller • 2023</span>
+                        <div class="rating">
+                            <i>★</i> 8.4
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Grand Hotel -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="historical,romance,mystery" data-year="2019" data-rating="9.1">
+                <img src="https://m.media-amazon.com/images/M/MV5BOTQ0NTE4OTUtZmRmMS00NTNkLWJjMDQtZmVlYzc1MGFkMjQzXkEyXkFqcGdeQXVyNDkwMjMxODA@._V1_FMjpg_UX1000_.jpg" alt="Grand Hotel">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Grand Hotel</h3>
+                    <div class="movie-meta">
+                        <span>Historical, Romance, Mystery • 2019</span>
+                        <div class="rating">
+                            <i>★</i> 9.1
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Welad El-Nas -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-categories="drama,social" data-year="2023" data-rating="8.2">
+                <img src="https://www.elsaha.com/upload/photo/news/134/9/600x338o/953.jpg" alt="Welad El-Nas">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Welad El-Nas</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Social • 2023</span>
+                        <div class="rating">
+                            <i>★</i> 8.2
                         </div>
                     </div>
                 </div>
@@ -672,152 +991,79 @@
         </a>
     </div>
 
-    <!-- Section Divider -->
-    <div class="section-divider"></div>
-
-    <!-- Top Rated Section -->
-    <h2 class="section-title">Top Rated</h2>
-    <div class="content-grid" id="top-rated-content">
-        <!-- FROM -->
-        <a href="series-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
-                <img src="https://images.justwatch.com/poster/321587621/s166/From.avif" alt="FROM">
-                <div class="overlay">
-                    <div class="play-btn">
-                        <div class="triangle"></div>
-                    </div>
+    <!-- Series List View (Hidden by default) -->
+    <div class="series-list" id="seriesList">
+        <!-- El Atawla -->
+        <div class="series-list-item" data-categories="drama,thriller" data-year="2025" data-rating="8.5">
+            <div class="series-list-poster">
+                <img src="https://i.imgur.com/HsUTeiH.jpeg" alt="El Atawla">
+            </div>
+            <div class="series-list-details">
+                <h3 class="series-list-title">El Atawla</h3>
+                <div class="series-list-meta">
+                    <span>Drama, Thriller</span>
+                    <span>•</span>
+                    <span>2025</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.5</span>
+                    <span>•</span>
+                    <span>13 Episodes</span>
                 </div>
-                <div class="movie-info">
-                    <h3 class="movie-title">FROM</h3>
-                    <div class="movie-meta">
-                        <span>Drama, Horror, Mystery</span>
-                        <div class="rating">
-                            <i>★</i> 9.2
-                        </div>
-                    </div>
+                <p class="series-list-desc">
+                    A high-stakes drama that follows a powerful family entangled in politics and business. When the patriarch decides to step down, the battle for succession turns deadly as family members and rivals clash over who will take control of the empire.
+                </p>
+                <div class="series-list-actions">
+                    <a href="al-atawla-detail.html" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="al-atawla-detail.html" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
                 </div>
             </div>
-        </a>
-
-        <!-- Steins;Gate -->
-        <a href="steins-gate-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
-                <img src="https://m.media-amazon.com/images/M/MV5BMjUxMzE4ZDctODNjMS00MzIwLThjNDktODkwYjc5YWU0MDc0XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_.jpg" alt="Steins;Gate">
-                <div class="overlay">
-                    <div class="play-btn">
-                        <div class="triangle"></div>
-                    </div>
+        </div>
+        
+        <!-- Ashghal Shaqa -->
+        <div class="series-list-item" data-categories="comedy,social" data-year="2025" data-rating="8.8">
+            <div class="series-list-poster">
+                <img src="https://media0070.elcinema.com/uploads/_640x_ba82444ceabe95b53cdede60a29ccc9f20340fb4a7c95368f9b497b94a4b8def.jpg" alt="Ashghal Shaqa">
+            </div>
+            <div class="series-list-details">
+                <h3 class="series-list-title">Ashghal Shaqa</h3>
+                <div class="series-list-meta">
+                    <span>Comedy, Social</span>
+                    <span>•</span>
+                    <span>2025</span>
+                    <span>•</span>
+                    <span><i>★</i> 8.8</span>
+                    <span>•</span>
+                    <span>15 Episodes</span>
                 </div>
-                <div class="movie-info">
-                    <h3 class="movie-title">Steins;Gate</h3>
-                    <div class="movie-meta">
-                        <span>Anime, Sci-Fi, Thriller</span>
-                        <div class="rating">
-                            <i>★</i> 9.0
-                        </div>
-                    </div>
+                <p class="series-list-desc">
+                    A hilarious comedy about a middle-class family whose apartment is constantly under renovation. As contractors come and go, the family faces one absurd situation after another while trying to maintain their daily lives despite the chaos.
+                </p>
+                <div class="series-list-actions">
+                    <a href="ashghal-shaqa-detail.html" class="list-action-btn watch-btn"><i>▶</i> Watch Now</a>
+                    <a href="ashghal-shaqa-detail.html" class="list-action-btn info-btn"><i>ℹ</i> More Info</a>
                 </div>
             </div>
-        </a>
+        </div>
+        
+        <!-- More list items would go here -->
+    </div>
 
-        <!-- Attack on Titan -->
-        <a href="attack-on-titan-detail.html" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
-                <img src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg" alt="Attack on Titan">
-                <div class="overlay">
-                    <div class="play-btn">
-                        <div class="triangle"></div>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3 class="movie-title">Attack on Titan</h3>
-                    <div class="movie-meta">
-                        <span>Anime, Action, Fantasy</span>
-                        <div class="rating">
-                            <i>★</i> 9.0
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-
-        <!-- The Office -->
-        <a href="#" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
-                <img src="https://m.media-amazon.com/images/M/MV5BMDNkOTE4NDQtMTNmYi00MWE0LWE4ZTktYTc0NzhhNWIzNzJiXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_.jpg" alt="The Office">
-                <div class="overlay">
-                    <div class="play-btn">
-                        <div class="triangle"></div>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3 class="movie-title">The Office</h3>
-                    <div class="movie-meta">
-                        <span>Comedy, Mockumentary</span>
-                        <div class="rating">
-                            <i>★</i> 9.0
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-
-        <!-- Breaking Bad -->
-        <a href="#" style="text-decoration: none;">
-            <div class="movie-card" data-type="tv-show">
-                <span class="content-type">TV Show</span>
-                <img src="https://m.media-amazon.com/images/M/MV5BNDkyZThhNmMtZDBjYS00NDBmLTlkMjgtNWM2ZWYzZDQxZWU1XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg" alt="Breaking Bad">
-                <div class="overlay">
-                    <div class="play-btn">
-                        <div class="triangle"></div>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3 class="movie-title">Breaking Bad</h3>
-                    <div class="movie-meta">
-                        <span>Drama, Crime, Thriller</span>
-                        <div class="rating">
-                            <i>★</i> 9.5
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-
-        <!-- Interstellar -->
-        <a href="#" style="text-decoration: none;">
-            <div class="movie-card" data-type="movie">
-                <span class="content-type">Movie</span>
-                <img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="Interstellar">
-                <div class="overlay">
-                    <div class="play-btn">
-                        <div class="triangle"></div>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3 class="movie-title">Interstellar</h3>
-                    <div class="movie-meta">
-                        <span>Sci-Fi, Adventure, Drama</span>
-                        <div class="rating">
-                            <i>★</i> 8.7
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
+    <!-- No Results Message -->
+    <div class="no-results" id="noResults">
+        <h3>No series match your filters</h3>
+        <p>Try adjusting your filter criteria or try a different combination of genres, years, or ratings.</p>
+        <button id="resetFiltersBtn">Reset All Filters</button>
     </div>
 
     <!-- Pagination -->
-    <div class="pagination">
-        <button class="pagination-btn disabled">❮</button>
+    <div class="pagination" id="pagination">
+        <button class="pagination-btn disabled" id="prevPage">❮</button>
         <button class="pagination-btn active">1</button>
         <button class="pagination-btn">2</button>
         <button class="pagination-btn">3</button>
-        <button class="pagination-btn">❯</button>
+        <button class="pagination-btn">4</button>
+        <button class="pagination-btn">5</button>
+        <button class="pagination-btn" id="nextPage">❯</button>
     </div>
 
     <!-- Footer -->
@@ -848,11 +1094,11 @@
             <div class="footer-column">
                 <h3>Categories</h3>
                 <ul>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Comedy</a></li>
-                    <li><a href="#">Drama</a></li>
-                    <li><a href="#">Sci-Fi</a></li>
-                    <li><a href="#">Horror</a></li>
+                    <li><a href="#" data-filter="action">Action</a></li>
+                    <li><a href="#" data-filter="comedy">Comedy</a></li>
+                    <li><a href="#" data-filter="drama">Drama</a></li>
+                    <li><a href="#" data-filter="historical">Historical</a></li>
+                    <li><a href="#" data-filter="romance">Romance</a></li>
                 </ul>
             </div>
             
@@ -875,113 +1121,276 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Content filter functionality
-            const contentFilter = document.getElementById('contentFilter');
-            const contentCards = document.querySelectorAll('.movie-card');
+            // Configuration
+            const seriesPerPage = 22; // Exactly 2 rows of 11 series
             
-            contentFilter.addEventListener('change', function() {
-                const selectedType = this.value;
+            // Get all series cards
+            const allSeriesCards = document.querySelectorAll('.movie-card');
+            const totalSeries = allSeriesCards.length;
+            const totalPages = Math.ceil(totalSeries / seriesPerPage);
+            
+            // Get DOM elements
+            const paginationContainer = document.getElementById('pagination');
+            const seriesGrid = document.getElementById('seriesGrid');
+            const seriesList = document.getElementById('seriesList');
+            const prevPageBtn = document.getElementById('prevPage');
+            const nextPageBtn = document.getElementById('nextPage');
+            const noResults = document.getElementById('noResults');
+            
+            // Current page (from URL or default to 1)
+            let currentPage = 1;
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('page')) {
+                const pageParam = parseInt(urlParams.get('page'));
+                if (!isNaN(pageParam) && pageParam > 0 && pageParam <= totalPages) {
+                    currentPage = pageParam;
+                }
+            }
+            
+            // Function to show only the series for the current page
+            function showSeriesForPage(pageNumber) {
+                const startIndex = (pageNumber - 1) * seriesPerPage;
+                const endIndex = Math.min(startIndex + seriesPerPage, totalSeries);
                 
-                contentCards.forEach(card => {
-                    const cardType = card.dataset.type;
-                    const cardElement = card.closest('a');
-                    
-                    if (selectedType === 'all' || cardType === selectedType) {
-                        cardElement.style.display = 'block';
-                    } else {
-                        cardElement.style.display = 'none';
+                // Hide all series first
+                Array.from(allSeriesCards).forEach((card, index) => {
+                    const seriesCard = card.closest('a');
+                    if (seriesCard) {
+                        if (index >= startIndex && index < endIndex) {
+                            seriesCard.style.display = 'block';
+                        } else {
+                            seriesCard.style.display = 'none';
+                        }
                     }
                 });
+                
+                // Also update list view if it exists
+                const listItems = document.querySelectorAll('.series-list-item');
+                Array.from(listItems).forEach((item, index) => {
+                    if (index >= startIndex && index < endIndex) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Build pagination buttons
+            function buildPagination() {
+                // Clear existing page number buttons
+                const oldButtons = paginationContainer.querySelectorAll('.pagination-btn:not(#prevPage):not(#nextPage)');
+                oldButtons.forEach(btn => btn.remove());
+                
+                // Add page number buttons
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
+                    pageBtn.textContent = i;
+                    
+                    // Insert before the next button
+                    paginationContainer.insertBefore(pageBtn, nextPageBtn);
+                }
+                
+                // Update prev/next buttons
+                prevPageBtn.classList.toggle('disabled', currentPage <= 1);
+                nextPageBtn.classList.toggle('disabled', currentPage >= totalPages);
+            }
+            
+            // Function to navigate to a page
+            function navigateToPage(pageNumber) {
+                if (pageNumber < 1 || pageNumber > totalPages || pageNumber === currentPage) return;
+                
+                // Update URL
+                const url = new URL(window.location);
+                url.searchParams.set('page', pageNumber);
+                window.history.pushState({}, '', url);
+                
+                // Update current page
+                currentPage = pageNumber;
+                
+                // Update UI
+                showSeriesForPage(currentPage);
+                buildPagination();
+                
+                // Scroll to top
+                window.scrollTo({
+                    top: document.querySelector('.filter-container').offsetTop - 10,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Set up event delegation for pagination buttons
+            paginationContainer.addEventListener('click', function(e) {
+                const button = e.target.closest('.pagination-btn');
+                if (!button) return;
+                
+                if (button.classList.contains('disabled')) return;
+                
+                if (button.id === 'prevPage') {
+                    navigateToPage(currentPage - 1);
+                } else if (button.id === 'nextPage') {
+                    navigateToPage(currentPage + 1);
+                } else {
+                    const pageNum = parseInt(button.textContent);
+                    if (!isNaN(pageNum)) {
+                        navigateToPage(pageNum);
+                    }
+                }
             });
             
-            // Time period filter functionality
-            const timeFilter = document.getElementById('timeFilter');
+            // Initialize pagination
+            buildPagination();
+            showSeriesForPage(currentPage);
             
-            timeFilter.addEventListener('change', function() {
-                const selectedTimePeriod = this.value;
-                console.log(`Filtering by time period: ${selectedTimePeriod}`);
-                // Here you would implement actual time filtering logic
+            // Filter functionality
+            const genreFilter = document.getElementById('genreFilter');
+            const yearFilter = document.getElementById('yearFilter');
+            const ratingFilter = document.getElementById('ratingFilter');
+            const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+            
+            function applyFilters() {
+                const selectedGenre = genreFilter.value;
+                const selectedYear = yearFilter.value;
+                const selectedRating = ratingFilter.value;
+                
+                let visibleCount = 0;
+                
+                allSeriesCards.forEach(card => {
+                    const categories = card.dataset.categories || '';
+                    const year = parseInt(card.dataset.year) || 0;
+                    const rating = parseFloat(card.dataset.rating) || 0;
+                    
+                    let genreMatch = selectedGenre === 'all' || categories.includes(selectedGenre);
+                    
+                    let yearMatch = false;
+                    if (selectedYear === 'all') {
+                        yearMatch = true;
+                    } else if (selectedYear === 'older' && year < 2020) {
+                        yearMatch = true;
+                    } else if (selectedYear !== 'older' && year === parseInt(selectedYear)) {
+                        yearMatch = true;
+                    }
+                    
+                    let ratingMatch = false;
+                    if (selectedRating === 'all') {
+                        ratingMatch = true;
+                    } else if (selectedRating === '9+' && rating >= 9.0) {
+                        ratingMatch = true;
+                    } else if (selectedRating === '8+' && rating >= 8.0) {
+                        ratingMatch = true;
+                    } else if (selectedRating === '7+' && rating >= 7.0) {
+                        ratingMatch = true;
+                    } else if (selectedRating === '6+' && rating >= 6.0) {
+                        ratingMatch = true;
+                    } else if (selectedRating === '5+' && rating >= 5.0) {
+                        ratingMatch = true;
+                    }
+                    
+                    const shouldShow = genreMatch && yearMatch && ratingMatch;
+                    const seriesCard = card.closest('a');
+                    
+                    if (shouldShow) {
+                        visibleCount++;
+                    }
+                    
+                    if (seriesCard) {
+                        seriesCard.style.display = shouldShow ? 'block' : 'none';
+                    }
+                });
+                
+                // Show or hide "No Results" message
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+                
+                // Hide pagination if no results
+                paginationContainer.style.display = visibleCount === 0 ? 'none' : 'flex';
+            }
+            
+            // Add event listeners for filters
+            genreFilter.addEventListener('change', applyFilters);
+            yearFilter.addEventListener('change', applyFilters);
+            ratingFilter.addEventListener('change', applyFilters);
+            
+            // Reset filters button
+            resetFiltersBtn.addEventListener('click', function() {
+                genreFilter.value = 'all';
+                yearFilter.value = 'all';
+                ratingFilter.value = 'all';
+                applyFilters();
+                showSeriesForPage(1);
+            });
+            
+            // View toggle functionality
+            const gridViewBtn = document.getElementById('gridViewBtn');
+            const listViewBtn = document.getElementById('listViewBtn');
+            
+            gridViewBtn.addEventListener('click', function() {
+                seriesGrid.style.display = 'grid';
+                seriesList.style.display = 'none';
+                gridViewBtn.classList.add('active');
+                listViewBtn.classList.remove('active');
+                showSeriesForPage(currentPage);
+            });
+            
+            listViewBtn.addEventListener('click', function() {
+                seriesGrid.style.display = 'none';
+                seriesList.style.display = 'block';
+                listViewBtn.classList.add('active');
+                gridViewBtn.classList.remove('active');
+                showSeriesForPage(currentPage);
             });
             
             // Sort functionality
             const sortSelect = document.getElementById('sortBy');
             
             sortSelect.addEventListener('change', function() {
-                const sortBy = this.value;
-                console.log(`Sorting content by: ${sortBy}`);
-                // Here you would implement actual sorting logic
+                const selectedSort = this.value;
+                const seriesGridItems = Array.from(seriesGrid.children);
+                
+                seriesGridItems.sort(function(a, b) {
+                    const cardA = a.querySelector('.movie-card');
+                    const cardB = b.querySelector('.movie-card');
+                    
+                    if (selectedSort === 'rating-high') {
+                        const ratingA = parseFloat(cardA.dataset.rating) || 0;
+                        const ratingB = parseFloat(cardB.dataset.rating) || 0;
+                        return ratingB - ratingA; // Higher rating first
+                    } else if (selectedSort === 'rating-low') {
+                        const ratingA = parseFloat(cardA.dataset.rating) || 0;
+                        const ratingB = parseFloat(cardB.dataset.rating) || 0;
+                        return ratingA - ratingB; // Lower rating first
+                    } else if (selectedSort === 'newest') {
+                        const yearA = parseInt(cardA.dataset.year) || 0;
+                        const yearB = parseInt(cardB.dataset.year) || 0;
+                        return yearB - yearA; // Newer first
+                    } else if (selectedSort === 'oldest') {
+                        const yearA = parseInt(cardA.dataset.year) || 0;
+                        const yearB = parseInt(cardB.dataset.year) || 0;
+                        return yearA - yearB; // Older first
+                    } else if (selectedSort === 'a-z') {
+                        const titleA = cardA.querySelector('.movie-title').textContent;
+                        const titleB = cardB.querySelector('.movie-title').textContent;
+                        return titleA.localeCompare(titleB); // A to Z
+                    } else if (selectedSort === 'z-a') {
+                        const titleA = cardA.querySelector('.movie-title').textContent;
+                        const titleB = cardB.querySelector('.movie-title').textContent;
+                        return titleB.localeCompare(titleA); // Z to A
+                    }
+                    
+                    return 0; // Default: no change
+                });
+                
+                // Reappend the sorted series
+                seriesGridItems.forEach(function(item) {
+                    seriesGrid.appendChild(item);
+                });
+                
+                // Reapply pagination
+                showSeriesForPage(currentPage);
             });
             
             // Search functionality
             const searchInput = document.getElementById('searchInput');
             const searchResults = document.getElementById('searchResults');
-            
-            // Collection of all content (movies and shows)
-            const allContent = [
-                { 
-                    title: "House of the Dragon", 
-                    type: "TV Show", 
-                    url: "hotd-detail.html", 
-                    image: "https://gzhls.at/i/67/74/2866774-n0.jpg", 
-                    genre: "Fantasy, Drama" 
-                },
-                { 
-                    title: "Oppenheimer", 
-                    type: "Movie", 
-                    url: "oppenheimer-detail.html", 
-                    image: "https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg", 
-                    genre: "Biography, Drama" 
-                },
-                { 
-                    title: "FROM", 
-                    type: "TV Show", 
-                    url: "series-detail.html", 
-                    image: "https://images.justwatch.com/poster/321587621/s166/From.avif", 
-                    genre: "Drama, Horror, Mystery" 
-                },
-                { 
-                    title: "Joker: Folie à Deux", 
-                    type: "Movie", 
-                    url: "joker2-detail.html", 
-                    image: "https://cdn.kinocheck.com/i/paucjss7ne.jpg", 
-                    genre: "Drama, Thriller, Crime" 
-                },
-                { 
-                    title: "John Wick 4", 
-                    type: "Movie", 
-                    url: "johnwick4-detail.html", 
-                    image: "https://m.media-amazon.com/images/M/MV5BMDExZGMyOTMtMDgyYi00NGIwLWJhMTEtOTdkZGFjNmZiMTEwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_FMjpg_UX1000_.jpg", 
-                    genre: "Action, Thriller" 
-                },
-                { 
-                    title: "Deadpool & Wolverine", 
-                    type: "Movie", 
-                    url: "deadpool3-detail.html", 
-                    image: "https://cdn.kinocheck.com/i/d3mx9y2anl.jpg", 
-                    genre: "Action, Comedy, Adventure" 
-                },
-                {
-                    title: "Attack on Titan",
-                    type: "TV Show",
-                    url: "attack-on-titan-detail.html",
-                    image: "https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg",
-                    genre: "Anime, Action, Fantasy"
-                },
-                {
-                    title: "Steins;Gate",
-                    type: "TV Show",
-                    url: "steins-gate-detail.html",
-                    image: "https://m.media-amazon.com/images/M/MV5BMjUxMzE4ZDctODNjMS00MzIwLThjNDktODkwYjc5YWU0MDc0XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_.jpg",
-                    genre: "Anime, Sci-Fi, Thriller"
-                },
-                {
-                    title: "Tower of God",
-                    type: "TV Show",
-                    url: "tower-of-god-detail.html",
-                    image: "https://aniworld.to/public/img/cover/tower-of-god-stream-cover-8nCCJxa8YByM62sG2rhj2bG2LtGm6iRX_220x330.jpg",
-                    genre: "Anime, Adventure, Fantasy"
-                }
-            ];
             
             // Function to perform search and display results
             function performSearch(query) {
@@ -989,21 +1398,37 @@
                     searchResults.classList.remove('active');
                     return;
                 }
-
+                
                 query = query.toLowerCase();
-                const matchingResults = allContent.filter(item => 
-                    item.title.toLowerCase().includes(query) || 
-                    item.genre.toLowerCase().includes(query) ||
-                    item.type.toLowerCase().includes(query)
-                );
+                const matchingSeries = [];
+                
+                allSeriesCards.forEach(card => {
+                    const title = card.querySelector('.movie-title').textContent.toLowerCase();
+                    const categories = (card.dataset.categories || '').toLowerCase();
+                    
+                    if (title.includes(query) || categories.includes(query)) {
+                        const img = card.querySelector('img').src;
+                        const rating = card.dataset.rating;
+                        const url = card.closest('a').href;
+                        
+                        matchingSeries.push({
+                            title: card.querySelector('.movie-title').textContent,
+                            image: img,
+                            type: 'TV Show',
+                            genre: categories.replace(/,/g, ', '),
+                            url: url,
+                            rating: rating
+                        });
+                    }
+                });
                 
                 // Display results
                 searchResults.innerHTML = '';
                 
-                if (matchingResults.length === 0) {
+                if (matchingSeries.length === 0) {
                     searchResults.innerHTML = '<div class="no-results">No results found</div>';
                 } else {
-                    matchingResults.forEach(item => {
+                    matchingSeries.forEach(item => {
                         const resultItem = document.createElement('div');
                         resultItem.className = 'search-result-item';
                         resultItem.innerHTML = `
@@ -1025,46 +1450,28 @@
                 
                 searchResults.classList.add('active');
             }
-
+            
             // Search input event listeners
             searchInput.addEventListener('input', () => {
                 performSearch(searchInput.value);
             });
-
+            
             searchInput.addEventListener('focus', () => {
                 if (searchInput.value.length >= 2) {
                     performSearch(searchInput.value);
                 }
             });
-
+            
             // Close search results when clicking outside
             document.addEventListener('click', (e) => {
                 if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
                     searchResults.classList.remove('active');
                 }
             });
-
+            
             // Prevent the dropdown from closing when clicking inside it
             searchResults.addEventListener('click', (e) => {
                 e.stopPropagation();
-            });
-            
-            // Pagination functionality
-            const paginationButtons = document.querySelectorAll('.pagination-btn');
-            
-            paginationButtons.forEach(button => {
-                if (!button.classList.contains('disabled')) {
-                    button.addEventListener('click', function() {
-                        // Remove active class from all buttons
-                        paginationButtons.forEach(btn => btn.classList.remove('active'));
-                        
-                        // Add active class to clicked button
-                        this.classList.add('active');
-                        
-                        // Here you would implement actual pagination logic
-                        console.log(`Navigating to page: ${this.textContent}`);
-                    });
-                }
             });
         });
     </script>

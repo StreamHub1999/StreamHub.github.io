@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Movies page specific styles */
+        .page-banner {
+            height: 300px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                        url('https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_1280.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        .page-banner h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .page-banner p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-container {
+            background-color: var(--background-darker);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 60px;
+            z-index: 900;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-right: 5px;
+        }
+
+        .filter-select, .sort-select {
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .filter-select:focus, .sort-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .view-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .view-btn.active {
+            color: var(--primary-color);
+            background-color: rgba(229, 9, 20, 0.1);
+        }
+
+        /* Grid View Styles */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            padding: 30px 5%;
+        }
+
+        @media (max-width: 768px) {
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+                padding: 20px 5%;
+            }
+        }
+
+        /* List View Styles */
+        .movies-list {
+            padding: 30px 5%;
+            display: none; /* Hidden by default, toggled by JavaScript */
+        }
+
+        .movie-list-item {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .movie-list-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .movie-list-poster {
+            width: 120px;
+            min-width: 120px;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .movie-list-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-list-details {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .movie-list-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .movie-list-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .movie-list-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .movie-list-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .list-action-btn {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .watch-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .watch-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .info-btn {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding: 30px 0;
+            gap: 5px;
+        }
+
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--background-lighter);
+            color: var(--text-primary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-btn:hover {
+            background-color: var(--card-hover);
+        }
+
+        .pagination-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .pagination-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        .no-results button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .no-results button:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html" class="active">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i>🔍</i>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login-page.html" class="btn-small btn-login">Login</a>
+                    <a href="simplified-register-page.html" class="btn-small btn-signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <h1>Movies</h1>
+        <p>Explore our vast collection of movies from classic hits to the latest blockbusters. Filter by genre, year, or rating to find your next favorite film.</p>
+    </section>
+
+    <!-- Filter Bar -->
+    <div class="filter-container">
+        <div class="filter-options">
+            <span class="filter-label">Filter by:</span>
+            <select class="filter-select" id="genreFilter">
+                <option value="all">All Genres</option>
+                <option value="action">Action</option>
+                <option value="adventure">Adventure</option>
+                <option value="animation">Animation</option>
+                <option value="comedy">Comedy</option>
+                <option value="crime">Crime</option>
+                <option value="documentary">Documentary</option>
+                <option value="drama">Drama</option>
+                <option value="fantasy">Fantasy</option>
+                <option value="horror">Horror</option>
+                <option value="mystery">Mystery</option>
+                <option value="romance">Romance</option>
+                <option value="sci-fi">Sci-Fi</option>
+                <option value="thriller">Thriller</option>
+            </select>
+            
+            <select class="filter-select" id="yearFilter">
+                <option value="all">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2010s">2010s</option>
+                <option value="2000s">2000s</option>
+                <option value="1990s">1990s</option>
+                <option value="older">Older</option>
+            </select>
+            
+            <select class="filter-select" id="ratingFilter">
+                <option value="all">All Ratings</option>
+                <option value="9+">9+ ★</option>
+                <option value="8+">8+ ★</option>
+                <option value="7+">7+ ★</option>
+                <option value="6+">6+ ★</option>
+                <option value="5+">5+ ★</option>
+            </select>
+        </div>
+        
+        <div class="view-options">
+            <span class="filter-label">Sort by:</span>
+            <select class="sort-select" id="sortBy">
+                <option value="popular">Most Popular</option>
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="rating-high">Highest Rated</option>
+                <option value="rating-low">Lowest Rated</option>
+                <option value="a-z">A-Z</option>
+                <option value="z-a">Z-A</option>
+            </select>
