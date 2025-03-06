@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamHub - Arabic Series</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page Banner styles like movies.html */
+        .page-banner {
+            height: 300px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                        url('https://wallpapercave.com/wp/wp5483697.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        .page-banner h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .page-banner p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Filter container styles from movies.html */
+        .filter-container {
+            background-color: var(--background-darker);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 60px;
+            z-index: 900;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-right: 5px;
+        }
+
+        .filter-select, .sort-select {
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .filter-select:focus, .sort-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .view-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .view-btn.active {
+            color: var(--primary-color);
+            background-color: rgba(229, 9, 20, 0.1);
+        }
+
+        /* Content grid styles like movies.html */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            padding: 30px 5%;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+                padding: 20px 5%;
+            }
+        }
+
+        /* Movie card styles from movies.html */
+        .movie-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            background-color: var(--card-bg);
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+
+        .movie-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 270px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .movie-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 20px;
+            border-color: transparent transparent transparent white;
+            margin-left: 5px;
+        }
+
+        .movie-info {
+            padding: 12px;
+        }
+
+        .movie-title {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .movie-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .movie-meta span {
+            max-width: 70%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .rating i {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        /* Content type and labels */
+        .content-type, .trending-label, .new-label {
+            position: absolute;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 2;
+        }
+
+        .content-type {
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+
+        .trending-label, .new-label {
+            top: 10px;
+            right: 10px;
+        }
+
+        .trending-label {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .new-label {
+            background-color: #e50914;
+            color: white;
+        }
+
+        /* Section divider */
+        .section-divider {
+            margin: 40px 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Section title */
+        .section-title {
+            padding: 0 5%;
+            margin-top: 40px;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+        }
+
+        /* Added date info */
+        .added-date {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Pagination Styles from movies.html */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding: 30px 0;
+            gap: 5px;
+        }
+
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--background-lighter);
+            color: var(--text-primary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-btn:hover {
+            background-color: var(--card-hover);
+        }
+
+        .pagination-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .pagination-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html" class="active">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i>🔍</i>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login-page.html" class="btn-small btn-login">Login</a>
+                    <a href="simplified-register-page.html" class="btn-small btn-signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner (styled like movies.html) -->
+    <section class="page-banner">
+        <h1>Arabic Series</h1>
+        <p>Discover the latest releases and trending content. Stay up-to-date with what everyone's watching right now.</p>
+    </section>
+
+    <!-- Filter Container (styled like movies.html) -->
+    <div class="filter-container">
+        <div class="filter-options">
+            <span class="filter-label">Filter by:</span>
+            <select class="filter-select" id="contentFilter">
+                <option value="all">All Content</option>
+                <option value="movies">Movies</option>
+                <option value="tv-shows">TV Shows</option>
+                <option value="anime">Anime</option>
+            </select>
+            
+            <select class="filter-select" id="timeFilter">
+                <option value="trending">Trending Now</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="year">This Year</option>
+            </select>
+        </div>
+        
+        <div class="view-options">
+            <span class="filter-label">Sort by:</span>
+            <select class="sort-select" id="sortBy">
+                <option value="popular">Most Popular</option>
+                <option value="newest">Newest First</option>
+                <option value="rating-high">Highest Rated</option>
+                <option value="a-z">A-Z</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- What's Popular Section -->
+    <h2 class="section-title">What's Popular</h2>
+    <div class="content-grid" id="trending-content">
+        <!-- El Atawla -->
+        <a href="al-atawla-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <img src="https://i.imgur.com/HsUTeiH.jpeg" alt="El Atawla">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">El Atawla</h3>
+                    <span class="added-date">Added: February 25, 2025</span>
+                    <div class="movie-meta">
+                        <span>Fantasy, Drama</span>
+                        <div class="rating">
+                            <i>★</i> 8.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Ashghal Shaqa -->
+        <a href="ashghal-shaqa-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="movie">
+                <span class="content-type">TV Show</span>
+                <img src="https://media0070.elcinema.com/uploads/_640x_ba82444ceabe95b53cdede60a29ccc9f20340fb4a7c95368f9b497b94a4b8def.jpg" alt="Ashghal Shaqa">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Ashghal Shaqa</h3>
+                    <span class="added-date">Added: February 20, 2025</span>
+                    <div class="movie-meta">
+                        <span>Biography, Drama</span>
+                        <div class="rating">
+                            <i>★</i> 8.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- FROM -->
+        <a href="series-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <span class="trending-label">#3 Trending</span>
+                <img src="https://images.justwatch.com/poster/321587621/s166/From.avif" alt="FROM">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">FROM</h3>
+                    <span class="added-date">Added: March 1, 2025</span>
+                    <div class="movie-meta">
+                        <span>Drama, Horror, Mystery</span>
+                        <div class="rating">
+                            <i>★</i> 9.2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Deadpool & Wolverine -->
+        <a href="deadpool3-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="movie">
+                <span class="content-type">Movie</span>
+                <span class="trending-label">#4 Trending</span>
+                <img src="https://cdn.kinocheck.com/i/d3mx9y2anl.jpg" alt="Deadpool & Wolverine">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Deadpool & Wolverine</h3>
+                    <span class="added-date">Added: February 15, 2025</span>
+                    <div class="movie-meta">
+                        <span>Action, Comedy, Adventure</span>
+                        <div class="rating">
+                            <i>★</i> 8.3
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Jujutsu Kaisen -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <span class="trending-label">#5 Trending</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BMTMwMDM3NjQtODFjNi00ZGRhLTg4ZmYtNzQ3Y2FmZTIyNzM2XkEyXkFqcGdeQXVyMTA1OTcyNDQ4._V1_.jpg" alt="Jujutsu Kaisen">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Jujutsu Kaisen</h3>
+                    <span class="added-date">Added: February 10, 2025</span>
+                    <div class="movie-meta">
+                        <span>Anime, Action, Fantasy</span>
+                        <div class="rating">
+                            <i>★</i> 8.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- John Wick 4 -->
+        <a href="johnwick4-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="movie">
+                <span class="content-type">Movie</span>
+                <span class="trending-label">#6 Trending</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BMDExZGMyOTMtMDgyYi00NGIwLWJhMTEtOTdkZGFjNmZiMTEwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_FMjpg_UX1000_.jpg" alt="John Wick 4">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">John Wick 4</h3>
+                    <span class="added-date">Added: February 5, 2025</span>
+                    <div class="movie-meta">
+                        <span>Action, Thriller</span>
+                        <div class="rating">
+                            <i>★</i> 7.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- New Releases Section -->
+    <h2 class="section-title">New Releases</h2>
+    <div class="content-grid" id="new-content">
+        <!-- Joker 2: Folie à Deux -->
+        <a href="joker2-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="movie">
+                <span class="content-type">Movie</span>
+                <span class="new-label">New</span>
+                <img src="https://cdn.kinocheck.com/i/paucjss7ne.jpg" alt="Joker 2">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Joker 2: Folie à Deux</h3>
+                    <span class="added-date">Added: March 4, 2025</span>
+                    <div class="movie-meta">
+                        <span>Drama, Thriller, Crime</span>
+                        <div class="rating">
+                            <i>★</i> 8.1
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- The Last of Us -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <span class="new-label">New</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BZGUzYTI3M2EtZmM0Yy00NGUyLWI4ODEtN2Q3ZGJlYzhhZjU3XkEyXkFqcGdeQXVyNTM0OTY1OQ@@._V1_.jpg" alt="The Last of Us">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Last of Us</h3>
+                    <span class="added-date">Added: March 3, 2025</span>
+                    <div class="movie-meta">
+                        <span>Drama, Action, Horror</span>
+                        <div class="rating">
+                            <i>★</i> 8.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Attack on Titan -->
+        <a href="attack-on-titan-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <span class="new-label">New Season</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg" alt="Attack on Titan">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Attack on Titan</h3>
+                    <span class="added-date">Added: March 2, 2025</span>
+                    <div class="movie-meta">
+                        <span>Anime, Action, Fantasy</span>
+                        <div class="rating">
+                            <i>★</i> 9.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Tower of God -->
+        <a href="tower-of-god-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <span class="new-label">New Season</span>
+                <img src="https://aniworld.to/public/img/cover/tower-of-god-stream-cover-8nCCJxa8YByM62sG2rhj2bG2LtGm6iRX_220x330.jpg" alt="Tower of God">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Tower of God</h3>
+                    <span class="added-date">Added: February 28, 2025</span>
+                    <div class="movie-meta">
+                        <span>Anime, Adventure, Fantasy</span>
+                        <div class="rating">
+                            <i>★</i> 7.6
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- The Boys -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <span class="new-label">New Season</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BOTEyNDJhMDAtY2U5ZS00OTMzLTkwODEtMWY5ZjEyNzgzZWYzXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg" alt="The Boys">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Boys</h3>
+                    <span class="added-date">Added: February 26, 2025</span>
+                    <div class="movie-meta">
+                        <span>Action, Comedy, Crime</span>
+                        <div class="rating">
+                            <i>★</i> 8.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Hitman - Agent 47 -->
+        <a href="hitman-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="movie">
+                <span class="content-type">Movie</span>
+                <span class="new-label">New</span>
+                <img src="https://cdn.kinocheck.com/i/2ibqysun2s.jpg" alt="Hitman - Agent 47">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Hitman - Agent 47</h3>
+                    <span class="added-date">Added: February 24, 2025</span>
+                    <div class="movie-meta">
+                        <span>Action, Thriller</span>
+                        <div class="rating">
+                            <i>★</i> 5.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Section Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Top Rated Section -->
+    <h2 class="section-title">Top Rated</h2>
+    <div class="content-grid" id="top-rated-content">
+        <!-- FROM -->
+        <a href="series-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <img src="https://images.justwatch.com/poster/321587621/s166/From.avif" alt="FROM">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">FROM</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Horror, Mystery</span>
+                        <div class="rating">
+                            <i>★</i> 9.2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Steins;Gate -->
+        <a href="steins-gate-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BMjUxMzE4ZDctODNjMS00MzIwLThjNDktODkwYjc5YWU0MDc0XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_.jpg" alt="Steins;Gate">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Steins;Gate</h3>
+                    <div class="movie-meta">
+                        <span>Anime, Sci-Fi, Thriller</span>
+                        <div class="rating">
+                            <i>★</i> 9.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Attack on Titan -->
+        <a href="attack-on-titan-detail.html" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg" alt="Attack on Titan">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Attack on Titan</h3>
+                    <div class="movie-meta">
+                        <span>Anime, Action, Fantasy</span>
+                        <div class="rating">
+                            <i>★</i> 9.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- The Office -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BMDNkOTE4NDQtMTNmYi00MWE0LWE4ZTktYTc0NzhhNWIzNzJiXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_.jpg" alt="The Office">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">The Office</h3>
+                    <div class="movie-meta">
+                        <span>Comedy, Mockumentary</span>
+                        <div class="rating">
+                            <i>★</i> 9.0
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Breaking Bad -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-type="tv-show">
+                <span class="content-type">TV Show</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BNDkyZThhNmMtZDBjYS00NDBmLTlkMjgtNWM2ZWYzZDQxZWU1XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_FMjpg_UX1000_.jpg" alt="Breaking Bad">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Breaking Bad</h3>
+                    <div class="movie-meta">
+                        <span>Drama, Crime, Thriller</span>
+                        <div class="rating">
+                            <i>★</i> 9.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Interstellar -->
+        <a href="#" style="text-decoration: none;">
+            <div class="movie-card" data-type="movie">
+                <span class="content-type">Movie</span>
+                <img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="Interstellar">
+                <div class="overlay">
+                    <div class="play-btn">
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">Interstellar</h3>
+                    <div class="movie-meta">
+                        <span>Sci-Fi, Adventure, Drama</span>
+                        <div class="rating">
+                            <i>★</i> 8.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <button class="pagination-btn disabled">❮</button>
+        <button class="pagination-btn active">1</button>
+        <button class="pagination-btn">2</button>
+        <button class="pagination-btn">3</button>
+        <button class="pagination-btn">❯</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Content filter functionality
+            const contentFilter = document.getElementById('contentFilter');
+            const contentCards = document.querySelectorAll('.movie-card');
+            
+            contentFilter.addEventListener('change', function() {
+                const selectedType = this.value;
+                
+                contentCards.forEach(card => {
+                    const cardType = card.dataset.type;
+                    const cardElement = card.closest('a');
+                    
+                    if (selectedType === 'all' || cardType === selectedType) {
+                        cardElement.style.display = 'block';
+                    } else {
+                        cardElement.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Time period filter functionality
+            const timeFilter = document.getElementById('timeFilter');
+            
+            timeFilter.addEventListener('change', function() {
+                const selectedTimePeriod = this.value;
+                console.log(`Filtering by time period: ${selectedTimePeriod}`);
+                // Here you would implement actual time filtering logic
+            });
+            
+            // Sort functionality
+            const sortSelect = document.getElementById('sortBy');
+            
+            sortSelect.addEventListener('change', function() {
+                const sortBy = this.value;
+                console.log(`Sorting content by: ${sortBy}`);
+                // Here you would implement actual sorting logic
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            
+            // Collection of all content (movies and shows)
+            const allContent = [
+                { 
+                    title: "House of the Dragon", 
+                    type: "TV Show", 
+                    url: "hotd-detail.html", 
+                    image: "https://gzhls.at/i/67/74/2866774-n0.jpg", 
+                    genre: "Fantasy, Drama" 
+                },
+                { 
+                    title: "Oppenheimer", 
+                    type: "Movie", 
+                    url: "oppenheimer-detail.html", 
+                    image: "https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg", 
+                    genre: "Biography, Drama" 
+                },
+                { 
+                    title: "FROM", 
+                    type: "TV Show", 
+                    url: "series-detail.html", 
+                    image: "https://images.justwatch.com/poster/321587621/s166/From.avif", 
+                    genre: "Drama, Horror, Mystery" 
+                },
+                { 
+                    title: "Joker: Folie à Deux", 
+                    type: "Movie", 
+                    url: "joker2-detail.html", 
+                    image: "https://cdn.kinocheck.com/i/paucjss7ne.jpg", 
+                    genre: "Drama, Thriller, Crime" 
+                },
+                { 
+                    title: "John Wick 4", 
+                    type: "Movie", 
+                    url: "johnwick4-detail.html", 
+                    image: "https://m.media-amazon.com/images/M/MV5BMDExZGMyOTMtMDgyYi00NGIwLWJhMTEtOTdkZGFjNmZiMTEwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_FMjpg_UX1000_.jpg", 
+                    genre: "Action, Thriller" 
+                },
+                { 
+                    title: "Deadpool & Wolverine", 
+                    type: "Movie", 
+                    url: "deadpool3-detail.html", 
+                    image: "https://cdn.kinocheck.com/i/d3mx9y2anl.jpg", 
+                    genre: "Action, Comedy, Adventure" 
+                },
+                {
+                    title: "Attack on Titan",
+                    type: "TV Show",
+                    url: "attack-on-titan-detail.html",
+                    image: "https://m.media-amazon.com/images/M/MV5BNDFjYTIxMjctYTQ2ZC00OGQ4LWE3OGYtNDdiMzNiNDZlMDAwXkEyXkFqcGdeQXVyNzI3NjY3NjQ@._V1_FMjpg_UX1000_.jpg",
+                    genre: "Anime, Action, Fantasy"
+                },
+                {
+                    title: "Steins;Gate",
+                    type: "TV Show",
+                    url: "steins-gate-detail.html",
+                    image: "https://m.media-amazon.com/images/M/MV5BMjUxMzE4ZDctODNjMS00MzIwLThjNDktODkwYjc5YWU0MDc0XkEyXkFqcGdeQXVyNjc3OTE4Nzk@._V1_.jpg",
+                    genre: "Anime, Sci-Fi, Thriller"
+                },
+                {
+                    title: "Tower of God",
+                    type: "TV Show",
+                    url: "tower-of-god-detail.html",
+                    image: "https://aniworld.to/public/img/cover/tower-of-god-stream-cover-8nCCJxa8YByM62sG2rhj2bG2LtGm6iRX_220x330.jpg",
+                    genre: "Anime, Adventure, Fantasy"
+                }
+            ];
+            
+            // Function to perform search and display results
+            function performSearch(query) {
+                if (!query || query.length < 2) {
+                    searchResults.classList.remove('active');
+                    return;
+                }
+
+                query = query.toLowerCase();
+                const matchingResults = allContent.filter(item => 
+                    item.title.toLowerCase().includes(query) || 
+                    item.genre.toLowerCase().includes(query) ||
+                    item.type.toLowerCase().includes(query)
+                );
+                
+                // Display results
+                searchResults.innerHTML = '';
+                
+                if (matchingResults.length === 0) {
+                    searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                } else {
+                    matchingResults.forEach(item => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'search-result-item';
+                        resultItem.innerHTML = `
+                            <img src="${item.image}" alt="${item.title}" class="search-result-thumb">
+                            <div class="search-result-info">
+                                <div class="search-result-title">${item.title}</div>
+                                <div class="search-result-meta">${item.type} • ${item.genre}</div>
+                            </div>
+                        `;
+                        
+                        // Add click event to redirect to content page
+                        resultItem.addEventListener('click', () => {
+                            window.location.href = item.url;
+                        });
+                        
+                        searchResults.appendChild(resultItem);
+                    });
+                }
+                
+                searchResults.classList.add('active');
+            }
+
+            // Search input event listeners
+            searchInput.addEventListener('input', () => {
+                performSearch(searchInput.value);
+            });
+
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.length >= 2) {
+                    performSearch(searchInput.value);
+                }
+            });
+
+            // Close search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.remove('active');
+                }
+            });
+
+            // Prevent the dropdown from closing when clicking inside it
+            searchResults.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+            
+            // Pagination functionality
+            const paginationButtons = document.querySelectorAll('.pagination-btn');
+            
+            paginationButtons.forEach(button => {
+                if (!button.classList.contains('disabled')) {
+                    button.addEventListener('click', function() {
+                        // Remove active class from all buttons
+                        paginationButtons.forEach(btn => btn.classList.remove('active'));
+                        
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // Here you would implement actual pagination logic
+                        console.log(`Navigating to page: ${this.textContent}`);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

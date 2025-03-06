@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Another - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="detail-styles.css">
+</head>
+<body>
+    <!-- Header (same as main page) -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#" class="active">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                    <i>🔍</i>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/32/32" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="detail-content">
+        <!-- Series Info Section -->
+        <section class="series-info-container">
+            <div class="series-poster">
+                <img src="https://aniworld.to/public/img/cover/another-stream-cover-b6AzljvYW1fg6QclAXZGsjGCa3mxvzn1_220x330.jpg" alt="Another">
+            </div>
+            
+            <div class="series-description">
+                <h1>Another</h1>
+                <div class="series-meta">
+                    <span class="year">2012</span>
+                    <span class="dot">•</span>
+                    <span class="rating">TV-MA</span>
+                    <span class="dot">•</span>
+                    <span class="seasons">1 Season</span>
+                    <span class="dot">•</span>
+                    <span class="genre">Anime, Horror, Mystery, Supernatural, Thriller</span>
+                </div>
+                <p class="synopsis">
+                    In 1972, Misaki, a popular student in Yomiyama North Middle School's class 3-3, suddenly died partway through the school year. Devastated by this loss, the students and teacher acted like Misaki was still alive, leading to a strange presence in the graduation photo.
+                </p>
+                <p class="synopsis">
+                    In the spring of 1998, 15-year-old Koichi Sakakibara transfers to Yomiyama North and becomes a member of class 3-3. He soon learns of the "curse of class 3-3" and the mysterious countermeasures in place to prevent it. When he meets the strange Mei Misaki, a student whom everyone else seems to ignore, he sets upon a dark journey to uncover the terrifying truth behind these mysterious deaths that plague the class year after year.
+                </p>
+                <div class="cast">
+                    <h3>Cast:</h3>
+                    <p>Atsushi Abe, Natsumi Takamori, Miki Itō, Takahiro Sakurai, Tomoaki Maeno</p>
+                </div>
+                <div class="creators">
+                    <h3>Director:</h3>
+                    <p>Tsutomu Mizushima</p>
+                </div>
+            </div>
+            
+            <div class="series-actions">
+                <button class="action-btn subscribe-btn">
+                    <i class="icon">🔔</i>
+                    Subscribe to Series
+                </button>
+                <button class="action-btn watchlist-btn">
+                    <i class="icon">➕</i>
+                    Add to Watchlist
+                </button>
+                <button class="action-btn trailer-btn">
+                    <i class="icon">▶</i>
+                    Watch Trailer
+                </button>
+                <div class="rating-container">
+                    <h3>Rate this:</h3>
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                        <span class="star" data-rating="6">★</span>
+                        <span class="star" data-rating="7">★</span>
+                        <span class="star" data-rating="8">★</span>
+                        <span class="star" data-rating="9">★</span>
+                        <span class="star" data-rating="10">★</span>
+                    </div>
+                    <div class="avg-rating">
+                        Average: <span>7.7</span>/10
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seasons & Episodes Section -->
+        <section class="episodes-section">
+            <div class="seasons-selector">
+                <h2>Seasons</h2>
+                <div class="season-boxes">
+                    <div class="season-box active" data-season="1">1</div>
+                </div>
+            </div>
+            
+            <div class="episodes-container">
+                <h2>Episodes - Season 1</h2>
+                
+                <div class="episodes-list" id="season1-episodes">
+                    <!-- Episode 1 -->
+                    <div class="episode-item" data-episode="1">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"Rough Sketch"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jan 10, 2012</div>
+                            <div class="episode-description">
+                                Koichi Sakakibara transfers to Yomiyama North Middle School's class 3-3, but is hospitalized before his first day. While in the hospital, he meets a strange girl with an eye patch who introduces herself as Mei Misaki.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 2 -->
+                    <div class="episode-item" data-episode="2">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"Blueprint"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jan 17, 2012</div>
+                            <div class="episode-description">
+                                Koichi finally begins school and is introduced to his classmates, who behave strangely. He sees Mei again, but his classmates act as though she doesn't exist, leaving him confused and intrigued.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 3 -->
+                    <div class="episode-item" data-episode="3">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"Bone Work"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jan 24, 2012</div>
+                            <div class="episode-description">
+                                Koichi continues to interact with Mei despite warnings from his classmates. He begins to learn about the mysterious curse affecting class 3-3, where students and their relatives die in horrible ways.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 4 -->
+                    <div class="episode-item" data-episode="4">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"Put Flesh"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Jan 31, 2012</div>
+                            <div class="episode-description">
+                                The first death related to the curse occurs, and class 3-3 becomes increasingly tense. Koichi learns more about the countermeasures implemented to prevent the curse, including the practice of treating one student as if they don't exist.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 5 -->
+                    <div class="episode-item" data-episode="5">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"Build Limbs"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Feb 7, 2012</div>
+                            <div class="episode-description">
+                                Mei reveals to Koichi that her left eye is actually a prosthetic, and that her real eye, which she keeps covered with her eye patch, allows her to "see things that aren't supposed to be seen."
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 6 -->
+                    <div class="episode-item" data-episode="6">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"Face to Face"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Feb 14, 2012</div>
+                            <div class="episode-description">
+                                The deaths continue, and suspicions grow among the students. Koichi and Mei visit a mysterious old shrine to search for clues about the curse's origin, delving deeper into the mystery.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 7 -->
+                    <div class="episode-item" data-episode="7">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"Sphere Joint"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Feb 21, 2012</div>
+                            <div class="episode-description">
+                                Koichi and his classmates go on a school trip. The curse follows them, resulting in more deaths. The tension between students rises as they try to determine who the "extra" person in the class is.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 8 -->
+                    <div class="episode-item" data-episode="8">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 8">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 8</div>
+                            <div class="episode-title">"Hair Stand"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Feb 28, 2012</div>
+                            <div class="episode-description">
+                                The school trip continues with more disturbing events. Mei uses her special eye to identify who among them shouldn't exist, but her revelation only deepens the mystery.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 9 -->
+                    <div class="episode-item" data-episode="9">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 9">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 9</div>
+                            <div class="episode-title">"Body Paint"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Mar 6, 2012</div>
+                            <div class="episode-description">
+                                Back at school, the class becomes increasingly paranoid. Koichi discovers more about the past incidents of the curse and begins to piece together how it might be stopped.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 10 -->
+                    <div class="episode-item" data-episode="10">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 10">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 10</div>
+                            <div class="episode-title">"Glass Eye"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Mar 13, 2012</div>
+                            <div class="episode-description">
+                                Mei shares more about her ability to see death with her artificial eye. Koichi finds evidence pointing toward the identity of the "extra" person in the class, bringing them closer to ending the curse.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 11 -->
+                    <div class="episode-item" data-episode="11">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 11">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 11</div>
+                            <div class="episode-title">"Makeup"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Mar 20, 2012</div>
+                            <div class="episode-description">
+                                The truth about the "extra" student is finally revealed, but chaos erupts as some students take drastic measures to end the curse, leading to even more death and destruction.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 12 -->
+                    <div class="episode-item" data-episode="12">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 12">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 12</div>
+                            <div class="episode-title">"Stand By Oneself"</div>
+                            <div class="episode-duration">24 min</div>
+                            <div class="episode-info">Aired: Mar 27, 2012</div>
+                            <div class="episode-description">
+                                In the chilling series finale, the full truth of the curse, the identity of the dead student, and the events of 1972 are revealed. Koichi and Mei make a final attempt to end the nightmare once and for all.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Video Player Modal -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Another - S1:E1 Rough Sketch</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="video-container">
+                    <!-- Video player/iframe will be inserted here by JavaScript -->
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Select an episode to watch</p>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="language-selection">
+                        <span>Language: </span>
+                        <button class="language-btn active" id="langJapanese" title="Japanese Audio">
+                            <img src="https://flagcdn.com/24x18/jp.png" alt="Japanese" class="flag-icon">
+                        </button>
+                        <button class="language-btn" id="langEnglish" title="English Audio">
+                            <img src="https://flagcdn.com/24x18/us.png" alt="English" class="flag-icon">
+                        </button>
+                    </div>
+                    <div class="player-info">
+                        <span>Source: voe.sx</span>
+                        <select class="quality-selector">
+                            <option value="auto">Auto Quality</option>
+                            <option value="1080p">1080p</option>
+                            <option value="720p">720p</option>
+                            <option value="480p">480p</option>
+                            <option value="360p">360p</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Anime</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <!-- Integrated JavaScript (formerly another-script.js) -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Episode video URLs for Season 1 (12 episodes)
+        const season1Videos = {
+            "1": "https://voe.sx/e/tcdudchm5qcp", // Episode 1
+            "2": "https://voe.sx/e/hlcnxt3erxjb", // Episode 2
+            "3": "https://voe.sx/e/wxv858za3klt", // Episode 3
+            "4": "https://voe.sx/e/7rai9drjj42u", // Episode 4
+            "5": "https://voe.sx/e/tirre8dzgyli", // Episode 5
+            "6": "https://voe.sx/e/t6qwgwatdpdm", // Episode 6
+            "7": "https://voe.sx/e/btkh3rfprios", // Episode 7
+            "8": "https://voe.sx/e/1qgamprgoka2", // Episode 8
+            "9": "https://voe.sx/e/mcbblraulvkc", // Episode 9
+            "10": "https://voe.sx/e/vbfyzabq4afu", // Episode 10
+            "11": "https://voe.sx/e/oxxwglbka9gc", // Episode 11
+            "12": "https://voe.sx/e/wwlkyiyrddin"  // Episode 12
+        };
+        
+        // OVA Episode URLs
+        const ovaVideos = {
+            "1": "https://voe.sx/e/3q3z9l3jcw6i" // Another: The Other - Inga OVA
+        };
+        
+        // Placeholder for English version videos (to be filled later)
+        const season1VideosEng = {
+            "1": "https://voe.sx/e/tcdudchm5qcp", // Same links as Japanese for now
+            "2": "https://voe.sx/e/hlcnxt3erxjb",
+            "3": "https://voe.sx/e/wxv858za3klt",
+            "4": "https://voe.sx/e/7rai9drjj42u",
+            "5": "https://voe.sx/e/tirre8dzgyli",
+            "6": "https://voe.sx/e/t6qwgwatdpdm",
+            "7": "https://voe.sx/e/btkh3rfprios",
+            "8": "https://voe.sx/e/1qgamprgoka2",
+            "9": "https://voe.sx/e/mcbblraulvkc",
+            "10": "https://voe.sx/e/vbfyzabq4afu",
+            "11": "https://voe.sx/e/oxxwglbka9gc",
+            "12": "https://voe.sx/e/wwlkyiyrddin"
+        };
+        
+        const ovaVideosEng = {
+            "1": "https://voe.sx/e/3q3z9l3jcw6i" // Same link as Japanese for now
+        };
+        
+        // Series thumbnail
+        const seriesThumbnail = "https://aniworld.to/public/img/cover/another-stream-cover-b6AzljvYW1fg6QclAXZGsjGCa3mxvzn1_220x330.jpg";
+        
+        // Current playing episode tracking
+        let currentSeason = "1";
+        let currentEpisode = "1";
+        let currentLanguage = "jp"; // Default language is Japanese
+        
+        // Seasons selector functionality
+        const seasonBoxes = document.querySelectorAll('.season-box');
+        const episodesTitle = document.querySelector('.episodes-container h2');
+        const episodesLists = {
+            season1: document.getElementById('season1-episodes')
+        };
+        
+        // Fix episode thumbnails - set same series image for all thumbnails
+        document.querySelectorAll('.episode-item .episode-thumbnail img').forEach(img => {
+            img.src = seriesThumbnail;
+            img.alt = "Another";
+            // Adjust the image display to show properly in the thumbnail container
+            img.style.objectFit = "cover";
+            img.style.objectPosition = "top center";
+        });
+        
+        // Video player related elements
+        const videoModal = document.getElementById('videoModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const videoContainer = document.querySelector('.video-container');
+        const closeModal = document.querySelector('.close-modal');
+        
+        // Episode click handler - Open video modal
+        const episodeItems = document.querySelectorAll('.episode-item');
+        episodeItems.forEach(episode => {
+            episode.addEventListener('click', () => {
+                // Get the current episode number from the clicked element
+                currentEpisode = episode.getAttribute('data-episode');
+                
+                // Get season number (default to 1 if not found)
+                const activeSeasonBox = document.querySelector('.season-box.active');
+                currentSeason = activeSeasonBox ? activeSeasonBox.getAttribute('data-season') : '1';
+                
+                // Get episode details for the modal title
+                const episodeNumber = episode.querySelector('.episode-number').textContent;
+                const episodeTitle = episode.querySelector('.episode-title').textContent;
+                
+                // Set modal title
+                modalTitle.textContent = `Another - ${episodeNumber} ${episodeTitle}`;
+                
+                // Get video source based on language and episode
+                let videoSrc = null;
+                if (currentLanguage === 'jp') {
+                    videoSrc = season1Videos[currentEpisode];
+                } else {
+                    videoSrc = season1VideosEng[currentEpisode];
+                }
+                
+                // Set up the video player
+                if (videoSrc) {
+                    videoContainer.innerHTML = '';
+                    
+                    // Create and append the iframe
+                    const iframe = document.createElement('iframe');
+                    iframe.src = videoSrc;
+                    iframe.width = '100%';
+                    iframe.height = '100%';
+                    iframe.style.position = 'absolute';
+                    iframe.style.top = '0';
+                    iframe.style.left = '0';
+                    iframe.frameBorder = '0';
+                    iframe.scrolling = 'no';
+                    iframe.allowFullscreen = true;
+                    
+                    videoContainer.appendChild(iframe);
+                    
+                    // Show the modal
+                    videoModal.style.display = 'flex';
+                    console.log(`Playing Episode ${currentEpisode} in ${currentLanguage === 'jp' ? 'Japanese' : 'English'}`);
+                } else {
+                    console.error('Video source not found for the selected episode');
+                    
+                    // Show error message in the video container
+                    videoContainer.innerHTML = `
+                        <div class="video-placeholder">
+                            <div class="play-button">⚠️</div>
+                            <p>Video source not available for this episode</p>
+                        </div>
+                    `;
+                    
+                    // Show the modal anyway to display the error
+                    videoModal.style.display = 'flex';
+                }
+            });
+        });
+        
+        // Language selection handlers
+        const langJapanese = document.getElementById('langJapanese');
+        const langEnglish = document.getElementById('langEnglish');
+        
+        if (langJapanese) {
+            langJapanese.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+                currentLanguage = 'jp';
+                
+                // Update active state of language buttons
+                langEnglish.classList.remove('active');
+                this.classList.add('active');
+                
+                // If a video is currently playing, reload it with the new language
+                if (videoModal.style.display === 'flex') {
+                    loadVideoWithCurrentSettings();
+                }
+            });
+        }
+        
+        if (langEnglish) {
+            langEnglish.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+                currentLanguage = 'en';
+                
+                // Update active state of language buttons
+                langJapanese.classList.remove('active');
+                this.classList.add('active');
+                
+                // If a video is currently playing, reload it with the new language
+                if (videoModal.style.display === 'flex') {
+                    loadVideoWithCurrentSettings();
+                }
+            });
+        }
+        
+        // Helper function to load video with current settings
+        function loadVideoWithCurrentSettings() {
+            let videoSrc = null;
+            
+            if (currentLanguage === 'jp') {
+                videoSrc = season1Videos[currentEpisode];
+            } else {
+                videoSrc = season1VideosEng[currentEpisode];
+            }
+            
+            if (videoSrc) {
+                const iframe = videoContainer.querySelector('iframe');
+                if (iframe) {
+                    iframe.src = videoSrc;
+                } else {
+                    // Create new iframe if it doesn't exist
+                    const newIframe = document.createElement('iframe');
+                    newIframe.src = videoSrc;
+                    newIframe.width = '100%';
+                    newIframe.height = '100%';
+                    newIframe.style.position = 'absolute';
+                    newIframe.style.top = '0';
+                    newIframe.style.left = '0';
+                    newIframe.frameBorder = '0';
+                    newIframe.scrolling = 'no';
+                    newIframe.allowFullscreen = true;
+                    
+                    videoContainer.innerHTML = '';
+                    videoContainer.appendChild(newIframe);
+                }
+                
+                // Update modal title with language
+                const langText = currentLanguage === 'jp' ? 'Japanese' : 'English';
+                if (modalTitle.textContent.includes('(')) {
+                    modalTitle.textContent = modalTitle.textContent.split('(')[0] + `(${langText})`;
+                } else {
+                    modalTitle.textContent = modalTitle.textContent + ` (${langText})`;
+                }
+            }
+        }
+        
+        // Close modal when clicking the X
+        closeModal.addEventListener('click', () => {
+            videoModal.style.display = 'none';
+            // Stop any playing videos by clearing the container
+            videoContainer.innerHTML = `
+                <div class="video-placeholder">
+                    <div class="play-button">▶</div>
+                    <p>Select an episode to watch</p>
+                </div>
+            `;
+        });
+        
+        // Close modal when clicking outside the content
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                videoModal.style.display = 'none';
+                // Stop any playing videos by clearing the container
+                videoContainer.innerHTML = `
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Select an episode to watch</p>
+                    </div>
+                `;
+            }
+        });
+        
+        // Star rating functionality
+        const stars = document.querySelectorAll('.star');
+        
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const rating = parseInt(star.dataset.rating);
+                
+                // Clear all active stars
+                stars.forEach(s => s.classList.remove('active'));
+                
+                // Set active stars up to the clicked one
+                stars.forEach(s => {
+                    if (parseInt(s.dataset.rating) <= rating) {
+                        s.classList.add('active');
+                    }
+                });
+                
+                console.log(`User rated the series ${rating}/10`);
+            });
+        });
+        
+        // Action buttons functionality
+        const subscribeBtn = document.querySelector('.subscribe-btn');
+        const watchlistBtn = document.querySelector('.watchlist-btn');
+        const trailerBtn = document.querySelector('.trailer-btn');
+        
+        if (subscribeBtn) {
+            subscribeBtn.addEventListener('click', () => {
+                // Toggle subscribe status
+                const isSubscribed = subscribeBtn.classList.toggle('subscribed');
+                
+                if (isSubscribed) {
+                    subscribeBtn.innerHTML = '<i class="icon">✓</i> Subscribed';
+                    subscribeBtn.style.backgroundColor = '#388E3C';
+                } else {
+                    subscribeBtn.innerHTML = '<i class="icon">🔔</i> Subscribe to Series';
+                    subscribeBtn.style.backgroundColor = '#4CAF50';
+                }
+                
+                console.log(`User ${isSubscribed ? 'subscribed to' : 'unsubscribed from'} the series`);
+            });
+        }
+        
+        if (watchlistBtn) {
+            watchlistBtn.addEventListener('click', () => {
+                // Toggle watchlist status
+                const isInWatchlist = watchlistBtn.classList.toggle('in-watchlist');
+                
+                if (isInWatchlist) {
+                    watchlistBtn.innerHTML = '<i class="icon">✓</i> In Watchlist';
+                    watchlistBtn.style.backgroundColor = '#1565C0';
+                } else {
+                    watchlistBtn.innerHTML = '<i class="icon">➕</i> Add to Watchlist';
+                    watchlistBtn.style.backgroundColor = '#2196F3';
+                }
+                
+                console.log(`User ${isInWatchlist ? 'added series to' : 'removed series from'} watchlist`);
+            });
+        }
+        
+        if (trailerBtn) {
+            trailerBtn.addEventListener('click', () => {
+                // Open the video modal with the trailer
+                modalTitle.textContent = 'Another - Official Trailer';
+                
+                // Use the official trailer embed URL
+                videoContainer.innerHTML = '';
+                
+                const trailerIframe = document.createElement('iframe');
+                trailerIframe.src = "https://www.youtube.com/embed/kupW7eDG48s"; // Official Another trailer
+                trailerIframe.width = '100%';
+                trailerIframe.height = '100%';
+                trailerIframe.style.position = 'absolute';
+                trailerIframe.style.top = '0';
+                trailerIframe.style.left = '0';
+                trailerIframe.frameBorder = '0';
+                trailerIframe.allowFullscreen = true;
+                
+                videoContainer.appendChild(trailerIframe);
+                
+                videoModal.style.display = 'flex';
+                console.log('Playing series trailer');
+            });
+        }
+        
+        // Quality selector implementation
+        const qualitySelector = document.querySelector('.quality-selector');
+        if (qualitySelector) {
+            qualitySelector.addEventListener('change', function() {
+                const selectedQuality = this.value;
+                console.log(`Quality changed to: ${selectedQuality}`);
+                
+                // Actually change the video quality (this would need to communicate with the video player)
+                // This is a placeholder implementation since most embed players handle quality internally
+                if (videoContainer.querySelector('iframe')) {
+                    // In a real implementation, you might need to reload the iframe with a quality parameter
+                    // or use player API to set quality
+                    
+                    // For demonstration purposes, show a notification
+                    const notification = document.createElement('div');
+                    notification.className = 'quality-notification';
+                    notification.textContent = `Quality changing to ${selectedQuality}...`;
+                    notification.style.position = 'absolute';
+                    notification.style.bottom = '10px';
+                    notification.style.left = '50%';
+                    notification.style.transform = 'translateX(-50%)';
+                    notification.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+                    notification.style.color = 'white';
+                    notification.style.padding = '8px 12px';
+                    notification.style.borderRadius = '4px';
+                    notification.style.zIndex = '10';
+                    
+                    videoContainer.appendChild(notification);
+                    
+                    // Remove notification after 2 seconds
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 2000);
+                }
+            });
+        }
+
+        // Add keyboard shortcuts for video player
+        document.addEventListener('keydown', (e) => {
+            if (videoModal.style.display === 'flex') {
+                // Escape key to close modal
+                if (e.key === 'Escape') {
+                    closeModal.click();
+                }
+            }
+        });
+        
+        // Add CSS styles for fixed elements
+        const styleElement = document.createElement('style');
+        styleElement.textContent = `
+            .episode-item {
+                cursor: pointer;
+                transition: transform 0.2s ease;
+            }
+            
+            .episode-item:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .episode-thumbnail {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .episode-thumbnail img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .play-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.4);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            
+            .episode-item:hover .play-overlay {
+                opacity: 1;
+            }
+            
+            .play-icon {
+                width: 40px;
+                height: 40px;
+                background-color: rgba(229, 9, 20, 0.8);
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size: 20px;
+            }
+        `;
+        
+        document.head.appendChild(styleElement);
+    });
+    </script>
+</body>
+</html>

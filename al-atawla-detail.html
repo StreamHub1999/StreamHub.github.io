@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al Atawla - StreamHub</title>
+    <style>
+        /* Global styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #141414;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e50914;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #f5f5f5;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-nav li {
+            margin-right: 20px;
+        }
+
+        .main-nav a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            color: #e50914;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .search {
+            position: relative;
+            margin-right: 20px;
+        }
+
+        .search input {
+            background-color: #000;
+            border: 1px solid #333;
+            color: #f5f5f5;
+            padding: 8px 36px 8px 10px;
+            border-radius: 4px;
+            width: 240px;
+        }
+
+        .search i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .user-profile img {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Main content styles */
+        .detail-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Series info section */
+        .series-info-container {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .series-poster img {
+            width: 220px;
+            height: 330px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .series-description {
+            max-width: 800px;
+        }
+
+        .series-description h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .series-meta {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .dot {
+            margin: 0 10px;
+        }
+
+        .synopsis {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .cast, .creators {
+            margin-top: 20px;
+        }
+
+        .cast h3, .creators h3 {
+            color: #aaa;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        /* Series actions */
+        .series-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .watchlist-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .trailer-btn {
+            background-color: #FFC107;
+            color: #000;
+        }
+
+        .action-btn .icon {
+            margin-right: 8px;
+        }
+
+        /* Star rating */
+        .rating-container {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        .rating-container h3 {
+            margin-bottom: 10px;
+        }
+
+        .star-rating {
+            display: flex;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .star {
+            color: #555;
+        }
+
+        .star.active, .star:hover {
+            color: gold;
+        }
+
+        .avg-rating {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Episodes section */
+        .episodes-section {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+        }
+
+        .seasons-selector h2 {
+            margin-bottom: 20px;
+        }
+
+        .season-boxes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .season-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .season-box.active {
+            background-color: #e50914;
+        }
+
+        .episodes-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .episodes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .episodes-list.hidden {
+            display: none;
+        }
+
+        .episode-item {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 15px;
+            background-color: #222;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .episode-item:hover {
+            transform: scale(1.01);
+            background-color: #333;
+        }
+
+        .episode-thumbnail {
+            position: relative;
+            width: 160px;
+            height: 90px;
+        }
+
+        .episode-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .episode-item:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            font-size: 24px;
+        }
+
+        .episode-details {
+            padding: 10px 15px 10px 0;
+        }
+
+        .episode-number {
+            font-weight: bold;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .episode-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .episode-duration, .episode-info {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .episode-description {
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Video modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            width: 80%;
+            max-width: 1200px;
+            background-color: #111;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #000;
+        }
+
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+            color: #aaa;
+        }
+
+        .play-button {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #000;
+        }
+
+        .language-selection {
+            display: flex;
+            align-items: center;
+        }
+
+        .language-btn {
+            background: none;
+            border: 1px solid #333;
+            margin-left: 10px;
+            padding: 5px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .language-btn.active {
+            opacity: 1;
+            border-color: #e50914;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 18px;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .quality-selector {
+            margin-left: 15px;
+            background-color: #111;
+            color: #f5f5f5;
+            border: 1px solid #333;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-column p {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: #333;
+            border-radius: 50%;
+            color: #f5f5f5;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #e50914;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #e50914;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html" class="active">TV Shows</a></li>
+                    <li><a href="arabic-series.html">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                    <i>🔍</i>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/32/32" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="detail-content">
+        <!-- Series Info Section -->
+        <section class="series-info-container">
+            <div class="series-poster">
+                <img src="http://i.epvpimg.com/iP4maab.jpg" alt="Al Atawla">
+            </div>
+            
+            <div class="series-description">
+                <h1>Al Atawla (The Table)</h1>
+                <div class="series-meta">
+                    <span class="year">2023-2024</span>
+                    <span class="dot">•</span>
+                    <span class="rating">TV-14</span>
+                    <span class="dot">•</span>
+                    <span class="seasons">2 Seasons</span>
+                    <span class="dot">•</span>
+                    <span class="genre">Crime, Drama, Thriller</span>
+                </div>
+                <p class="synopsis">
+                    "Al Atawla" (The Table) is a gripping Egyptian crime drama that follows the power struggles within the criminal underworld. The series revolves around a complex network of drug lords, corrupt officials, and ambitious players all vying for control of "The Table" - the symbolic center of power in the narcotics trade.
+                </p>
+                <p class="synopsis">
+                    When a major power vacuum emerges, longtime enemies and uneasy allies must navigate betrayals, revenge plots, and shifting loyalties, all while evading law enforcement. The story interweaves personal vendettas with business conflicts, showing how the criminal hierarchy affects lives across all social classes.
+                </p>
+                <div class="cast">
+                    <h3>Cast:</h3>
+                    <p>Amir Karara, Mahmoud Abdel-Moghni, Mai Omar, Maged El Masry, Ahmed Khaled Saleh, Khaled El Sawy</p>
+                </div>
+                <div class="creators">
+                    <h3>Director:</h3>
+                    <p>Khaled Marei</p>
+                </div>
+            </div>
+            
+            <div class="series-actions">
+                <button class="action-btn subscribe-btn">
+                    <i class="icon">🔔</i>
+                    Subscribe to Series
+                </button>
+                <button class="action-btn watchlist-btn">
+                    <i class="icon">➕</i>
+                    Add to Watchlist
+                </button>
+                <button class="action-btn trailer-btn">
+                    <i class="icon">▶</i>
+                    Watch Trailer
+                </button>
+                <div class="rating-container">
+                    <h3>Rate this:</h3>
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                        <span class="star" data-rating="6">★</span>
+                        <span class="star" data-rating="7">★</span>
+                        <span class="star" data-rating="8">★</span>
+                        <span class="star" data-rating="9">★</span>
+                        <span class="star" data-rating="10">★</span>
+                    </div>
+                    <div class="avg-rating">
+                        Average: <span>8.7</span>/10
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seasons & Episodes Section -->
+        <section class="episodes-section">
+            <div class="seasons-selector">
+                <h2>Seasons</h2>
+                <div class="season-boxes">
+                    <div class="season-box active" data-season="1">1</div>
+                    <div class="season-box" data-season="2">2</div>
+                </div>
+            </div>
+            
+            <div class="episodes-container">
+                <h2>Episodes - Season 1</h2>
+                
+                <div class="episodes-list" id="season1-episodes">
+                    <!-- Season 1 Episodes -->
+                    <!-- Episode 1 -->
+                    <div class="episode-item" data-episode="1">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"The Beginning"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 1, 2023</div>
+                            <div class="episode-description">
+                                The power struggle begins as major players in the criminal underworld position themselves around "The Table" following a significant disruption in the hierarchy.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 2 -->
+                    <div class="episode-item" data-episode="2">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"Alliances"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 8, 2023</div>
+                            <div class="episode-description">
+                                Uneasy alliances form as different factions see the advantage in joining forces against common enemies, while the authorities begin to take notice.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 3 -->
+                    <div class="episode-item" data-episode="3">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"Betrayal"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 15, 2023</div>
+                            <div class="episode-description">
+                                An unexpected betrayal throws carefully laid plans into chaos, forcing major players to reconsider their strategies and loyalties.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 4 -->
+                    <div class="episode-item" data-episode="4">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"Consequences"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 22, 2023</div>
+                            <div class="episode-description">
+                                The fallout from recent events reaches far and wide, affecting not only the criminal hierarchy but innocent bystanders caught in the crossfire.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 5 -->
+                    <div class="episode-item" data-episode="5">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"Retribution"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 29, 2023</div>
+                            <div class="episode-description">
+                                Plans for revenge are set in motion as those who have been wronged seek to balance the scales through increasingly desperate measures.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 6 -->
+                    <div class="episode-item" data-episode="6">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"Power Play"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: May 6, 2023</div>
+                            <div class="episode-description">
+                                A strategic move reshapes the balance of power at "The Table," while law enforcement begins closing in on key operations.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 7 -->
+                    <div class="episode-item" data-episode="7">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"Trust Issues"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: May 13, 2023</div>
+                            <div class="episode-description">
+                                As suspicions grow among the criminal hierarchy, a mole within the organization threatens to expose critical operations.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 8 -->
+                    <div class="episode-item" data-episode="8">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 8">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 8</div>
+                            <div class="episode-title">"Family Ties"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: May 20, 2023</div>
+                            <div class="episode-description">
+                                Personal and family connections complicate business decisions, leading to unexpected alliances and dangerous confrontations.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 9 -->
+                    <div class="episode-item" data-episode="9">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 9">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 9</div>
+                            <div class="episode-title">"Collateral Damage"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: May 27, 2023</div>
+                            <div class="episode-description">
+                                Innocent lives become entangled in the criminal web as the war for control escalates to new levels of violence.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 10 -->
+                    <div class="episode-item" data-episode="10">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 10">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 10</div>
+                            <div class="episode-title">"Point of No Return"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jun 3, 2023</div>
+                            <div class="episode-description">
+                                A decisive act changes the trajectory of the conflict, with consequences that will reverberate through the entire underworld.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 11 -->
+                    <div class="episode-item" data-episode="11">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 11">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 11</div>
+                            <div class="episode-title">"Desperate Measures"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jun 10, 2023</div>
+                            <div class="episode-description">
+                                With backs against the wall, key players resort to extreme tactics that blur the line between strategy and madness.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 12 -->
+                    <div class="episode-item" data-episode="12">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 12">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 12</div>
+                            <div class="episode-title">"The Inner Circle"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jun 17, 2023</div>
+                            <div class="episode-description">
+                                A closer look at the elite members of "The Table" reveals hidden motivations and long-standing vendettas that shaped the current conflict.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 13 -->
+                    <div class="episode-item" data-episode="13">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 13">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 13</div>
+                            <div class="episode-title">"Double Cross"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jun 24, 2023</div>
+                            <div class="episode-description">
+                                A shocking betrayal from within changes everything, forcing allies to reconsider who they can truly trust.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 14 -->
+                    <div class="episode-item" data-episode="14">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 14">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 14</div>
+                            <div class="episode-title">"The Outsider"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jul 1, 2023</div>
+                            <div class="episode-description">
+                                A new player enters the game with resources and connections that threaten to upend the established order of "The Table."
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 15 -->
+                    <div class="episode-item" data-episode="15">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 15">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 15</div>
+                            <div class="episode-title">"The Long Game"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jul 8, 2023</div>
+                            <div class="episode-description">
+                                It becomes clear that some players have been orchestrating events from the shadows for years, with plans more intricate than anyone suspected.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 16 -->
+                    <div class="episode-item" data-episode="16">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 16">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 16</div>
+                            <div class="episode-title">"Breaking Point"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jul 15, 2023</div>
+                            <div class="episode-description">
+                                The pressure becomes unbearable for some, leading to crucial mistakes that could determine the final outcome of the power struggle.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 17 -->
+                    <div class="episode-item" data-episode="17">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 17">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 17</div>
+                            <div class="episode-title">"The Price of Power"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jul 22, 2023</div>
+                            <div class="episode-description">
+                                The personal cost of the criminal lifestyle becomes apparent as family relationships strain under the weight of secrets and danger.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 18 -->
+                    <div class="episode-item" data-episode="18">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 18">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 18</div>
+                            <div class="episode-title">"Under Siege"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jul 29, 2023</div>
+                            <div class="episode-description">
+                                A coordinated attack puts key members of "The Table" on the defensive, fighting for survival against overwhelming odds.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 19 -->
+                    <div class="episode-item" data-episode="19">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 19">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 19</div>
+                            <div class="episode-title">"The Informant"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Aug 5, 2023</div>
+                            <div class="episode-description">
+                                The identity of a high-level informant working with authorities threatens to destabilize the entire criminal organization.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 20 -->
+                    <div class="episode-item" data-episode="20">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 20">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 20</div>
+                            <div class="episode-title">"Divided We Fall"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Aug 12, 2023</div>
+                            <div class="episode-description">
+                                Internal conflicts reach a boiling point as factions within "The Table" openly clash, weakening the organization from within.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 21 -->
+                    <div class="episode-item" data-episode="21">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 21">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 21</div>
+                            <div class="episode-title">"Dead Ends"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Aug 19, 2023</div>
+                            <div class="episode-description">
+                                As escape routes close and options dwindle, desperate measures lead to violent confrontations with lasting consequences.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 22 -->
+                    <div class="episode-item" data-episode="22">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 22">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 22</div>
+                            <div class="episode-title">"The Truth Revealed"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Aug 26, 2023</div>
+                            <div class="episode-description">
+                                Long-held secrets come to light, changing perspectives on key events and motivations that have driven the conflict.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 23 -->
+                    <div class="episode-item" data-episode="23">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 23">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 23</div>
+                            <div class="episode-title">"The Last Stand"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Sep 2, 2023</div>
+                            <div class="episode-description">
+                                A major confrontation forces all players to choose sides in what could be the final battle for control of "The Table."
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 24 -->
+                    <div class="episode-item" data-episode="24">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 24">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 24</div>
+                            <div class="episode-title">"No Way Out"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Sep 9, 2023</div>
+                            <div class="episode-description">
+                                Trapped and facing overwhelming opposition, key characters must make life-or-death decisions with no good options available.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 25 -->
+                    <div class="episode-item" data-episode="25">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 25">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 25</div>
+                            <div class="episode-title">"The Fall"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Sep 16, 2023</div>
+                            <div class="episode-description">
+                                Major players in the criminal hierarchy meet their downfall in unexpected ways, reshaping the power dynamic completely.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 26 -->
+                    <div class="episode-item" data-episode="26">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 26">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 26</div>
+                            <div class="episode-title">"New Alliances"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Sep 23, 2023</div>
+                            <div class="episode-description">
+                                In the aftermath of recent chaos, surprising new partnerships form as survivors adapt to the changed landscape of power.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 27 -->
+                    <div class="episode-item" data-episode="27">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 27">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 27</div>
+                            <div class="episode-title">"Rising from Ashes"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Sep 30, 2023</div>
+                            <div class="episode-description">
+                                The criminal world begins to rebuild after the devastation, with new leaders emerging to fill the power vacuum at "The Table."
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 28 -->
+                    <div class="episode-item" data-episode="28">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 28">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 28</div>
+                            <div class="episode-title">"Unfinished Business"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Oct 7, 2023</div>
+                            <div class="episode-description">
+                                Old scores remain to be settled as survivors of the conflict seek closure for personal vendettas that transcend business.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 29 -->
+                    <div class="episode-item" data-episode="29">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 29">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 29</div>
+                            <div class="episode-title">"The New Order"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Oct 14, 2023</div>
+                            <div class="episode-description">
+                                A transformed criminal hierarchy emerges with new rules and power structures, setting the stage for different kinds of conflicts.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 30 -->
+                    <div class="episode-item" data-episode="30">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 30">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 30</div>
+                            <div class="episode-title">"Full Circle"</div>
+                            <div class="episode-duration">50 min</div>
+                            <div class="episode-info">Aired: Oct 21, 2023</div>
+                            <div class="episode-description">
+                                Season one concludes with a dramatic finale that ties up major storylines while setting up new threats and challenges for the future.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="episodes-list hidden" id="season2-episodes">
+                    <!-- Season 2 Episodes -->
+                    <!-- Episode 1 -->
+                    <div class="episode-item" data-episode="1">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"New Order"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jan 1, 2024</div>
+                            <div class="episode-description">
+                                A new power structure emerges following the chaotic events of the previous season, with unexpected players taking seats at "The Table."
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 2 -->
+                    <div class="episode-item" data-episode="2">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"Old Debts"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jan 8, 2024</div>
+                            <div class="episode-description">
+                                Past debts come due as those who survived the previous conflicts find that their actions have far-reaching consequences that can't be escaped.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 3 -->
+                    <div class="episode-item" data-episode="3">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"Shifting Loyalties"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jan 15, 2024</div>
+                            <div class="episode-description">
+                                As the balance of power shifts once again, allies become enemies and enemies become reluctant partners in a constantly evolving game.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 4 -->
+                    <div class="episode-item" data-episode="4">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"The Hunt"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jan 22, 2024</div>
+                            <div class="episode-description">
+                                Law enforcement closes in on key players, forcing difficult decisions that could tear apart the fragile structure of "The Table."
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 5 -->
+                    <div class="episode-item" data-episode="5">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"Desperate Measures"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Jan 29, 2024</div>
+                            <div class="episode-description">
+                                With options running out, the remaining players at "The Table" resort to increasingly desperate and dangerous tactics to maintain control.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 6 -->
+                    <div class="episode-item" data-episode="6">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"Final Gambit"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Feb 5, 2024</div>
+                            <div class="episode-description">
+                                A daring plan unfolds that could either secure ultimate power or result in total destruction for everyone involved in "The Table."
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 7 -->
+                    <div class="episode-item" data-episode="7">
+                        <div class="episode-thumbnail">
+                            <img src="/api/placeholder/160/90" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"Endgame"</div>
+                            <div class="episode-duration">50 min</div>
+                            <div class="episode-info">Aired: Feb 12, 2024</div>
+                            <div class="episode-description">
+                                The season culminates in a shocking finale that redefines "The Table" and sets the stage for an even more dangerous future in the criminal underworld.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Video Player Modal -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Al Atawla - S1:E1 The Beginning</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="video-container">
+                    <!-- Video player/iframe will be inserted here by JavaScript -->
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Select an episode to watch</p>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="language-selection">
+                        <span>Language: </span>
+                        <button class="language-btn active" id="langArabic" title="Arabic Audio">
+                            <img src="https://flagcdn.com/24x18/eg.png" alt="Arabic" class="flag-icon">
+                        </button>
+                        <button class="language-btn" id="langEnglish" title="English Audio">
+                            <img src="https://flagcdn.com/24x18/us.png" alt="English" class="flag-icon">
+                        </button>
+                    </div>
+                    <div class="player-info">
+                        <span>Source: voe.sx</span>
+                        <select class="quality-selector">
+                            <option value="auto">Auto Quality</option>
+                            <option value="1080p">1080p</option>
+                            <option value="720p">720p</option>
+                            <option value="480p">480p</option>
+                            <option value="360p">360p</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Thriller</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Episode video URLs
+            const season1Videos = {
+                "1": "https://voe.sx/e/upw15adame7u", // Episode 1
+                "2": "https://voe.sx/e/fjf1bcljxlsr", // Episode 2
+                "3": "https://voe.sx/e/l1reyb2cmacs", // Episode 3
+                "4": "https://voe.sx/e/xrtdaimzgc92", // Episode 4
+                "5": "https://voe.sx/e/3n16k1gaep0c", // Episode 5
+                "6": "https://voe.sx/e/qrken637fikk", // Episode 6
+                "7": "https://voe.sx/e/6eje7qinljed", // Episode 7
+                "8": "https://voe.sx/e/z3daoiwkcaik", // Episode 8
+                "9": "https://voe.sx/e/szwhhvgfg4hy", // Episode 9
+                "10": "https://voe.sx/e/cmnjkjf7nyu3", // Episode 10
+                "11": "https://voe.sx/e/wptecj3j9x6t", // Episode 11
+                "12": "https://voe.sx/e/calho5tjk56h", // Episode 12
+                "13": "https://voe.sx/e/xt0hrguf5til", // Episode 13
+                "14": "https://voe.sx/e/jww9o6s07voc", // Episode 14
+                "15": "https://voe.sx/e/lbhdnvy0k3fj", // Episode 15
+                "16": "https://voe.sx/e/yh6isfdc26o8", // Episode 16
+                "17": "https://voe.sx/e/jdjrvefvyhb5", // Episode 17
+                "18": "https://voe.sx/e/n6nckfi3xoza", // Episode 18
+                "19": "https://voe.sx/e/xawolzltqlhq", // Episode 19
+                "20": "https://voe.sx/e/opu3iqy5jk39", // Episode 20
+                "21": "https://voe.sx/e/qvn7fngnetls", // Episode 21
+                "22": "https://voe.sx/e/wp4briofy9mo", // Episode 22
+                "23": "https://voe.sx/e/qfnucbyenihw", // Episode 23
+                "24": "https://voe.sx/e/c0tkuoijkxtu", // Episode 24
+                "25": "https://voe.sx/e/7s9qutm2gp3t", // Episode 25
+                "26": "https://voe.sx/e/dmt5ih63cosb", // Episode 26
+                "27": "https://voe.sx/e/cq24sdgy7bub", // Episode 27
+                "28": "https://voe.sx/e/ro9dwjgs6vdu", // Episode 28
+                "29": "https://voe.sx/e/darwxuuqvbss", // Episode 29
+                "30": "https://voe.sx/e/fq6znseyykqg", // Episode 30
+            };
+            
+            const season2Videos = {
+                "1": "https://voe.sx/e/r27jkmgxkylz", // Episode 1
+                "2": "https://voe.sx/e/dgmqnflp0pot", // Episode 2
+                "3": "https://voe.sx/e/fr5rbrzkdr3d", // Episode 3
+                "4": "https://voe.sx/e/j3ntzfsmpyle", // Episode 4
+                "5": "https://voe.sx/e/eeu5cy1jsa2d", // Episode 5
+                "6": "https://voe.sx/e/4d1dhvnktipb", // Episode 6
+                "7": "https://voe.sx/e/80joonigsmm1", // Episode 7
+            };
+            
+            // Placeholder for English version videos (to be filled later)
+            const season1VideosEng = {};
+            const season2VideosEng = {};
+            
+            // Series thumbnail
+            const seriesThumbnail = "https://m.media-amazon.com/images/M/MV5BMGM4MzM0OTYtN2RlYS00MDk4LWEzYTYtMDAzOGFiNzJkMjI2XkEyXkFqcGdeQXVyMjExNDk4ODA@._V1_.jpg";
+            
+            // Seasons selector functionality
+            const seasonBoxes = document.querySelectorAll('.season-box');
+            const episodesTitle = document.querySelector('.episodes-container h2');
+            const episodesLists = {
+                season1: document.getElementById('season1-episodes'),
+                season2: document.getElementById('season2-episodes')
+            };
+            
+            // Set the same thumbnail for all episodes
+            document.querySelectorAll('.episode-item .episode-thumbnail img').forEach(img => {
+                img.src = "http://i.epvpimg.com/iP4maab.jpg";
+                img.alt = "Al Atawla";
+                // Adjust the image display to show properly in the thumbnail container
+                img.style.objectPosition = "top center";
+            });
+            
+            // Current playing episode tracking
+            let currentSeason = "1";
+            let currentEpisode = "1";
+            let currentLanguage = "ar"; // Default language is Arabic
+            
+            seasonBoxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    // Remove active class from all boxes
+                    seasonBoxes.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked box
+                    box.classList.add('active');
+                    
+                    // Update episodes title
+                    const seasonNumber = box.dataset.season;
+                    episodesTitle.textContent = `Episodes - Season ${seasonNumber}`;
+                    
+                    // Hide all episodes lists
+                    Object.values(episodesLists).forEach(list => {
+                        list.classList.add('hidden');
+                    });
+                    
+                    // Show the selected season's episodes
+                    episodesLists[`season${seasonNumber}`].classList.remove('hidden');
+                    
+                    // Update current season
+                    currentSeason = seasonNumber;
+                    
+                    console.log(`Viewing episodes for Season ${seasonNumber}`);
+                });
+            });
+            
+            // Video player related elements
+            const videoModal = document.getElementById('videoModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const videoContainer = document.querySelector('.video-container');
+            const closeModal = document.querySelector('.close-modal');
+            
+            // Episode click handler - Open video modal
+            const episodeItems = document.querySelectorAll('.episode-item');
+            
+            episodeItems.forEach(episode => {
+                episode.addEventListener('click', () => {
+                    // Update tracking variables
+                    currentSeason = document.querySelector('.season-box.active').dataset.season;
+                    currentEpisode = episode.dataset.episode;
+                    
+                    loadAndPlayEpisode(currentSeason, currentEpisode, currentLanguage);
+                });
+            });
+            
+            // Function to load and play an episode with language selection
+            function loadAndPlayEpisode(season, episode, language) {
+                const episodeItem = document.querySelector(`.episodes-list:not(.hidden) .episode-item[data-episode="${episode}"]`);
+                if (!episodeItem) return;
+                
+                const episodeTitle = episodeItem.querySelector('.episode-title').textContent;
+                
+                // Set the modal title with language indicator
+                const langText = language === 'ar' ? 'Arabic' : 'English';
+                modalTitle.textContent = `Al Atawla - S${season}:E${episode} ${episodeTitle} (${langText})`;
+                
+                // Get the correct video source based on season and language
+                let videoSrc = null;
+                
+                if (language === 'ar') {
+                    // Arabic version
+                    if (season === '1' && season1Videos[episode]) {
+                        videoSrc = season1Videos[episode];
+                    } else if (season === '2' && season2Videos[episode]) {
+                        videoSrc = season2Videos[episode];
+                    }
+                } else {
+                    // English version (placeholder for now)
+                    if (season === '1' && season1VideosEng[episode]) {
+                        videoSrc = season1VideosEng[episode];
+                    } else if (season === '2' && season2VideosEng[episode]) {
+                        videoSrc = season2VideosEng[episode];
+                    }
+                }
+                
+                // Create video player if video source is available
+                if (videoSrc) {
+                    // Clear previous content
+                    videoContainer.innerHTML = '';
+                    
+                    // Create and append the iframe
+                    const iframe = document.createElement('iframe');
+                    iframe.src = videoSrc;
+                    iframe.width = '100%';
+                    iframe.height = '100%';
+                    iframe.style.position = 'absolute';
+                    iframe.style.top = '0';
+                    iframe.style.left = '0';
+                    iframe.frameBorder = '0';
+                    iframe.scrolling = 'no';
+                    iframe.allowFullscreen = true;
+                    
+                    videoContainer.appendChild(iframe);
+                } else {
+                    // Show placeholder message (especially for English version not yet available)
+                    videoContainer.innerHTML = `
+                        <div class="video-placeholder">
+                            <div class="play-button">▶</div>
+                            <p>${language === 'en' ? 'English version coming soon' : 'Video not available for this episode'}</p>
+                        </div>
+                    `;
+                }
+                
+                // Show the modal
+                videoModal.style.display = 'flex';
+                
+                console.log(`Playing Season ${season}, Episode ${episode} in ${language}`);
+            }
+            
+            // Language selection handlers
+            document.getElementById('langArabic').addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+                currentLanguage = 'ar';
+                
+                // Update active state of language buttons
+                document.getElementById('langEnglish').classList.remove('active');
+                this.classList.add('active');
+                
+                loadAndPlayEpisode(currentSeason, currentEpisode, currentLanguage);
+            });
+            
+            document.getElementById('langEnglish').addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+                currentLanguage = 'en';
+                
+                // Update active state of language buttons
+                document.getElementById('langArabic').classList.remove('active');
+                this.classList.add('active');
+                
+                loadAndPlayEpisode(currentSeason, currentEpisode, currentLanguage);
+            });
+            
+            // Close modal when clicking the X
+            closeModal.addEventListener('click', () => {
+                videoModal.style.display = 'none';
+                // Stop any playing videos by clearing the container
+                videoContainer.innerHTML = '';
+            });
+            
+            // Close modal when clicking outside the content
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    videoModal.style.display = 'none';
+                    // Stop any playing videos by clearing the container
+                    videoContainer.innerHTML = '';
+                }
+            });
+            
+            // Star rating functionality
+            const stars = document.querySelectorAll('.star');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    
+                    // Clear all active stars
+                    stars.forEach(s => s.classList.remove('active'));
+                    
+                    // Set active stars up to the clicked one
+                    stars.forEach(s => {
+                        if (parseInt(s.dataset.rating) <= rating) {
+                            s.classList.add('active');
+                        }
+                    });
+                    
+                    console.log(`User rated the series ${rating}/10`);
+                });
+            });
+            
+            // Action buttons functionality
+            const subscribeBtn = document.querySelector('.subscribe-btn');
+            const watchlistBtn = document.querySelector('.watchlist-btn');
+            const trailerBtn = document.querySelector('.trailer-btn');
+            
+            subscribeBtn.addEventListener('click', () => {
+                // Toggle subscribe status
+                const isSubscribed = subscribeBtn.classList.toggle('subscribed');
+                
+                if (isSubscribed) {
+                    subscribeBtn.innerHTML = '<i class="icon">✓</i> Subscribed';
+                    subscribeBtn.style.backgroundColor = '#388E3C';
+                } else {
+                    subscribeBtn.innerHTML = '<i class="icon">🔔</i> Subscribe to Series';
+                    subscribeBtn.style.backgroundColor = '#4CAF50';
+                }
+                
+                console.log(`User ${isSubscribed ? 'subscribed to' : 'unsubscribed from'} the series`);
+            });
+            
+            watchlistBtn.addEventListener('click', () => {
+                // Toggle watchlist status
+                const isInWatchlist = watchlistBtn.classList.toggle('in-watchlist');
+                
+                if (isInWatchlist) {
+                    watchlistBtn.innerHTML = '<i class="icon">✓</i> In Watchlist';
+                    watchlistBtn.style.backgroundColor = '#1565C0';
+                } else {
+                    watchlistBtn.innerHTML = '<i class="icon">➕</i> Add to Watchlist';
+                    watchlistBtn.style.backgroundColor = '#2196F3';
+                }
+                
+                console.log(`User ${isInWatchlist ? 'added series to' : 'removed series from'} watchlist`);
+            });
+            
+            trailerBtn.addEventListener('click', () => {
+                // Open the video modal with the trailer
+                modalTitle.textContent = 'Al Atawla - Official Trailer';
+                
+                // Use a YouTube embed for the trailer (placeholder - replace with actual trailer if available)
+                videoContainer.innerHTML = '';
+                
+                const trailerIframe = document.createElement('iframe');
+                trailerIframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ"; // Placeholder - replace with actual trailer
+                trailerIframe.width = '100%';
+                trailerIframe.height = '100%';
+                trailerIframe.style.position = 'absolute';
+                trailerIframe.style.top = '0';
+                trailerIframe.style.left = '0';
+                trailerIframe.frameBorder = '0';
+                trailerIframe.allowFullscreen = true;
+                
+                videoContainer.appendChild(trailerIframe);
+                
+                videoModal.style.display = 'flex';
+                console.log('Playing series trailer');
+            });
+            
+            // Quality selector (for demonstration - would need real implementation)
+            const qualitySelector = document.querySelector('.quality-selector');
+            qualitySelector.addEventListener('change', function() {
+                console.log(`Quality changed to: ${this.value}`);
+                // In a real implementation, this would change the video quality
+            });
+        });
+    </script>
+</body>
+</html>

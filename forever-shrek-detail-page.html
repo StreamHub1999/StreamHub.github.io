@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forever Shrek - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Movie Detail Page Specific Styles */
+        .movie-detail-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            background-color: var(--background-darker);
+            color: var(--text-primary);
+        }
+
+        .movie-hero {
+            position: relative;
+            height: 70vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 1) 0%,
+                rgba(0, 0, 0, 0.8) 25%,
+                rgba(0, 0, 0, 0.4) 50%,
+                rgba(0, 0, 0, 0.1) 100%
+            );
+            z-index: 1;
+        }
+
+        .movie-info {
+            display: flex;
+            padding: 30px 5%;
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .movie-poster {
+            flex-shrink: 0;
+            width: 300px;
+            height: 450px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .movie-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .movie-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .movie-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .movie-rating i {
+            color: var(--primary-color);
+        }
+
+        .movie-description {
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .movie-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .large-btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .watch-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .watch-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .trailer-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .trailer-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .add-list-btn {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .add-list-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .movie-content {
+            padding: 30px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .cast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cast-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .cast-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .cast-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .cast-info {
+            padding: 10px;
+        }
+
+        .cast-name {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .cast-role {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .player-section {
+            margin-bottom: 40px;
+        }
+
+        .player-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .similar-movies {
+            margin-bottom: 40px;
+        }
+
+        .similar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .movie-info {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .movie-poster {
+                margin-bottom: 20px;
+            }
+
+            .movie-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .movie-hero {
+                height: 50vh;
+            }
+
+            .movie-title {
+                font-size: 2rem;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cast-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .similar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html" class="active">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i>🔍</i>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login-page.html" class="btn-small btn-login">Login</a>
+                    <a href="simplified-register-page.html" class="btn-small btn-signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Movie Detail Container -->
+    <div class="movie-detail-container">
+        <!-- Movie Hero Section -->
+        <div class="movie-hero" style="background-image: url('https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/66d5b1b8-ce9a-4ffe-bae2-8d3d9f97ddc9/shrek_5.jpg');">
+            <div class="hero-overlay"></div>
+            <div class="movie-info">
+                <div class="movie-poster">
+                    <img src="https://resizing.flixster.com/dyS1FcVpWJr5hTDBY6F8uOS9avI=/206x305/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p3546149_p_v8_aq.jpg" alt="Forever Shrek Movie Poster">
+                </div>
+                <div class="movie-details">
+                    <h1 class="movie-title">Forever Shrek</h1>
+                    <div class="movie-meta">
+                        <span>Animation, Adventure, Comedy</span>
+                        <span>•</span>
+                        <span>2024</span>
+                        <span>•</span>
+                        <span>105 min</span>
+                        <span>•</span>
+                        <span>PG</span>
+                    </div>
+                    <div class="movie-rating">
+                        <i>★</i> <strong>8.3</strong>/10
+                    </div>
+                    <p class="movie-description">
+                        After years of peaceful living in the swamp with Fiona and their ogre triplets, Shrek faces his greatest challenge yet when a mysterious spell begins erasing fairy tale creatures from existence. When his family starts to fade away, Shrek must reunite with Donkey and Puss in Boots for one final adventure to save the magical realm and protect the future of Far Far Away. Along the way, they'll encounter new allies, face formidable foes, and Shrek will discover that his legacy as an ogre is far more significant than he ever imagined.
+                    </p>
+                    <div class="movie-actions">
+                        <a href="#player" class="large-btn watch-btn"><i>▶</i> Watch Now</a>
+                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="large-btn trailer-btn"><i>🎬</i> Watch Trailer</a>
+                        <button class="large-btn add-list-btn"><i>+</i> Add to My List</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Movie Content Section -->
+        <div class="movie-content">
+            <!-- Player Section -->
+            <div class="player-section" id="player">
+                <h2 class="section-title">Watch Forever Shrek</h2>
+                <div class="player-container">
+                    <iframe src="https://voe.sx/e/jiojyuzfmvaq" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Movie Details Section -->
+            <div class="movie-details-info">
+                <h2 class="section-title">Movie Details</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Director</div>
+                        <div class="info-value">Walt Dohrn</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Writers</div>
+                        <div class="info-value">Michael McCullers, William Steig</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Release Date</div>
+                        <div class="info-value">July 5, 2024</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Language</div>
+                        <div class="info-value">English</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Production</div>
+                        <div class="info-value">DreamWorks Animation</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Content Rating</div>
+                        <div class="info-value">PG</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cast and Crew Section -->
+            <div class="cast-section">
+                <h2 class="section-title">Cast & Crew</h2>
+                <div class="cast-grid">
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMjE3Mzg0MjAxMl5BMl5BanBnXkFtZTcwOTQ1MDIzMw@@._V1_.jpg" alt="Mike Myers" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Mike Myers</div>
+                            <div class="cast-role">Shrek (voice)</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMTc5NTkxMzE5MF5BMl5BanBnXkFtZTcwNjU5NDk0OQ@@._V1_.jpg" alt="Eddie Murphy" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Eddie Murphy</div>
+                            <div class="cast-role">Donkey (voice)</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMTUyNDk5OTk0N15BMl5BanBnXkFtZTgwMDI5NTU5MTE@._V1_.jpg" alt="Cameron Diaz" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Cameron Diaz</div>
+                            <div class="cast-role">Princess Fiona (voice)</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMTQzMjkwNTQ2OF5BMl5BanBnXkFtZTgwNTQ4MTQ4MTE@._V1_.jpg" alt="Antonio Banderas" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Antonio Banderas</div>
+                            <div class="cast-role">Puss in Boots (voice)</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMTA0MTIyOTIyNDJeQTJeQWpwZ15BbWU3MDk4Njg0MzM@._V1_.jpg" alt="Julie Andrews" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Julie Andrews</div>
+                            <div class="cast-role">Queen Lillian (voice)</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMTkwMDE1MTY0NV5BMl5BanBnXkFtZTcwMzU5NjgyOQ@@._V1_.jpg" alt="Cody Cameron" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Cody Cameron</div>
+                            <div class="cast-role">Pinocchio/Three Pigs (voice)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Movies Section -->
+            <div class="similar-movies">
+                <h2 class="section-title">Similar Movies You May Like</h2>
+                <div class="similar-grid">
+                    <a href="#" style="text-decoration: none;">
+                        <div class="movie-card" data-categories="animation,adventure,comedy" data-year="2001" data-rating="7.9">
+                            <img src="https://m.media-amazon.com/images/M/MV5BOGZhM2FhNTItODAzNi00YjA0LWEyN2UtNjJlYWQzYzU1MDg5L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg" alt="Shrek">
+                            <div class="overlay">
+                                <div class="play-btn">
+                                    <div class="triangle"></div>
+                                </div>
+                            </div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">Shrek</h3>
+                                <div class="movie-meta">
+                                    <span>Animation, Adventure • 2001</span>
+                                    <div class="rating">
+                                        <i>★</i> 7.9
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="movie-card" data-categories="animation,adventure,comedy" data-year="2010" data-rating="7.8">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMTY0OTU1NzkxMl5BMl5BanBnXkFtZTcwMzI2NDUzMw@@._V1_.jpg" alt="Shrek Forever After">
+                            <div class="overlay">
+                                <div class="play-btn">
+                                    <div class="triangle"></div>
+                                </div>
+                            </div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">Shrek Forever After</h3>
+                                <div class="movie-meta">
+                                    <span>Animation, Adventure • 2010</span>
+                                    <div class="rating">
+                                        <i>★</i> 7.8
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="movie-card" data-categories="animation,adventure,comedy" data-year="2011" data-rating="7.8">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMTMzMDcyMzM2Ml5BMl5BanBnXkFtZTcwMjM3MjA5NQ@@._V1_.jpg" alt="Puss in Boots">
+                            <div class="overlay">
+                                <div class="play-btn">
+                                    <div class="triangle"></div>
+                                </div>
+                            </div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">Puss in Boots</h3>
+                                <div class="movie-meta">
+                                    <span>Animation, Adventure • 2011</span>
+                                    <div class="rating">
+                                        <i>★</i> 7.8
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" style="text-decoration: none;">
+                        <div class="movie-card" data-categories="animation,adventure,comedy" data-year="2023" data-rating="8.2">
+                            <img src="https://m.media-amazon.com/images/M/MV5BNjMyMDBjMGUtNDUzZi00N2MwLTg1MjItZTk2MDE1OTZmNTYxXkEyXkFqcGdeQXVyMTQ5NjA0NDM0._V1_.jpg" alt="Puss in Boots: The Last Wish">
+                            <div class="overlay">
+                                <div class="play-btn">
+                                    <div class="triangle"></div>
+                                </div>
+                            </div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">Puss in Boots: The Last Wish</h3>
+                                <div class="movie-meta">
+                                    <span>Animation, Adventure • 2023</span>
+                                    <div class="rating">
+                                        <i>★</i> 8.2
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#" data-filter="action">Action</a></li>
+                    <li><a href="#" data-filter="comedy">Comedy</a></li>
+                    <li><a href="#" data-filter="drama">Drama</a></li>
+                    <li><a href="#" data-filter="sci-fi">Sci-Fi</a></li>
+                    <li><a href="#" data-filter="horror">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll to player when Watch Now is clicked
+            document.querySelector('.watch-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const playerSection = document.getElementById('player');
+                playerSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Add to My List functionality
+            document.querySelector('.add-list-btn').addEventListener('click', function() {
+                this.innerHTML = '<i>✓</i> Added to My List';
+                this.style.backgroundColor = 'rgba(76, 175, 80, 0.2)';
+                this.style.borderColor = 'rgba(76, 175, 80, 0.5)';
+                
+                // You could add actual functionality to store this in user's list
+                // For demo purposes, we'll just show the visual change
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    this.innerHTML = '<i>+</i> Add to My List';
+                    this.style.backgroundColor = '';
+                    this.style.borderColor = '';
+                }, 3000);
+            });
+
+            // Lazy load images for better performance
+            const lazyImages = document.querySelectorAll('img');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            const src = img.getAttribute('data-src');
+                            
+                            if (src) {
+                                img.src = src;
+                                img.removeAttribute('data-src');
+                            }
+                            
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(img => {
+                    if (img.src && !img.getAttribute('data-src')) {
+                        img.setAttribute('data-src', img.src);
+                        img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNTI1MjUiLz48L3N2Zz4=';
+                        imageObserver.observe(img);
+                    }
+                });
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                lazyImages.forEach(img => {
+                    const src = img.getAttribute('data-src');
+                    if (src) {
+                        img.src = src;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

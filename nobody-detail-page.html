@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nobody - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Movie Detail Page Specific Styles */
+        .movie-detail-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            background-color: var(--background-darker);
+            color: var(--text-primary);
+        }
+
+        .movie-hero {
+            position: relative;
+            height: 70vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 1) 0%,
+                rgba(0, 0, 0, 0.8) 25%,
+                rgba(0, 0, 0, 0.4) 50%,
+                rgba(0, 0, 0, 0.1) 100%
+            );
+            z-index: 1;
+        }
+
+        .movie-info {
+            display: flex;
+            padding: 30px 5%;
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .movie-poster {
+            flex-shrink: 0;
+            width: 300px;
+            height: 450px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .movie-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .movie-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .movie-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .movie-rating i {
+            color: var(--primary-color);
+        }
+
+        .movie-description {
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .movie-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .large-btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .watch-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .watch-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .trailer-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .trailer-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .add-list-btn {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .add-list-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .movie-content {
+            padding: 30px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .cast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cast-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .cast-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .cast-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .cast-info {
+            padding: 10px;
+        }
+
+        .cast-name {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .cast-role {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .player-section {
+            margin-bottom: 40px;
+        }
+
+        .player-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .similar-movies {
+            margin-bottom: 40px;
+        }
+
+        .similar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .movie-info {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .movie-poster {
+                margin-bottom: 20px;
+            }
+
+            .movie-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .movie-hero {
+                height: 50vh;
+            }
+
+            .movie-title {
+                font-size: 2rem;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cast-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .similar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html" class="active">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i>🔍</i>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login-page.html" class="btn-small btn-login">Login</a>
+                    <a href="simplified-register-page.html" class="btn-small btn-signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Movie Detail Container -->
+    <div class="movie-detail-container">
+        <!-- Movie Hero Section -->
+        <div class="movie-hero" style="background-image: url('https://wallpapercave.com/wp/wp8930463.jpg');">
+            <div class="hero-overlay"></div>
+            <div class="movie-info">
+                <div class="movie-poster">
+                    <img src="https://musicart.xboxlive.com/7/71ad5100-0000-0000-0000-000000000002/504/image.jpg?q=90&m=6&h=270&w=270&b=%23FFFFFFFF&f=jpg&o=f&aim=true" alt="Nobody Movie Poster">
+                </div>
+                <div class="movie-details">
+                    <h1 class="movie-title">Nobody</h1>
+                    <div class="movie-meta">
+                        <span>Action, Thriller, Crime</span>
+                        <span>•</span>
+                        <span>2021</span>
+                        <span>•</span>
+                        <span>92 min</span>
+                        <span>•</span>
+                        <span>R</span>
+                    </div>
+                    <div class="movie-rating">
+                        <i>★</i> <strong>7.4</strong>/10
+                    </div>
+                    <p class="movie-description">
+                        Hutch Mansell, a suburban dad, overlooked husband, and neighbor - a "nobody." When two thieves break into his home one night, Hutch's long-simmering rage is ignited, propelling him on a brutal path that will uncover dark secrets he fought to leave behind. A man who appears to be a docile family man turns into a killing machine when his family is threatened by a robbery.
+                    </p>
+                    <div class="movie-actions">
+                        <a href="#player" class="large-btn watch-btn"><i>▶</i> Watch Now</a>
+                        <a href="https://www.youtube.com/watch?v=wZti8QKBWPo" target="_blank" class="large-btn trailer-btn"><i>🎬</i> Watch Trailer</a>
+                        <button class="large-btn add-list-btn"><i>+</i> Add to My List</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Movie Content Section -->
+        <div class="movie-content">
+            <!-- Player Section -->
+            <div class="player-section" id="player">
+                <h2 class="section-title">Watch Nobody</h2>
+                <div class="player-container">
+                    <iframe src="https://voe.sx/e/wy9hwoj1zh5l" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Movie Details Section -->
+            <div class="movie-details-info">
+                <h2 class="section-title">Movie Details</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Director</div>
+                        <div class="info-value">Ilya Naishuller</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Writer</div>
+                        <div class="info-value">Derek Kolstad</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Release Date</div>
+                        <div class="info-value">March 26, 2021</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Language</div>
+                        <div class="info-value">English</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Production</div>
+                        <div class="info-value">Universal Pictures</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Content Rating</div>
+                        <div class="info-value">R</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cast and Crew Section -->
+            <div class="cast-section">
+                <h2 class="section-title">Cast & Crew</h2>
+                <div class="cast-grid">
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMTUzOTg1NzM4NV5BMl5BanBnXkFtZTcwMzIxNTM0NA@@._V1_.jpg" alt="Bob Odenkirk" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Bob Odenkirk</div>
+                            <div class="cast-role">Hutch Mansell</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMjEzMjA0ODk4OF5BMl5BanBnXkFtZTcwMTA4ODM3OQ@@._V1_.jpg" alt="Connie Nielsen" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Connie Nielsen</div>
+                            <div class="cast-role">Becca Mansell</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BOWZjMjkxM2QtZGI5YS00NTRiLTlmNTgtZmRhOWJkMDA3NGU2XkEyXkFqcGdeQXVyMTQyMTMwOTk0._V1_.jpg" alt="Aleksey Serebryakov" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Aleksey Serebryakov</div>
+                            <div class="cast-role">Yulian Kuznetsov</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BZGY5ZGM2M2ItZTFmZi00MWUwLWI5ZGQtMTdkODI0NjBkY2QwXkEyXkFqcGdeQXVyMTI0OTExMzQx._V1_.jpg" alt="Christopher Lloyd" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Christopher Lloyd</div>
+                            <div class="cast-role">David Mansell</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BM2JmNzI0ZTAtNzgzZC00MWRmLTkzYzYtYzEzMzRmMzc0ZGNiXkEyXkFqcGdeQXVyMTMwNzgzNTA0._V1_.jpg" alt="RZA" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">RZA</div>
+                            <div class="cast-role">Harry Mansell</div>
+                        </div>
+                    </div>
+                    <div class="cast-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BNmVlOWYxM2MtM2ViZC00NzBmLWEzYzgtNjkzMDRmYjc1YTkxXkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_.jpg" alt="Michael Ironside" class="cast-img">
+                        <div class="cast-info">
+                            <div class="cast-name">Michael Ironside</div>
+                            <div class="cast-role">Eddie Williams</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Movies Section -->
+            <div class="similar-movies">
+                <h2 class="section-title">Similar Movies You May Like</h2>
+                <div class="similar-grid">
+                    <a href="johnwick-detail.html" style="text-decoration: none;">
+                        <div class="movie-card" data-categories="action,thriller" data-year="2014" data-rating="7.4">
+                            <img src="https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_.jpg" alt="John Wick">
+                            <div class="overlay">
+                                <div class="play-btn">
+                                    <div class="triangle"></div>
+                                </div>
+                            </div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">John Wick</h3>
+                                <div class="movie-meta">
+                                    <span>Action, Thriller • 2014</span>
+                                    <div class="rating">
+                                        <i>★</i> 7.4
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="hitman-detail.html" style="text-decoration: none;">
+                        <div class="movie-card" data-categories="action,thriller,crime" data-year="2015" data-rating="5.7">
+                            <img src="https://cdn.kinocheck.com/i/2ibqysun2s.jpg" alt="Hitman: Agent 47">
+                            <div class="overlay">
+                                <div class="play-btn">
+                                    <div class="triangle"></div>
+                                </div>
+                            </div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">Hitman: Agent 47</h3>
+                                <div class="movie-meta">
+                                    <span>Action, Thriller • 2015</span>
+                                    <div class="rating">
+                                        <i>★</i> 5.7
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="joker-detail.html" style="text-decoration: none;">
+                        <div class="movie-card" data-categories="drama,thriller,crime" data-year="2019" data-rating="8.4">
+                            <img src="https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg" alt="Joker">
+                            <div class="overlay">
+                                <div class="play-btn">
+                                    <div class="triangle"></div>
+                                </div>
+                            </div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">Joker</h3>
+                                <div class="movie-meta">
+                                    <span>Drama, Thriller • 2019</span>
+                                    <div class="rating">
+                                        <i>★</i> 8.4
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="deadpool-detail.html" style="text-decoration: none;">
+                        <div class="movie-card" data-categories="action,comedy,adventure" data-year="2016" data-rating="8.0">
+                            <img src="https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg" alt="Deadpool">
+                            <div class="overlay">
+                                <div class="play-btn">
+                                    <div class="triangle"></div>
+                                </div>
+                            </div>
+                            <div class="movie-info">
+                                <h3 class="movie-title">Deadpool</h3>
+                                <div class="movie-meta">
+                                    <span>Action, Comedy • 2016</span>
+                                    <div class="rating">
+                                        <i>★</i> 8.0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="new-popular.html">New & Popular</a></li>
+                    <li><a href="#">My List</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#" data-filter="action">Action</a></li>
+                    <li><a href="#" data-filter="comedy">Comedy</a></li>
+                    <li><a href="#" data-filter="drama">Drama</a></li>
+                    <li><a href="#" data-filter="sci-fi">Sci-Fi</a></li>
+                    <li><a href="#" data-filter="horror">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll to player when Watch Now is clicked
+            document.querySelector('.watch-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const playerSection = document.getElementById('player');
+                playerSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Add to My List functionality
+            document.querySelector('.add-list-btn').addEventListener('click', function() {
+                this.innerHTML = '<i>✓</i> Added to My List';
+                this.style.backgroundColor = 'rgba(76, 175, 80, 0.2)';
+                this.style.borderColor = 'rgba(76, 175, 80, 0.5)';
+                
+                // You could add actual functionality to store this in user's list
+                // For demo purposes, we'll just show the visual change
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    this.innerHTML = '<i>+</i> Add to My List';
+                    this.style.backgroundColor = '';
+                    this.style.borderColor = '';
+                }, 3000);
+            });
+
+            // Lazy load images for better performance
+            const lazyImages = document.querySelectorAll('img');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            const src = img.getAttribute('data-src');
+                            
+                            if (src) {
+                                img.src = src;
+                                img.removeAttribute('data-src');
+                            }
+                            
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(img => {
+                    if (img.src && !img.getAttribute('data-src')) {
+                        img.setAttribute('data-src', img.src);
+                        img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyNTI1MjUiLz48L3N2Zz4=';
+                        imageObserver.observe(img);
+                    }
+                });
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                lazyImages.forEach(img => {
+                    const src = img.getAttribute('data-src');
+                    if (src) {
+                        img.src = src;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
