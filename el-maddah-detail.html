@@ -573,7 +573,7 @@
         <!-- Series Info Section -->
         <section class="series-info-container">
             <div class="series-poster">
-                <img src="http://i.epvpimg.com/yq5Xbab.jpg" alt="El Maddah">
+                <img src="https://media0070.elcinema.com/uploads/_315x420_0d16f91d9bf2efd4f3d916f37ec9f92b1881c4e6c1c6f9cf43d1d57680bd2072.jpg" alt="El Maddah">
             </div>
             
             <div class="series-description">
@@ -1161,7 +1161,16 @@ https://voe.sx/odnbvhmwds6s`;
                         "5": []
                     };
                     
-                    // Parse the raw data (each line alternates between filename and URL)
+                    // Track unique episode numbers for each season to prevent duplicates
+                    const episodeTracker = {
+                        "1": new Set(),
+                        "2": new Set(),
+                        "3": new Set(),
+                        "4": new Set(),
+                        "5": new Set()
+                    };
+                    
+                    // Process the raw data (each line alternates between filename and URL)
                     const lines = rawData.split('\n').filter(line => line.trim() !== '');
                     
                     console.log(`Processing ${lines.length} lines of data`);
@@ -1179,8 +1188,29 @@ https://voe.sx/odnbvhmwds6s`;
                             let episodeNumber = 1;
                             let title = 'Al Maddah';
                             
-                            // Simple season detection
-                            if (filename.includes('S5') || filename.includes('S05')) {
+                            // Handle specific known issues
+                            
+                            // Fix for "Al Maddah S4 S23.mp4" - this is Episode 23, not Episode 3
+                            if (filename === "Al Maddah S4 S23.mp4") {
+                                season = '4';
+                                episodeNumber = 23; // This is Episode 23
+                                title = 'Ostouret El Awda';
+                            }
+                            // Make sure "El.MaddahS04E03.mp4" is recognized as Episode 3
+                            else if (filename === "El.MaddahS04E03.mp4") {
+                                season = '4';
+                                episodeNumber = 3; // Confirm this is Episode 3
+                                title = 'Ostouret El Awda';
+                            }
+                            // Special case for Season 2 Episode 10 that's being misclassified
+                            else if (filename.toLowerCase().includes('season.2.episode.10') || 
+                                filename.toLowerCase().includes('season 2 episode 10')) {
+                                season = '2';
+                                title = 'Ostouret Al Wadi';
+                                episodeNumber = 10;
+                            }
+                            // Standard season detection
+                            else if (filename.includes('S5') || filename.includes('S05')) {
                                 season = '5';
                                 title = 'Ostouret El Ahd';
                             } else if (filename.includes('S4') || filename.includes('S04')) {
@@ -1189,7 +1219,9 @@ https://voe.sx/odnbvhmwds6s`;
                             } else if (filename.includes('S3') || filename.includes('S03')) {
                                 season = '3';
                                 title = 'Ostouret El Ishq';
-                            } else if (filename.includes('S2') || filename.includes('S02') || filename.includes('S2.')) {
+                            } else if (filename.includes('S2') || filename.includes('S02') || 
+                                      filename.includes('S2.') || filename.includes('season.2') || 
+                                      filename.includes('season 2')) {
                                 season = '2';
                                 title = 'Ostouret Al Wadi';
                             } else if (filename.includes('S1') || filename.includes('S01') || 
@@ -1213,6 +1245,18 @@ https://voe.sx/odnbvhmwds6s`;
                             // Format episode number as 2 digits
                             const episode = episodeNumber.toString().padStart(2, '0');
                             
+                            // Check if this episode already exists in this season
+                            if (episodeTracker[season].has(episodeNumber) && 
+                                // Don't skip episodes that we're explicitly handling
+                                filename !== "Al Maddah S4 S23.mp4" && 
+                                filename !== "El.MaddahS04E03.mp4") {
+                                console.log(`Skipping duplicate: Season ${season} Episode ${episodeNumber} - ${filename}`);
+                                continue; // Skip this entry
+                            }
+                            
+                            // Add to tracker to prevent duplicates
+                            episodeTracker[season].add(episodeNumber);
+                            
                             // Add to appropriate season
                             episodesBySeason[season].push({
                                 id: `S${season}E${episode}`,
@@ -1230,6 +1274,61 @@ https://voe.sx/odnbvhmwds6s`;
                     }
                     
                     // Sort episodes within each season
+                    Object.keys(episodesBySeason).forEach(season => {
+                        episodesBySeason[season].sort((a, b) => parseInt(a.episode) - parseInt(b.episode));
+                    });
+                    
+                    // Ensure specific episodes exist with their correct URLs regardless of parsing
+                    
+                    // Make sure Season 1 Episode 25 exists with the correct URL
+                    episodesBySeason["1"] = episodesBySeason["1"].filter(ep => ep.episodeNumber !== 25);
+                    episodesBySeason["1"].push({
+                        id: "S1E25",
+                        season: "1",
+                        episode: "25",
+                        episodeNumber: 25,
+                        title: "Al Maddah",
+                        videoId: "qvsu9jelgato",
+                        filename: "Al Maddah S1 E25.mp4"
+                    });
+                    
+                    // Make sure Season 4 Episode 3 exists with the correct URL
+                    episodesBySeason["4"] = episodesBySeason["4"].filter(ep => ep.episodeNumber !== 3);
+                    episodesBySeason["4"].push({
+                        id: "S4E03",
+                        season: "4",
+                        episode: "03",
+                        episodeNumber: 3,
+                        title: "Ostouret El Awda",
+                        videoId: "jzi9qxlbxuoi",
+                        filename: "El.MaddahS04E03.mp4"
+                    });
+                    
+                    // Make sure Season 4 Episode 16 exists with the correct URL
+                    episodesBySeason["4"] = episodesBySeason["4"].filter(ep => ep.episodeNumber !== 16);
+                    episodesBySeason["4"].push({
+                        id: "S4E16",
+                        season: "4",
+                        episode: "16",
+                        episodeNumber: 16,
+                        title: "Ostouret El Awda",
+                        videoId: "zpycjjxcc0qt",
+                        filename: "El.MaddahS04E16.mp4"
+                    });
+                    
+                    // Make sure Season 4 Episode 23 exists with the correct URL
+                    episodesBySeason["4"] = episodesBySeason["4"].filter(ep => ep.episodeNumber !== 23);
+                    episodesBySeason["4"].push({
+                        id: "S4E23",
+                        season: "4",
+                        episode: "23",
+                        episodeNumber: 23,
+                        title: "Ostouret El Awda",
+                        videoId: "adc8ai9ffhbl",
+                        filename: "Al Maddah S4 S23.mp4"
+                    });
+                    
+                    // Re-sort all seasons after adding the fixed episodes
                     Object.keys(episodesBySeason).forEach(season => {
                         episodesBySeason[season].sort((a, b) => parseInt(a.episode) - parseInt(b.episode));
                     });
@@ -1382,7 +1481,7 @@ https://voe.sx/odnbvhmwds6s`;
                             
                             episodeElement.innerHTML = `
                                 <div class="episode-thumbnail">
-                                    <img src="/api/placeholder/160/90" alt="Episode ${episode.episode}">
+                                    <img src="https://media0070.elcinema.com/uploads/_315x420_0d16f91d9bf2efd4f3d916f37ec9f92b1881c4e6c1c6f9cf43d1d57680bd2072.jpg" alt="Episode ${episode.episode}">
                                     <div class="play-overlay">
                                         <div class="play-icon">▶</div>
                                     </div>
