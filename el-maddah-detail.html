@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Maddah - StreamHub</title>
+    <style>
+        /* Global styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #141414;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e50914;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #f5f5f5;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-nav li {
+            margin-right: 20px;
+        }
+
+        .main-nav a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            color: #e50914;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .search {
+            position: relative;
+            margin-right: 20px;
+        }
+
+        .search input {
+            background-color: #000;
+            border: 1px solid #333;
+            color: #f5f5f5;
+            padding: 8px 36px 8px 10px;
+            border-radius: 4px;
+            width: 240px;
+        }
+
+        .search i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .user-profile img {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Main content styles */
+        .detail-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Series info section */
+        .series-info-container {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .series-poster img {
+            width: 220px;
+            height: 330px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .series-description {
+            max-width: 800px;
+        }
+
+        .series-description h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .series-meta {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .dot {
+            margin: 0 10px;
+        }
+
+        .synopsis {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .cast, .creators {
+            margin-top: 20px;
+        }
+
+        .cast h3, .creators h3 {
+            color: #aaa;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        /* Series actions */
+        .series-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .watchlist-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .trailer-btn {
+            background-color: #FFC107;
+            color: #000;
+        }
+
+        .action-btn .icon {
+            margin-right: 8px;
+        }
+
+        /* Star rating */
+        .rating-container {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        .rating-container h3 {
+            margin-bottom: 10px;
+        }
+
+        .star-rating {
+            display: flex;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .star {
+            color: #555;
+        }
+
+        .star.active, .star:hover {
+            color: gold;
+        }
+
+        .avg-rating {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Episodes section */
+        .episodes-section {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+        }
+
+        .seasons-selector h2 {
+            margin-bottom: 20px;
+        }
+
+        .season-boxes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .season-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .season-box.active {
+            background-color: #e50914;
+        }
+
+        .episodes-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .episodes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .episodes-list.hidden {
+            display: none;
+        }
+
+        .episode-item {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 15px;
+            background-color: #222;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .episode-item:hover {
+            transform: scale(1.01);
+            background-color: #333;
+        }
+
+        .episode-thumbnail {
+            position: relative;
+            width: 160px;
+            height: 90px;
+        }
+
+        .episode-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .episode-item:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            font-size: 24px;
+        }
+
+        .episode-details {
+            padding: 10px 15px 10px 0;
+        }
+
+        .episode-number {
+            font-weight: bold;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .episode-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .episode-duration, .episode-info {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .episode-description {
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Video modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            width: 80%;
+            max-width: 1200px;
+            background-color: #111;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #000;
+        }
+
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+            color: #aaa;
+        }
+
+        .play-button {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #000;
+        }
+
+        .language-selection {
+            display: flex;
+            align-items: center;
+        }
+
+        .language-btn {
+            background: none;
+            border: 1px solid #333;
+            margin-left: 10px;
+            padding: 5px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .language-btn.active {
+            opacity: 1;
+            border-color: #e50914;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 18px;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .quality-selector {
+            margin-left: 15px;
+            background-color: #111;
+            color: #f5f5f5;
+            border: 1px solid #333;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-column p {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: #333;
+            border-radius: 50%;
+            color: #f5f5f5;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #e50914;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #e50914;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html" class="active">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                    <i>🔍</i>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/32/32" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="detail-content">
+        <!-- Series Info Section -->
+        <section class="series-info-container">
+            <div class="series-poster">
+                <img src="http://i.epvpimg.com/yq5Xbab.jpg" alt="El Maddah">
+            </div>
+            
+            <div class="series-description">
+                <h1>El Maddah (المداح)</h1>
+                <div class="series-meta">
+                    <span class="year">2020-2024</span>
+                    <span class="dot">•</span>
+                    <span class="rating">TV-14</span>
+                    <span class="dot">•</span>
+                    <span class="seasons">5 Seasons</span>
+                    <span class="dot">•</span>
+                    <span class="genre">Drama, Mystery, Supernatural</span>
+                </div>
+                <p class="synopsis">
+                    "El Maddah" follows the story of Saber El Maddah, a man with mysterious powers who can communicate with the supernatural world. As he navigates between the realms of the living and the dead, Saber uses his extraordinary gifts to help those in need while confronting dark forces that threaten both worlds.
+                </p>
+                <p class="synopsis">
+                    Throughout the series, Saber faces increasingly powerful adversaries and uncovers ancient secrets that challenge his understanding of his own abilities. Each season introduces new supernatural threats and delves deeper into the rich mythology of Egyptian folklore and legends. As Saber's journey continues, he must balance his responsibilities as a protector with his personal struggles and relationships.
+                </p>
+                <div class="cast">
+                    <h3>Cast:</h3>
+                    <p>Hamada Helal, Heba Magdi, Khaled Sarhan, Donia Abdel Aziz, Mahmoud Abdel Moghni</p>
+                </div>
+                <div class="creators">
+                    <h3>Director:</h3>
+                    <p>Ahmed Samir Farag</p>
+                </div>
+            </div>
+            
+            <div class="series-actions">
+                <button class="action-btn subscribe-btn">
+                    <i class="icon">🔔</i>
+                    Subscribe to Series
+                </button>
+                <button class="action-btn watchlist-btn">
+                    <i class="icon">➕</i>
+                    Add to Watchlist
+                </button>
+                <button class="action-btn trailer-btn">
+                    <i class="icon">▶</i>
+                    Watch Trailer
+                </button>
+                <div class="rating-container">
+                    <h3>Rate this:</h3>
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                        <span class="star" data-rating="6">★</span>
+                        <span class="star" data-rating="7">★</span>
+                        <span class="star" data-rating="8">★</span>
+                        <span class="star" data-rating="9">★</span>
+                        <span class="star" data-rating="10">★</span>
+                    </div>
+                    <div class="avg-rating">
+                        Average: <span>9.3</span>/10
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seasons & Episodes Section -->
+        <section class="episodes-section">
+            <div class="seasons-selector">
+                <h2>Seasons</h2>
+                <div class="season-boxes">
+                    <div class="season-box" data-season="1">1</div>
+                    <div class="season-box" data-season="2">2</div>
+                    <div class="season-box" data-season="3">3</div>
+                    <div class="season-box" data-season="4">4</div>
+                    <div class="season-box active" data-season="5">5</div>
+                </div>
+            </div>
+            
+            <div class="episodes-container">
+                <h2>Episodes - Season 5</h2>
+                
+                <div class="episodes-list" id="season5-episodes">
+                    <!-- Loading placeholder - will be populated by JavaScript -->
+                    <div class="episode-item" data-episode="1">
+                        <div class="episode-thumbnail">
+                            <img src="http://i.epvpimg.com/yq5Xbab.jpg" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">Loading episodes...</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Season 5</div>
+                            <div class="episode-description">
+                                Please wait while all episodes are being loaded...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Video Player Modal -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">El Maddah - Episode</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="video-container">
+                    <!-- Video player/iframe will be inserted here by JavaScript -->
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Select an episode to watch</p>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="language-selection">
+                        <span>Language: </span>
+                        <button class="language-btn active" id="langArabic" title="Arabic Audio">
+                            <img src="https://flagcdn.com/24x18/eg.png" alt="Arabic" class="flag-icon">
+                        </button>
+                        <button class="language-btn" id="langEnglish" title="English Audio">
+                            <img src="https://flagcdn.com/24x18/us.png" alt="English" class="flag-icon">
+                        </button>
+                    </div>
+                    <div class="player-info">
+                        <span>Source: voe.sx</span>
+                        <select class="quality-selector">
+                            <option value="auto">Auto Quality</option>
+                            <option value="1080p">1080p</option>
+                            <option value="720p">720p</option>
+                            <option value="480p">480p</option>
+                            <option value="360p">360p</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Thriller</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Episode data from paste.txt
+            const episodeData = `Al Maddah S3 E16.mp4
+https://voe.sx/8aivaryk6cex
+
+Al Maddah S4 E10.mp4
+https://voe.sx/0ahelmybxwe6
+
+Al Maddah S5 E4.mp4
+https://voe.sx/qzuzcxvszxp7
+
+Al Maddah S5 E3.mp4
+https://voe.sx/gz5c5lnrovmv
+
+Al Maddah S4 E30.mp4
+https://voe.sx/yxtxscqu557x
+
+Al Maddah S4 S23.mp4
+https://voe.sx/adc8ai9ffhbl
+
+Al Maddah S4 E29.mp4
+https://voe.sx/tfrikbphf7cj
+
+El.MaddahS05.E01..mp4
+https://voe.sx/ze7rgzjxgeft
+
+El.MaddahS05.E06..mp4
+https://voe.sx/h0rr0ngq8szj
+
+El.MaddahS05.E02..mp4
+https://voe.sx/gmquok77ga5d
+
+El.MaddahS05.E05.mp4
+https://voe.sx/8cm8pcgygwzv
+
+El.MaddahS04E07.mp4
+https://voe.sx/spunxiw1ljbt
+
+El.MaddahS04E05.mp4
+https://voe.sx/zlvtpkwf4mnu
+
+El.MaddahS04E04.mp4
+https://voe.sx/4ff1cb2fcqd0
+
+El.MaddahS04E01.mp4
+https://voe.sx/qczwnvkxg9vn
+
+El.MaddahS04E03.mp4
+https://voe.sx/jzi9qxlbxuoi
+
+El.MaddahS04.E18.mp4
+https://voe.sx/x4wv5lfvnjat
+
+El.MaddahS04.E11.mp4
+https://voe.sx/skeru8ngewwz
+
+El.MaddahS04.E02.mp4
+https://voe.sx/gufke8o4ijbs
+
+El.MaddahS04.E06.mp4
+https://voe.sx/q8xfrbhxsamr
+
+El.MaddahS04.E28..mp4
+https://voe.sx/afa63vw1zlxe
+
+El.MaddahS04.E19..mp4
+https://voe.sx/dl9jy4r3queg
+
+El.MaddahS04.E21..mp4
+https://voe.sx/ybsulryyseeq
+
+El.MaddahS04E15..mp4
+https://voe.sx/ombsgqmsqjry
+
+El.MaddahS04E25.mp4
+https://voe.sx/8jvdokwbliru
+
+El.MaddahS04E27..mp4
+https://voe.sx/ukutk3ecrgzw
+
+El.MaddahS04E24.mp4
+https://voe.sx/bhcitztcunnx
+
+El.MaddahS04E26.mp4
+https://voe.sx/bwluk2uoovcd
+
+El.MaddahS04E17.mp4
+https://voe.sx/ed30ghyqbk8d
+
+El.MaddahS04E22.mp4
+https://voe.sx/2znpkyauwosd
+
+El.MaddahS04E20.mp4
+https://voe.sx/y5ycgefjsmbe
+
+El.MaddahS04E14.mp4
+https://voe.sx/hetpfcingy4w
+
+El.MaddahS04E13.mp4
+https://voe.sx/egwyrc37w1hr
+
+El.MaddahS04E12.mp4
+https://voe.sx/viyqgn2uttg8
+
+El.MaddahS04E09.mp4
+https://voe.sx/ijkpavqe23fj
+
+Al.Maddah.S02.E13.mp4
+https://voe.sx/amjwjqrlhimb
+
+Al Maddah S3 E16.mp4
+https://voe.sx/blr7ogwh12c1
+
+El.MaddahS04E08.mp4
+https://voe.sx/wg07bpyp9uaf
+
+Al.Maddah.S02.E12.mp4
+https://voe.sx/qmxgrzekseus
+
+Al.Maddah.S02.E11.mp4
+https://voe.sx/da9s1kwvpmaw
+
+Al.Maddah.S02.E09.mp4
+https://voe.sx/ve6uoytif3qv
+
+Al.Maddah.S02.E06.mp4
+https://voe.sx/gihi6bdif5pe
+
+Al.Maddah.720p.S02-E01.mp4
+https://voe.sx/10ibzao2evev
+
+Al.Maddah.S02.E04.mp4
+https://voe.sx/hai77qhjdcvs
+
+Al.Maddah.S02.E03.mp4
+https://voe.sx/kdku1s2yzkws
+
+Al.Maddah.S2.E26.mp4
+https://voe.sx/pnuxcpxb8wqm
+
+al.maddah season.2.episode.10.mp4
+https://voe.sx/ekwcgeg8izcn
+
+Al.Maddah.S2.E29.mp4
+https://voe.sx/z7bexuwdmi30
+
+Al.Maddah.S2.E30.mp4
+https://voe.sx/pbeeght9xzta
+
+Al.Maddah.S2.E27.mp4
+https://voe.sx/f5gih1foofau
+
+Al.Maddah.S2.E28.mp4
+https://voe.sx/bfz60ixmhmk7
+
+Al.Maddah.S2.E22.mp4
+https://voe.sx/npu88iw96ros
+
+Al.Maddah.S2.E23.mp4
+https://voe.sx/alr60fznkypn
+
+Al.Maddah.S2.E20.mp4
+https://voe.sx/tz1eannwpmfw
+
+Al.Maddah.S2.E21.mp4
+https://voe.sx/qoyi8ovnrn9y
+
+Al.Maddah.S2.E17.mp4
+https://voe.sx/ndel8zchyr6c
+
+Al.Maddah.S2.E7.mp4
+https://voe.sx/e6xvhiu7h4uv
+
+Al.Maddah.S2.E05.mp4
+https://voe.sx/kx9hg6b0iipm
+
+Al.Maddah.S2.E16..mp4
+https://voe.sx/kutqhv0vi81s
+
+Al.Maddah.S2.E2.mp4
+https://voe.sx/7uranturfpsq
+
+Al.Maddah.S02-E25.mp4
+https://voe.sx/mbotpkfbncsr
+
+Al.Maddah.S02-E08.mp4
+https://voe.sx/th1mchd7dcqa
+
+Al.Maddah.S02.E24.mp4
+https://voe.sx/wssxmfrdir7y
+
+Al.Maddah.S02.E19.mp4
+https://voe.sx/iesxvxvbfdkd
+
+Al.Maddah.S02.E18.mp4
+https://voe.sx/tgmd4loyepje
+
+El.Maddah.S03-E30.mp4
+https://voe.sx/mkjfpuuruubf
+
+Al.Maddah.S02.E14.mp4
+https://voe.sx/wstc22w7fupg
+
+Al.Maddah.S02.E15.mp4
+https://voe.sx/yieepl1ltxeh
+
+El.Maddah.S03-E27.mp4
+https://voe.sx/cnml4qhkslt1
+
+El.Maddah.S03-E26.mp4
+https://voe.sx/fbod7coqy4ye
+
+El.Maddah.S03-E25.mp4
+https://voe.sx/zn41qackwhl9
+
+El.Maddah.S03-E29..mp4
+https://voe.sx/cyacxkfr3xci
+
+El.Maddah.S03-E28.mp4
+https://voe.sx/rpwkryp8kmey
+
+El.Maddah.S03-E24.mp4
+https://voe.sx/dxmnqc9b8str
+
+El.Maddah.S03-E23.mp4
+https://voe.sx/jih1di4ad60m
+
+El.Maddah.S03-E22.mp4
+https://voe.sx/iqs6r3wtzrew
+
+El.Maddah.S03-E21.mp4
+https://voe.sx/u9j28qgqfoo9
+
+El.Maddah.S03-E20...mp4
+https://voe.sx/gawapaq7fnph
+
+El.Maddah.S03-E19.mp4
+https://voe.sx/lufhnsvcraia
+
+El.Maddah.S03-E18...mp4
+https://voe.sx/uxjxxmy7mzkq
+
+El.Maddah.S03-E17...mp4
+https://voe.sx/urkbwikdmll1
+
+El.Maddah.S03-E14...mp4
+https://voe.sx/uhxcuoi0tz8l
+
+El.Maddah.S03-E08.mp4
+https://voe.sx/qeprwozvgt0j
+
+El.Maddah.S03-E13.mp4
+https://voe.sx/guczbpozsrlc
+
+El.Maddah.S03-E15...mp4
+https://voe.sx/xznwkw2ye2nm
+
+El.Maddah.S03-E12.mp4
+https://voe.sx/u2jfgnv5snmf
+
+El.Maddah.S03-E11...mp4
+https://voe.sx/x4kqolrdzmdi
+
+El.Maddah.S03-E09...mp4
+https://voe.sx/d2ukv7bxkfho
+
+El.Maddah.S03-E10...mp4
+https://voe.sx/dz763yzkbxy3
+
+El.Maddah.S03-E06.mp4
+https://voe.sx/t7qgeco4s2iq
+
+El.Maddah.S03-E03..mp4
+https://voe.sx/jsnsbxhmf6vf
+
+El.Maddah.S03E01.mp4
+https://voe.sx/nqepmvg32prb
+
+El.Maddah.S03-E07..mp4
+https://voe.sx/krdcambruhqn
+
+El.Maddah.S03-E04..mp4
+https://voe.sx/cxyktyjon3cw
+
+El.Maddah.S03.E05.mp4
+https://voe.sx/9uh8qgtwwpkz
+
+El.Maddah.S03-E02.mp4
+https://voe.sx/lujrxykeitpq
+
+Al Maddah 28.mp4
+https://voe.sx/sbnmphsxodey
+
+Al Maddah 10.mp4
+https://voe.sx/nunaxjiu1rn7
+
+Al Maddah 26.mp4
+https://voe.sx/x7m1mfgvw6tw
+
+Al Maddah 11.mp4
+https://voe.sx/bwvi3fxmalij
+
+Al Maddah 18.mp4
+https://voe.sx/ijtoqrfyf0n6
+
+Al Maddah 16.mp4
+https://voe.sx/gtmfiefpjiia
+
+Al Maddah 8.mp4
+https://voe.sx/w9wvoonzfrtx
+
+Al Maddah 4.mp4
+https://voe.sx/wvgjwuxhbwtz
+
+Almaddah_-_S01E23...mp4
+https://voe.sx/s1atx4k62iml
+
+Almaddah_-_S01E27...mp4
+https://voe.sx/2b8zmoaj84ar
+
+Almaddah_-_S01E22...mp4
+https://voe.sx/uagfymi0q58n
+
+Almaddah_-_S01E20...mp4
+https://voe.sx/dznalit8walp
+
+Almaddah_-_S01E07...mp4
+https://voe.sx/n3tzeqgrquwe
+
+Almaddah_-_S01E14...mp4
+https://voe.sx/bo29qnpedqra
+
+Almaddah_-_S01E15...mp4
+https://voe.sx/ijkaebsrdwkv
+
+Almaddah_-_S01E19...mp4
+https://voe.sx/qhybhwgssvlj
+
+Almaddah.S01E30...mp4
+https://voe.sx/ropk3lnbxubc
+
+Almaddah.S01E28...mp4
+https://voe.sx/xrztcdwhi915
+
+Almaddah_-_S01E06..mp4
+https://voe.sx/trfv2qig7ihg
+
+Almaddah.S01E17...mp4
+https://voe.sx/xtpsxealxkkc
+
+Almaddah.S01E13...mp4
+https://voe.sx/tujen00kah2r
+
+Almaddah.S01E21..mp4
+https://voe.sx/xtjd8huyy4az
+
+Almaddah.E05...mp4
+https://voe.sx/kntsecdeyo5h
+
+Almaddah.S01E09...mp4
+https://voe.sx/4eiyolzbjcii
+
+Almaddah.S01E12..mp4
+https://voe.sx/ncd0v19bhzao
+
+Almaddah.E01...mp4
+https://voe.sx/axltryclziue
+
+Almaddah.E03..w.mp4
+https://voe.sx/2dv5dc8oaaoh
+
+Almaddah.E02...mp4
+https://voe.sx/p8wgjbun4jka
+
+AL.Maddah.S01E24...mp4
+https://voe.sx/cucwkturv2zv
+
+AL_Maddah_S01E29..mp4
+https://voe.sx/odnbvhmwds6s`;
+            
+            // Parse and organize all episodes from the paste.txt data
+            const parseEpisodeData = (rawData) => {
+                try {
+                    // Create storage for all episodes by season
+                    const episodesBySeason = {
+                        "1": [],
+                        "2": [],
+                        "3": [],
+                        "4": [],
+                        "5": []
+                    };
+                    
+                    // Parse the raw data (each line alternates between filename and URL)
+                    const lines = rawData.split('\n').filter(line => line.trim() !== '');
+                    
+                    console.log(`Processing ${lines.length} lines of data`);
+                    
+                    for (let i = 0; i < lines.length; i += 2) {
+                        if (i + 1 >= lines.length) break;
+                        
+                        try {
+                            const filename = lines[i].trim();
+                            const videoUrl = lines[i + 1].trim();
+                            const videoId = videoUrl.split('/').pop();
+                            
+                            // Default values
+                            let season = '1';
+                            let episodeNumber = 1;
+                            let title = 'Al Maddah';
+                            
+                            // Simple season detection
+                            if (filename.includes('S5') || filename.includes('S05')) {
+                                season = '5';
+                                title = 'Ostouret El Ahd';
+                            } else if (filename.includes('S4') || filename.includes('S04')) {
+                                season = '4';
+                                title = 'Ostouret El Awda';
+                            } else if (filename.includes('S3') || filename.includes('S03')) {
+                                season = '3';
+                                title = 'Ostouret El Ishq';
+                            } else if (filename.includes('S2') || filename.includes('S02') || filename.includes('S2.')) {
+                                season = '2';
+                                title = 'Ostouret Al Wadi';
+                            } else if (filename.includes('S1') || filename.includes('S01') || 
+                                      filename.match(/^Almaddah/i) ||
+                                      filename.match(/^AL[\._]Maddah/i)) {
+                                season = '1';
+                                title = 'Al Maddah';
+                            }
+                            
+                            // Simple episode detection
+                            let epMatch = filename.match(/E(\d+)/i);
+                            if (epMatch) {
+                                episodeNumber = parseInt(epMatch[1]);
+                            } else if (filename.match(/Al Maddah (\d+)\.mp4/i)) {
+                                episodeNumber = parseInt(filename.match(/Al Maddah (\d+)\.mp4/i)[1]);
+                            } else {
+                                // For files without clear episode numbers, assign sequential
+                                episodeNumber = episodesBySeason[season].length + 1;
+                            }
+                            
+                            // Format episode number as 2 digits
+                            const episode = episodeNumber.toString().padStart(2, '0');
+                            
+                            // Add to appropriate season
+                            episodesBySeason[season].push({
+                                id: `S${season}E${episode}`,
+                                season: season,
+                                episode: episode,
+                                episodeNumber: episodeNumber,
+                                title: title,
+                                videoId: videoId,
+                                filename: filename
+                            });
+                        } catch (innerError) {
+                            console.error(`Error processing entry at index ${i}:`, innerError);
+                            // Continue with next entry
+                        }
+                    }
+                    
+                    // Sort episodes within each season
+                    Object.keys(episodesBySeason).forEach(season => {
+                        episodesBySeason[season].sort((a, b) => parseInt(a.episode) - parseInt(b.episode));
+                    });
+                    
+                    console.log("Episodes processed by season:", {
+                        "Season 1": episodesBySeason["1"].length,
+                        "Season 2": episodesBySeason["2"].length,
+                        "Season 3": episodesBySeason["3"].length,
+                        "Season 4": episodesBySeason["4"].length,
+                        "Season 5": episodesBySeason["5"].length
+                    });
+                    
+                    return episodesBySeason;
+                } catch (error) {
+                    console.error("Error in parseEpisodeData:", error);
+                    // Return empty structure in case of error
+                    return { "1": [], "2": [], "3": [], "4": [], "5": [] };
+                }
+            };
+            
+            // Process the episode data
+            const episodesBySeason = parseEpisodeData(episodeData);
+            
+            // Add error handling for initialization
+            try {
+                // Setup the seasons selector
+                setupSeasonsSelector(episodesBySeason);
+                
+                // Populate the initial season (season 5 by default)
+                populateEpisodesList('5', episodesBySeason['5']);
+                
+                console.log("Initial season 5 populated successfully");
+            } catch (error) {
+                console.error("Error during initialization:", error);
+                // Show error message to user
+                document.querySelector('.episodes-list').innerHTML = `
+                    <div class="episode-item">
+                        <div class="episode-details">
+                            <div class="episode-title">Error loading episodes</div>
+                            <div class="episode-description">
+                                Please refresh the page and try again.
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Function to setup the seasons selector
+            function setupSeasonsSelector(episodesBySeason) {
+                try {
+                    const seasonsContainer = document.querySelector('.season-boxes');
+                    if (!seasonsContainer) {
+                        console.error("Could not find season-boxes container");
+                        return;
+                    }
+                    
+                    seasonsContainer.innerHTML = ''; // Clear existing season boxes
+                    
+                    // Create a box for each season
+                    Object.keys(episodesBySeason).forEach(season => {
+                        const episodeCount = episodesBySeason[season].length;
+                        const isActive = season === '5'; // Default to season 5
+                        
+                        const seasonBox = document.createElement('div');
+                        seasonBox.className = `season-box ${isActive ? 'active' : ''}`;
+                        seasonBox.dataset.season = season;
+                        seasonBox.textContent = `${season} (${episodeCount})`;
+                        
+                        // Add click event
+                        seasonBox.addEventListener('click', () => {
+                            try {
+                                // Update active state
+                                document.querySelectorAll('.season-box').forEach(box => {
+                                    box.classList.remove('active');
+                                });
+                                seasonBox.classList.add('active');
+                                
+                                // Update episodes title
+                                const episodesTitle = document.querySelector('.episodes-container h2');
+                                if (episodesTitle) {
+                                    episodesTitle.textContent = `Episodes - Season ${season} (${episodeCount} episodes)`;
+                                }
+                                
+                                // Populate episodes
+                                populateEpisodesList(season, episodesBySeason[season]);
+                            } catch (error) {
+                                console.error("Error in season click handler:", error);
+                            }
+                        });
+                        
+                        seasonsContainer.appendChild(seasonBox);
+                    });
+                    
+                    console.log("Season selector setup complete");
+                } catch (error) {
+                    console.error("Error in setupSeasonsSelector:", error);
+                }
+            }
+            
+            // Function to populate the episodes list for a season
+            function populateEpisodesList(season, episodes) {
+                try {
+                    const episodesContainer = document.querySelector('.episodes-container');
+                    if (!episodesContainer) {
+                        console.error("Could not find episodes-container");
+                        return;
+                    }
+                    
+                    // Update title
+                    const titleElement = episodesContainer.querySelector('h2');
+                    if (titleElement) {
+                        titleElement.textContent = `Episodes - Season ${season} (${episodes.length} episodes)`;
+                    }
+                    
+                    // Clear existing episodes
+                    let episodesList = document.querySelector('.episodes-list');
+                    if (!episodesList) {
+                        console.error("Could not find episodes-list");
+                        return;
+                    }
+                    
+                    episodesList.innerHTML = '';
+                    
+                    // If no episodes, show message
+                    if (episodes.length === 0) {
+                        episodesList.innerHTML = `
+                            <div class="episode-item">
+                                <div class="episode-details">
+                                    <div class="episode-title">No episodes found</div>
+                                    <div class="episode-description">
+                                        No episodes available for this season.
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    console.log(`Populating ${episodes.length} episodes for season ${season}`);
+                    
+                    // Add each episode
+                    episodes.forEach((episode, index) => {
+                        try {
+                            const episodeElement = document.createElement('div');
+                            episodeElement.className = 'episode-item';
+                            episodeElement.dataset.episode = episode.episode;
+                            episodeElement.dataset.video = episode.videoId;
+                            
+                            const safeName = episode.filename || `Season ${season} Episode ${episode.episodeNumber}`;
+                            
+                            episodeElement.innerHTML = `
+                                <div class="episode-thumbnail">
+                                    <img src="/api/placeholder/160/90" alt="Episode ${episode.episode}">
+                                    <div class="play-overlay">
+                                        <div class="play-icon">▶</div>
+                                    </div>
+                                </div>
+                                <div class="episode-details">
+                                    <div class="episode-number">Episode ${episode.episodeNumber}</div>
+                                    <div class="episode-title">${episode.title}</div>
+                                    <div class="episode-duration">45 min</div>
+                                    <div class="episode-info">Season ${episode.season}</div>
+                                    <div class="episode-description">${safeName}</div>
+                                </div>
+                            `;
+                            
+                            episodesList.appendChild(episodeElement);
+                        } catch (innerError) {
+                            console.error(`Error adding episode ${index}:`, innerError);
+                        }
+                    });
+                    
+                    console.log(`Successfully populated episodes for season ${season}`);
+                } catch (error) {
+                    console.error("Error in populateEpisodesList:", error);
+                }
+            }
+            
+            // Setup episode click event listener
+            document.addEventListener('click', function(event) {
+                const episodeItem = event.target.closest('.episode-item');
+                if (episodeItem) {
+                    const episodeNumber = episodeItem.dataset.episode;
+                    const videoId = episodeItem.dataset.video;
+                    const seasonNumber = document.querySelector('.season-box.active').dataset.season;
+                    
+                    openVideoModal(seasonNumber, episodeNumber, videoId);
+                }
+            });
+            
+            // Function to open the video modal
+            function openVideoModal(season, episode, videoId) {
+                const videoModal = document.getElementById('videoModal');
+                const modalTitle = document.getElementById('modalTitle');
+                const videoContainer = document.querySelector('.video-container');
+                
+                if (!videoId) return;
+                
+                // Set the modal title
+                modalTitle.textContent = `El Maddah - S${season}:E${episode}`;
+                
+                // Create the embed URL
+                const videoSrc = `https://voe.sx/e/${videoId}`;
+                
+                // Clear previous content
+                videoContainer.innerHTML = '';
+                
+                // Create and add the iframe
+                const iframe = document.createElement('iframe');
+                iframe.src = videoSrc;
+                iframe.width = '100%';
+                iframe.height = '100%';
+                iframe.style.position = 'absolute';
+                iframe.style.top = '0';
+                iframe.style.left = '0';
+                iframe.frameBorder = '0';
+                iframe.scrolling = 'no';
+                iframe.allowFullscreen = true;
+                
+                videoContainer.appendChild(iframe);
+                
+                // Show the modal
+                videoModal.style.display = 'flex';
+            }
+            
+            // Close modal when clicking the X
+            document.querySelector('.close-modal').addEventListener('click', () => {
+                document.getElementById('videoModal').style.display = 'none';
+                document.querySelector('.video-container').innerHTML = '';
+            });
+            
+            // Close modal when clicking outside the content
+            document.getElementById('videoModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('videoModal')) {
+                    document.getElementById('videoModal').style.display = 'none';
+                    document.querySelector('.video-container').innerHTML = '';
+                }
+            });
+            
+            // Language selection
+            document.getElementById('langArabic').addEventListener('click', function() {
+                document.getElementById('langEnglish').classList.remove('active');
+                this.classList.add('active');
+            });
+            
+            document.getElementById('langEnglish').addEventListener('click', function() {
+                document.getElementById('langArabic').classList.remove('active');
+                this.classList.add('active');
+                
+                document.querySelector('.video-container').innerHTML = `
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>English version coming soon</p>
+                    </div>
+                `;
+            });
+            
+            // Star rating functionality
+            document.querySelectorAll('.star').forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    
+                    // Clear all active stars
+                    document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+                    
+                    // Set active stars up to the clicked one
+                    document.querySelectorAll('.star').forEach(s => {
+                        if (parseInt(s.dataset.rating) <= rating) {
+                            s.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Action buttons functionality
+            document.querySelector('.subscribe-btn').addEventListener('click', function() {
+                const isSubscribed = this.classList.toggle('subscribed');
+                
+                if (isSubscribed) {
+                    this.innerHTML = '<i class="icon">✓</i> Subscribed';
+                    this.style.backgroundColor = '#388E3C';
+                } else {
+                    this.innerHTML = '<i class="icon">🔔</i> Subscribe to Series';
+                    this.style.backgroundColor = '#4CAF50';
+                }
+            });
+            
+            document.querySelector('.watchlist-btn').addEventListener('click', function() {
+                const isInWatchlist = this.classList.toggle('in-watchlist');
+                
+                if (isInWatchlist) {
+                    this.innerHTML = '<i class="icon">✓</i> In Watchlist';
+                    this.style.backgroundColor = '#1565C0';
+                } else {
+                    this.innerHTML = '<i class="icon">➕</i> Add to Watchlist';
+                    this.style.backgroundColor = '#2196F3';
+                }
+            });
+            
+            document.querySelector('.trailer-btn').addEventListener('click', function() {
+                const videoModal = document.getElementById('videoModal');
+                const modalTitle = document.getElementById('modalTitle');
+                const videoContainer = document.querySelector('.video-container');
+                
+                modalTitle.textContent = 'El Maddah - Official Trailer';
+                
+                videoContainer.innerHTML = '';
+                
+                const iframe = document.createElement('iframe');
+                iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ'; // Replace with actual trailer
+                iframe.width = '100%';
+                iframe.height = '100%';
+                iframe.style.position = 'absolute';
+                iframe.style.top = '0';
+                iframe.style.left = '0';
+                iframe.frameBorder = '0';
+                iframe.allowFullscreen = true;
+                
+                videoContainer.appendChild(iframe);
+                
+                videoModal.style.display = 'flex';
+            });
+        });
+    </script>
+</body>
+</html>
