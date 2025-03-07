@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>80 Bako - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Detail page specific styles */
+        .detail-container {
+            display: flex;
+            flex-direction: column;
+            padding: 30px 5%;
+            color: var(--text-primary);
+        }
+        
+        .detail-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .detail-poster {
+            flex-shrink: 0;
+            width: 300px;
+            height: 450px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .detail-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .detail-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .detail-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .star-rating {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .rating-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .detail-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .detail-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .watch-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .watch-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .trailer-btn {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .trailer-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .detail-desc {
+            margin-top: auto;
+            line-height: 1.6;
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+        }
+        
+        .detail-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .cast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .cast-card {
+            text-align: center;
+        }
+        
+        .cast-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 10px;
+        }
+        
+        .cast-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .cast-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .cast-role {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .similar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        
+        .episodes-section {
+            margin-bottom: 40px;
+        }
+        
+        .episode-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .episode-item {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .episode-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .episode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        
+        .episode-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .episode-expand {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .episode-body {
+            padding: 20px;
+            display: none;
+        }
+        
+        .episode-body.active {
+            display: block;
+        }
+        
+        .video-container {
+            margin-top: 20px;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .stream-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .stream-option {
+            padding: 8px 15px;
+            border-radius: 4px;
+            background-color: var(--background-lighter);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .stream-option:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .stream-option.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .trailer-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .trailer-container {
+            width: 80%;
+            max-width: 900px;
+            position: relative;
+        }
+        
+        .close-trailer {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html" class="active">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <i>🔍</i>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login-page.html" class="btn-small btn-login">Login</a>
+                    <a href="simplified-register-page.html" class="btn-small btn-signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="detail-container">
+        <!-- Detail Header Section -->
+        <div class="detail-header">
+            <div class="detail-poster">
+                <img src="https://www.milleworld.com/wp-content/uploads/2025/02/huda-el-mufti-80-bako-poster-shahid.webp" alt="80 Bako">
+            </div>
+            
+            <div class="detail-info">
+                <h1 class="detail-title">80 Bako</h1>
+                
+                <div class="detail-meta">
+                    <span>Drama</span>
+                    <span>•</span>
+                    <span>Mystery</span>
+                    <span>•</span>
+                    <span>Thriller</span>
+                    <span>•</span>
+                    <span>2025</span>
+                    <span>•</span>
+                    <span>7 Episodes</span>
+                </div>
+                
+                <div class="detail-rating">
+                    <div class="star-rating">★★★★<span style="opacity: 0.3;">★</span></div>
+                    <span class="rating-value">8.7</span>
+                </div>
+                
+                <div class="detail-buttons">
+                    <button class="detail-btn watch-btn" id="watchBtn"><i>▶</i> Watch Now</button>
+                    <button class="detail-btn trailer-btn" id="trailerBtn"><i>🎬</i> Trailer</button>
+                </div>
+                
+                <p class="detail-desc">
+                    "80 Bako" is a gripping Egyptian thriller series that follows the mysterious events in apartment 80 in the Bako district. When a new tenant moves in, they discover dark secrets hidden within the walls of the building and become entangled in a web of intrigue involving the enigmatic neighbors and their suspicious activities. As the story unfolds, nothing is as it seems in this psychological thriller that examines the thin line between paranoia and real danger.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Episodes Section -->
+        <div class="episodes-section">
+            <h2 class="section-title">Episodes</h2>
+            
+            <div class="episode-list">
+                <!-- Episode 1 -->
+                <div class="episode-item">
+                    <div class="episode-header" data-episode="1">
+                        <div class="episode-title">Episode 1</div>
+                        <div class="episode-expand">+</div>
+                    </div>
+                    <div class="episode-body" id="episode1">
+                        <p>After a series of strange occurrences in her life, Leila decides to move to a new apartment, number 80 in the Bako building. She hopes for a fresh start, but strange noises and mysterious neighbors make her question her decision from the very first night.</p>
+                        <div class="stream-options">
+                            <div class="stream-option active" data-src="https://voe.sx/majzpxglkigc">Server 1</div>
+                            <div class="stream-option" data-src="https://voe.sx/gnm6sm7nnmlm">Server 2</div>
+                        </div>
+                        <div class="video-container">
+                            <iframe src="https://voe.sx/e/majzpxglkigc" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Episode 2 -->
+                <div class="episode-item">
+                    <div class="episode-header" data-episode="2">
+                        <div class="episode-title">Episode 2</div>
+                        <div class="episode-expand">+</div>
+                    </div>
+                    <div class="episode-body" id="episode2">
+                        <p>Leila attempts to learn more about the history of the building and meets some of her neighbors, including the reclusive Mr. Farouk who seems to know more than he's letting on. A cryptic message appears on her door, escalating her suspicions.</p>
+                        <div class="stream-options">
+                            <div class="stream-option active" data-src="https://voe.sx/xrintzcajlya">Server 1</div>
+                            <div class="stream-option" data-src="https://voe.sx/1oxgwd6a6gly">Server 2</div>
+                        </div>
+                        <div class="video-container">
+                            <iframe src="https://voe.sx/e/xrintzcajlya" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Episode 3 -->
+                <div class="episode-item">
+                    <div class="episode-header" data-episode="3">
+                        <div class="episode-title">Episode 3</div>
+                        <div class="episode-expand">+</div>
+                    </div>
+                    <div class="episode-body" id="episode3">
+                        <p>A blackout in the building leads to a frightening encounter in the stairwell. Leila discovers the previous tenant left behind hidden documents that hint at a dangerous conspiracy. Meanwhile, she begins to form an alliance with Samir, another tenant who has his own suspicions.</p>
+                        <div class="stream-options">
+                            <div class="stream-option active" data-src="https://voe.sx/ovpkrlz2wxi5">Server 1</div>
+                            <div class="stream-option" data-src="https://voe.sx/9k1rctgauvjj">Server 2</div>
+                        </div>
+                        <div class="video-container">
+                            <iframe src="https://voe.sx/e/ovpkrlz2wxi5" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Episode 4 -->
+                <div class="episode-item">
+                    <div class="episode-header" data-episode="4">
+                        <div class="episode-title">Episode 4</div>
+                        <div class="episode-expand">+</div>
+                    </div>
+                    <div class="episode-body" id="episode4">
+                        <p>Leila and Samir investigate the mysterious disappearance of a former resident. They uncover a hidden room in the basement that contains disturbing clues about the building's past. The landlord's unusual behavior raises more questions than answers.</p>
+                        <div class="stream-options">
+                            <div class="stream-option active" data-src="https://voe.sx/ickp0f4bikqy">Server 1</div>
+                            <div class="stream-option" data-src="https://voe.sx/e3z2mx5xjnlj">Server 2</div>
+                        </div>
+                        <div class="video-container">
+                            <iframe src="https://voe.sx/e/ickp0f4bikqy" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Episode 5 -->
+                <div class="episode-item">
+                    <div class="episode-header" data-episode="5">
+                        <div class="episode-title">Episode 5</div>
+                        <div class="episode-expand">+</div>
+                    </div>
+                    <div class="episode-body" id="episode5">
+                        <p>A series of break-ins target specific apartments, including Leila's. The police seem oddly reluctant to investigate thoroughly. Leila finds a connection between the building and a notorious criminal case from years ago, leading her deeper into danger.</p>
+                        <div class="stream-options">
+                            <div class="stream-option active" data-src="https://voe.sx/dfq7rzdoeyk7">Server 1</div>
+                            <div class="stream-option" data-src="https://voe.sx/ikycbog3hgzm">Server 2</div>
+                        </div>
+                        <div class="video-container">
+                            <iframe src="https://voe.sx/e/dfq7rzdoeyk7" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Episode 6 -->
+                <div class="episode-item">
+                    <div class="episode-header" data-episode="6">
+                        <div class="episode-title">Episode 6</div>
+                        <div class="episode-expand">+</div>
+                    </div>
+                    <div class="episode-body" id="episode6">
+                        <p>Confronted by threatening messages, Leila considers leaving the building, but her growing attachment to Samir complicates matters. A mysterious figure follows her, and she makes a shocking discovery about one of her neighbors that changes everything.</p>
+                        <div class="stream-options">
+                            <div class="stream-option active" data-src="https://voe.sx/5hggmnhzmsjf">Server 1</div>
+                            <div class="stream-option" data-src="https://voe.sx/gndrz2gdtuwa">Server 2</div>
+                        </div>
+                        <div class="video-container">
+                            <iframe src="https://voe.sx/e/5hggmnhzmsjf" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Episode 7 -->
+                <div class="episode-item">
+                    <div class="episode-header" data-episode="7">
+                        <div class="episode-title">Episode 7</div>
+                        <div class="episode-expand">+</div>
+                    </div>
+                    <div class="episode-body" id="episode7">
+                        <p>In the thrilling finale, Leila's investigation comes to a head as she confronts the mastermind behind the events at 80 Bako. Past and present collide in a dangerous showdown that reveals the building's darkest secrets and forces Leila to make a life-altering decision.</p>
+                        <div class="stream-options">
+                            <div class="stream-option active" data-src="https://voe.sx/go2clwsaxc7t">Server 1</div>
+                            <div class="stream-option" data-src="https://voe.sx/qatv5kri1gph">Server 2</div>
+                        </div>
+                        <div class="video-container">
+                            <iframe src="https://voe.sx/e/go2clwsaxc7t" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+				<!-- Episode 8 -->
+                <div class="episode-item">
+                    <div class="episode-header" data-episode="8">
+                        <div class="episode-title">Episode 8</div>
+                        <div class="episode-expand">+</div>
+                    </div>
+                    <div class="episode-body" id="episode7">
+                        <p>In the thrilling finale, Leila's investigation comes to a head as she confronts the mastermind behind the events at 80 Bako. Past and present collide in a dangerous showdown that reveals the building's darkest secrets and forces Leila to make a life-altering decision.</p>
+                        <div class="stream-options">
+                            <div class="stream-option active" data-src="https://voe.sx/e/quhzt30rh1bk">Server 1</div>
+                            <div class="stream-option" data-src="https://voe.sx/e/quhzt30rh1bk">Server 2</div>
+                        </div>
+                        <div class="video-container">
+                            <iframe src="https://voe.sx/e/quhzt30rh1bk" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cast Section -->
+        <div class="detail-section">
+            <h2 class="section-title">Cast</h2>
+            
+            <div class="cast-grid">
+                <div class="cast-card">
+                    <div class="cast-img">
+                        <img src="https://api.placeholder.com/300x300" alt="Huda El Mufti">
+                    </div>
+                    <div class="cast-name">Huda El Mufti</div>
+                    <div class="cast-role">Leila</div>
+                </div>
+                
+                <div class="cast-card">
+                    <div class="cast-img">
+                        <img src="https://api.placeholder.com/300x300" alt="Ahmed Malek">
+                    </div>
+                    <div class="cast-name">Ahmed Malek</div>
+                    <div class="cast-role">Samir</div>
+                </div>
+                
+                <div class="cast-card">
+                    <div class="cast-img">
+                        <img src="https://api.placeholder.com/300x300" alt="Asser Yassin">
+                    </div>
+                    <div class="cast-name">Asser Yassin</div>
+                    <div class="cast-role">Mr. Farouk</div>
+                </div>
+                
+                <div class="cast-card">
+                    <div class="cast-img">
+                        <img src="https://api.placeholder.com/300x300" alt="Amina Khalil">
+                    </div>
+                    <div class="cast-name">Amina Khalil</div>
+                    <div class="cast-role">Dalia</div>
+                </div>
+                
+                <div class="cast-card">
+                    <div class="cast-img">
+                        <img src="https://api.placeholder.com/300x300" alt="Mohamed Mamdouh">
+                    </div>
+                    <div class="cast-name">Mohamed Mamdouh</div>
+                    <div class="cast-role">Landlord</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Similar Series Section -->
+        <div class="detail-section">
+            <h2 class="section-title">You May Also Like</h2>
+            
+            <div class="similar-grid">
+                <a href="el-atawla-detail.html" style="text-decoration: none;">
+                    <div class="movie-card">
+                        <img src="https://i.imgur.com/HsUTeiH.jpeg" alt="El Atawla">
+                        <div class="overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="movie-info">
+                            <h3 class="movie-title">El Atawla</h3>
+                            <div class="movie-meta">
+                                <span>Drama, Thriller • 2025</span>
+                                <div class="rating">
+                                    <i>★</i> 8.5
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="taht-sabe-ard-detail.html" style="text-decoration: none;">
+                    <div class="movie-card">
+                        <img src="http://i.epvpimg.com/HHelgab.jpg" alt="Taht Sabe' Ard">
+                        <div class="overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="movie-info">
+                            <h3 class="movie-title">Taht Sabe' Ard</h3>
+                            <div class="movie-meta">
+                                <span>Drama, Thriller • 2025</span>
+                                <div class="rating">
+                                    <i>★</i> 8.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="#" style="text-decoration: none;">
+                    <div class="movie-card">
+                        <img src="https://media.elcinema.com/uploads/_315x420_6f6fe37a4f3dfc7d7d626bc5a7b96c2bace1a5c2e0224885f611d4f5cfc9dfc7.jpg" alt="Al Qahira Kabul">
+                        <div class="overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="movie-info">
+                            <h3 class="movie-title">Al Qahira Kabul</h3>
+                            <div class="movie-meta">
+                                <span>Action, Thriller • 2024</span>
+                                <div class="rating">
+                                    <i>★</i> 8.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="#" style="text-decoration: none;">
+                    <div class="movie-card">
+                        <img src="https://m.media-amazon.com/images/M/MV5BMzg4ODA0MTMtZWY4NC00MjljLThjYjQtYzEzZGY1YTRkODY3XkEyXkFqcGdeQXVyMTUyNjIwMDEw._V1_.jpg" alt="Zodiak">
+                        <div class="overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="movie-info">
+                            <h3 class="movie-title">Zodiak</h3>
+                            <div class="movie-meta">
+                                <span>Thriller, Mystery • 2024</span>
+                                <div class="rating">
+                                    <i>★</i> 8.3
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="#" style="text-decoration: none;">
+                    <div class="movie-card">
+                        <img src="https://media.elcinema.com/uploads/_315x420_c3a3f5fde5134b9a9d00b58fa0b0faedb16e4a4c7f27b66d026dbea5026a0a5d.jpg" alt="El A'arraf">
+                        <div class="overlay">
+                            <div class="play-btn">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                        <div class="movie-info">
+                            <h3 class="movie-title">El A'arraf</h3>
+                            <div class="movie-meta">
+                                <span>Mystery, Thriller • 2023</span>
+                                <div class="rating">
+                                    <i>★</i> 8.4
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Comments Section (just for show) -->
+        <div class="detail-section">
+            <h2 class="section-title">Comments</h2>
+            
+            <div id="disqus_thread">
+                <p style="color: var(--text-secondary);">Login to leave a comment.</p>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Trailer Modal -->
+    <div class="trailer-modal" id="trailerModal">
+        <div class="trailer-container">
+            <div class="close-trailer" id="closeTrailer">✕</div>
+            <div class="video-container">
+                <iframe width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#" data-filter="action">Action</a></li>
+                    <li><a href="#" data-filter="comedy">Comedy</a></li>
+                    <li><a href="#" data-filter="drama">Drama</a></li>
+                    <li><a href="#" data-filter="mystery">Mystery</a></li>
+                    <li><a href="#" data-filter="thriller">Thriller</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Episode accordion functionality
+            const episodeHeaders = document.querySelectorAll('.episode-header');
+            
+            episodeHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const episodeNumber = this.getAttribute('data-episode');
+                    const episodeBody = this.nextElementSibling;
+                    const expandIcon = this.querySelector('.episode-expand');
+                    
+                    // Toggle the active state
+                    if (episodeBody.style.display === 'block') {
+                        episodeBody.style.display = 'none';
+                        expandIcon.textContent = '+';
+                    } else {
+                        // Hide all other episode bodies
+                        document.querySelectorAll('.episode-body').forEach(body => {
+                            body.style.display = 'none';
+                            body.previousElementSibling.querySelector('.episode-expand').textContent = '+';
+                        });
+                        
+                        // Show this episode body
+                        episodeBody.style.display = 'block';
+                        expandIcon.textContent = '−';
+                        
+                        // Scroll to the episode section
+                        episodeBody.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            });
+            
+            // Watch button functionality
+            const watchBtn = document.getElementById('watchBtn');
+            if (watchBtn) {
+                watchBtn.addEventListener('click', function() {
+                    // Open the first episode
+                    const firstEpisodeHeader = document.querySelector('.episode-header[data-episode="1"]');
+                    if (firstEpisodeHeader) {
+                        firstEpisodeHeader.click();
+                    }
+                });
+            }
+            
+            // Stream options functionality
+            const streamOptions = document.querySelectorAll('.stream-option');
+            
+            streamOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Get the parent episode body
+                    const episodeBody = this.closest('.episode-body');
+                    
+                    // Update active class on options
+                    episodeBody.querySelectorAll('.stream-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Update iframe source
+                    const videoContainer = episodeBody.querySelector('.video-container');
+                    const iframe = videoContainer.querySelector('iframe');
+                    const src = this.getAttribute('data-src');
+                    
+                    iframe.src = `https://voe.sx/e/${src.split('/').pop()}`;
+                });
+            });
+            
+            // Trailer modal functionality
+            const trailerBtn = document.getElementById('trailerBtn');
+            const trailerModal = document.getElementById('trailerModal');
+            const closeTrailer = document.getElementById('closeTrailer');
+            
+            if (trailerBtn && trailerModal && closeTrailer) {
+                trailerBtn.addEventListener('click', function() {
+                    // Set a placeholder trailer URL (in a real site this would be the actual trailer)
+                    const trailerIframe = trailerModal.querySelector('iframe');
+                    trailerIframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ"; // Placeholder
+                    
+                    // Show modal
+                    trailerModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                closeTrailer.addEventListener('click', function() {
+                    // Reset iframe source to stop playback
+                    const trailerIframe = trailerModal.querySelector('iframe');
+                    trailerIframe.src = "";
+                    
+                    // Hide modal
+                    trailerModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+                
+                // Close modal when clicking outside the trailer
+                trailerModal.addEventListener('click', function(e) {
+                    if (e.target === trailerModal) {
+                        closeTrailer.click();
+                    }
+                });
+            }
+            
+            // Search functionality (simplified version)
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            
+            if (searchInput && searchResults) {
+                searchInput.addEventListener('focus', function() {
+                    // Simple placeholder results
+                    if (this.value.length > 0) {
+                        searchResults.innerHTML = `
+                            <div class="search-result-item">
+                                <img src="https://www.milleworld.com/wp-content/uploads/2025/02/huda-el-mufti-80-bako-poster-shahid.webp" alt="80 Bako" class="search-result-thumb">
+                                <div class="search-result-info">
+                                    <div class="search-result-title">80 Bako</div>
+                                    <div class="search-result-meta">TV Show • Drama, Mystery, Thriller</div>
+                                </div>
+                            </div>
+                        `;
+                        searchResults.classList.add('active');
+                    }
+                });
+                
+                searchInput.addEventListener('blur', function() {
+                    // Hide results when clicking away
+                    setTimeout(() => {
+                        searchResults.classList.remove('active');
+                    }, 200);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
