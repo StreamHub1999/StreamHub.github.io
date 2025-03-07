@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamel El Adad - StreamHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="detail-styles.css">
+    <style>
+        /* Additional styles for the series detail page */
+        .series-info-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 40px 5%;
+            color: var(--text-primary);
+            gap: 30px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), var(--background-dark));
+        }
+
+        .series-poster {
+            width: 220px;
+            flex-shrink: 0;
+        }
+
+        .series-poster img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .series-description {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .series-description h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .series-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .dot {
+            color: var(--text-secondary);
+        }
+
+        .synopsis {
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: var(--text-secondary);
+        }
+
+        .cast, .creators {
+            margin-bottom: 15px;
+        }
+
+        .cast h3, .creators h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .cast p, .creators p {
+            color: var(--text-secondary);
+        }
+
+        .series-actions {
+            min-width: 220px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px 0;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            background-color: var(--background-lighter);
+            color: var(--text-primary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .subscribe-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .subscribe-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .watchlist-btn:hover, .trailer-btn:hover {
+            background-color: var(--card-hover);
+        }
+
+        .rating-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .rating-container h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .star-rating {
+            margin-bottom: 10px;
+        }
+
+        .star {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #555;
+            transition: color 0.2s ease;
+        }
+
+        .star:hover, .star.active {
+            color: var(--primary-color);
+        }
+
+        .avg-rating {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .avg-rating span {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Episodes section */
+        .episodes-section {
+            padding: 20px 5% 60px;
+        }
+
+        .seasons-selector {
+            margin-bottom: 30px;
+        }
+
+        .seasons-selector h2 {
+            margin-bottom: 15px;
+        }
+
+        .season-boxes {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .season-box {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background-lighter);
+            color: var(--text-secondary);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .season-box:hover {
+            background-color: var(--card-hover);
+        }
+
+        .season-box.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .episodes-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .episodes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .episodes-list.hidden {
+            display: none;
+        }
+
+        .episode-item {
+            display: flex;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .episode-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .episode-thumbnail {
+            width: 160px;
+            height: 90px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .episode-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .episode-item:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .episode-details {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .episode-number {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .episode-title {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .episode-duration {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .episode-info {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .episode-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Video Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-modal.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            margin: 50px auto 0;
+            background: var(--background-dark);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+        }
+
+        .close-modal {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--text-primary);
+        }
+
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .play-button {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .language-selection {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+        }
+
+        .language-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .language-btn:hover, .language-btn.active {
+            opacity: 1;
+            border-color: var(--primary-color);
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 18px;
+            object-fit: cover;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .quality-selector {
+            background-color: var(--background-lighter);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .series-info-container {
+                flex-direction: column;
+            }
+            
+            .series-poster {
+                width: 180px;
+                margin: 0 auto;
+            }
+            
+            .episode-item {
+                flex-direction: column;
+            }
+            
+            .episode-thumbnail {
+                width: 100%;
+                height: 180px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (same as main page) -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html" class="active">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                    <i>🔍</i>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/32/32" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="detail-content">
+        <!-- Series Info Section -->
+        <section class="series-info-container">
+            <div class="series-poster">
+                <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Kamel El Adad">
+            </div>
+            
+            <div class="series-description">
+                <h1>Kamel El Adad</h1>
+                <div class="series-meta">
+                    <span class="year">2020-Present</span>
+                    <span class="dot">•</span>
+                    <span class="rating">TV-14</span>
+                    <span class="dot">•</span>
+                    <span class="seasons">3 Seasons</span>
+                    <span class="dot">•</span>
+                    <span class="genre">Comedy, Drama, Social</span>
+                </div>
+                <p class="synopsis">
+                    "Kamel El Adad" (Full House) is a popular Egyptian comedy series that follows the daily challenges and hilarious situations of an extended family living under one roof. As they navigate through life's ups and downs, the series showcases the dynamics of modern Egyptian family life with humor and heart.
+                </p>
+                <div class="cast">
+                    <h3>Cast:</h3>
+                    <p>Ahmed Amin, Bayoumi Fouad, Sherif Salama, Mai Omar, Samaa Ibrahim, Sabry Fawaz</p>
+                </div>
+                <div class="creators">
+                    <h3>Creator:</h3>
+                    <p>Ahmed El Mallawany</p>
+                </div>
+            </div>
+            
+            <div class="series-actions">
+                <button class="action-btn subscribe-btn">
+                    <i class="icon">🔔</i>
+                    Subscribe to Series
+                </button>
+                <button class="action-btn watchlist-btn">
+                    <i class="icon">➕</i>
+                    Add to Watchlist
+                </button>
+                <button class="action-btn trailer-btn">
+                    <i class="icon">▶</i>
+                    Watch Trailer
+                </button>
+                <div class="rating-container">
+                    <h3>Rate this:</h3>
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                        <span class="star" data-rating="6">★</span>
+                        <span class="star" data-rating="7">★</span>
+                        <span class="star" data-rating="8">★</span>
+                        <span class="star" data-rating="9">★</span>
+                        <span class="star" data-rating="10">★</span>
+                    </div>
+                    <div class="avg-rating">
+                        Average: <span>8.7</span>/10
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seasons & Episodes Section -->
+        <section class="episodes-section">
+            <div class="seasons-selector">
+                <h2>Seasons</h2>
+                <div class="season-boxes">
+                    <div class="season-box" data-season="1">1</div>
+                    <div class="season-box active" data-season="2">2</div>
+                    <div class="season-box" data-season="3">3</div>
+                </div>
+            </div>
+            
+            <div class="episodes-container">
+                <h2>Episodes - Season 1</h2>
+                
+                <div class="episodes-list hidden" id="season1-episodes">
+                    <div class="episode-item" data-episode="1" data-url="https://voe.sx/e/uixnn6hp90qe">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"الحلقة الأولى - Family Gathering"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                تبدأ الحكاية عندما تجتمع العائلة لأول مرة في المنزل الجديد، وتظهر الشخصيات الرئيسية ويبدأ الصراع الكوميدي.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="2" data-url="https://voe.sx/e/h5ctd6cvnttn">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"الحلقة الثانية - Growing Tensions"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                تتطور العلاقات بين أفراد العائلة وتظهر التناقضات الكوميدية في طريقة تعاملهم مع الحياة اليومية.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="3" data-url="https://voe.sx/e/mzrn6qoskb3v">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"الحلقة الثالثة - Common Enemy"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                يواجه أفراد العائلة مشكلة مشتركة تجمعهم معًا رغم اختلافاتهم، مما يؤدي إلى مواقف كوميدية.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="4" data-url="https://voe.sx/e/xo1odimjc1nj">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"الحلقة الرابعة - Battle of Wills"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                تتطور الأحداث عندما يحاول كل فرد من العائلة إثبات وجهة نظره، مما يزيد من حدة الصراع الكوميدي.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="5" data-url="https://voe.sx/e/g0wzpqovvmrd">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"الحلقة الخامسة - Embarrassing Situation"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                يتعرض أحد أفراد العائلة لموقف محرج، مما يدفع الجميع للتعاون من أجل حل المشكلة بطريقة كوميدية.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="6" data-url="https://voe.sx/e/5fg2sn5nrnta">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"الحلقة السادسة - Unexpected Surprise"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                تحدث مفاجأة غير متوقعة تقلب موازين العائلة وتجعلهم يعيدون النظر في علاقاتهم ببعضهم البعض.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="7" data-url="https://voe.sx/e/mj4rbwlglkaj">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"الحلقة السابعة - Home Improvement"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                يقوم أحد أفراد العائلة بمحاولة لتحسين أوضاع المنزل، لكن الأمور تسير في اتجاه آخر تمامًا.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="8" data-url="https://voe.sx/e/nxbr0ouyv92x">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 8">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 8</div>
+                            <div class="episode-title">"الحلقة الثامنة - Visitor from the Past"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                زيارة مفاجئة من شخصية من الماضي تهدد استقرار العائلة وتكشف أسرارًا كانت مخفية.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="9" data-url="https://voe.sx/e/xpfzgnjiqgrs">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 9">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 9</div>
+                            <div class="episode-title">"الحلقة التاسعة - Secrets Revealed"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                الأسرار التي تم كشفها تؤدي إلى سلسلة من المواقف الكوميدية بين أفراد العائلة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="10" data-url="https://voe.sx/e/wbo9xntgclxb">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 10">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 10</div>
+                            <div class="episode-title">"الحلقة العاشرة - Making Amends"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                محاولة العائلة لإصلاح الأمور تؤدي إلى مزيد من التعقيدات والمواقف المضحكة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="11" data-url="https://voe.sx/e/hgfclsozdcgv">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 11">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 11</div>
+                            <div class="episode-title">"الحلقة الحادية عشر - Family Occasion"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                مناسبة عائلية تجمع الجميع وتؤدي إلى كشف المزيد من الأسرار والمواقف الطريفة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="12" data-url="https://voe.sx/e/1kqqwoct7yz4">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 12">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 12</div>
+                            <div class="episode-title">"الحلقة الثانية عشر - Financial Crisis"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                أزمة مالية تهدد العائلة وتدفعهم للعمل معًا لإيجاد حل يرضي الجميع.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="13" data-url="https://voe.sx/e/y93dyrkkcc6g">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 13">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 13</div>
+                            <div class="episode-title">"الحلقة الثالثة عشر - Hard Choices"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                تفاقم الأزمة المالية يضع العائلة في موقف حرج، مما يدفعهم لاتخاذ قرارات صعبة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="14" data-url="https://voe.sx/e/opvbwhctsvzr">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 14">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 14</div>
+                            <div class="episode-title">"الحلقة الرابعة عشر - Unexpected Turn"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                تطورات غير متوقعة تغير مسار الأحداث وتضع العائلة أمام تحدٍ جديد.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="15" data-url="https://voe.sx/e/7direxocyl3u">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 15">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 15</div>
+                            <div class="episode-title">"الحلقة الخامسة عشر - Season Finale"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                في نهاية الموسم الأول، تتكشف الحقائق ويواجه أفراد العائلة مصيرهم المشترك بطريقة غير متوقعة.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="episodes-list" id="season2-episodes">
+                    <div class="episode-item" data-episode="1" data-url="https://voe.sx/e/zx8bm4galx9u">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"الحلقة الأولى - New Beginnings"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                يبدأ الموسم الثاني بعد أحداث الموسم الأول، حيث تواجه العائلة تحديات جديدة وظروف متغيرة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="2" data-url="https://voe.sx/e/ot1nfmrfn7vr">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"الحلقة الثانية - New Face"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                ظهور شخصية جديدة تغير ديناميكية العائلة وتخلق مواقف طريفة بين أفرادها.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="3" data-url="https://voe.sx/e/1vxki0pvazqv">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"الحلقة الثالثة - Adjustment Period"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                محاولات أفراد العائلة للتكيف مع الشخصية الجديدة تؤدي إلى سلسلة من المواقف الكوميدية.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="4" data-url="https://voe.sx/e/vdwd6goghfpf">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"الحلقة الرابعة - New Crisis"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                أزمة جديدة تهدد العائلة وتختبر قدرتهم على التعامل مع الضغوط.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="5" data-url="https://voe.sx/e/tkcvozedpx2e">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"الحلقة الخامسة - Creative Solutions"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                محاولات غير تقليدية من أفراد العائلة لحل الأزمة تؤدي إلى نتائج غير متوقعة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="6" data-url="https://voe.sx/e/qgz7vtiljibz">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"الحلقة السادسة - Family Dispute"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                خلاف بين أفراد العائلة يهدد تماسكهم ويؤدي إلى انقسامات داخلية.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="7" data-url="https://voe.sx/e/z44lyczqvwxj">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"الحلقة السابعة - Reconciliation Efforts"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                جهود للمصالحة بين أفراد العائلة تأخذ منحنى غير متوقع.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="8" data-url="https://voe.sx/e/dh9gtz3fqqfg">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 8">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 8</div>
+                            <div class="episode-title">"الحلقة الثامنة - Awkward Gathering"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                مناسبة عائلية تجمع الأفراد المتخاصمين، مما يؤدي إلى مواقف كوميدية محرجة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="9" data-url="https://voe.sx/e/mpn8nnowx43w">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 9">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 9</div>
+                            <div class="episode-title">"الحلقة التاسعة - Unexpected Twist"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                تحول غير متوقع في الأحداث يجبر العائلة على إعادة النظر في خلافاتهم.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="10" data-url="https://voe.sx/e/kyawzvge8mon">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 10">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 10</div>
+                            <div class="episode-title">"الحلقة العاشرة - Golden Opportunity"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                فرصة ذهبية لأحد أفراد العائلة تضعه في موقف اختيار صعب بين طموحاته وعائلته.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="11" data-url="https://voe.sx/e/hvfkycumo8dc">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 11">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 11</div>
+                            <div class="episode-title">"الحلقة الحادية عشر - Consequences"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                تداعيات القرار الصعب تؤثر على حياة العائلة بأكملها.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="12" data-url="https://voe.sx/e/nznioqcyh9ml">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 12">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 12</div>
+                            <div class="episode-title">"الحلقة الثانية عشر - Shocking News"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                خبر صادم يوحد العائلة من جديد ويجعلهم يواجهون تحديات غير متوقعة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="13" data-url="https://voe.sx/e/tie1nanjxml3">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 13">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 13</div>
+                            <div class="episode-title">"الحلقة الثالثة عشر - United Front"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                العائلة تعمل معًا لمواجهة التحدي الجديد، مما يعزز روابطهم من جديد.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="14" data-url="https://voe.sx/e/goxgbh4d1rpu">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 14">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 14</div>
+                            <div class="episode-title">"الحلقة الرابعة عشر - Progress & Surprises"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                تقدم في مواجهة التحدي يعطي العائلة أملًا جديدًا، لكن مع ظهور مفاجآت غير متوقعة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="15" data-url="https://voe.sx/e/qptegckjqetz">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 15">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 15</div>
+                            <div class="episode-title">"الحلقة الخامسة عشر - Season Finale"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                نهاية الموسم الثاني تترك العائلة في موقف حرج، مع نهاية مفتوحة تمهد للموسم الثالث.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="episodes-list hidden" id="season3-episodes">
+                    <div class="episode-item" data-episode="1" data-url="https://voe.sx/e/q6xmswdojnol">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"الحلقة الأولى - Season 3 Begins"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                بداية الموسم الثالث تكشف مصير العائلة بعد أحداث نهاية الموسم الثاني.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="2" data-url="https://voe.sx/e/wvzzkaayvgje">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"الحلقة الثانية - Adaptation"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                العائلة تحاول التكيف مع الوضع الجديد، مع ظهور تحديات جديدة غير متوقعة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="3" data-url="https://voe.sx/e/dijdedqf1qgy">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"الحلقة الثالثة - New Opportunity"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                فرصة جديدة تلوح في الأفق للعائلة، لكنها تأتي مع تضحيات محتملة.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="4" data-url="https://voe.sx/e/ojupmlbfivup">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"الحلقة الرابعة - Family Conflict"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                صراع داخلي بين أفراد العائلة حول الفرصة الجديدة، وخلافات حول كيفية المضي قدمًا.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="5" data-url="https://voe.sx/e/wi618y6dx029">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"الحلقة الخامسة - Unexpected Visit"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                زيارة مفاجئة من شخصية من الماضي تقلب موازين العائلة وتؤثر على قراراتهم.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="6" data-url="https://voe.sx/e/pt6emqt7yqx6">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"الحلقة السادسة - Dealing with the Past"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                التعامل مع تأثير زيارة الشخصية من الماضي يضع العائلة أمام اختبار حقيقي لتماسكهم.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="episode-item" data-episode="7" data-url="https://voe.sx/e/sdtmyqeyf1pm">
+                        <div class="episode-thumbnail">
+                            <img src="https://cairogossip.com/app/uploads/2023/04/336773598_898045148190129_1188787990312943637_n.jpg" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"الحلقة السابعة - Critical Decisions"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Directed by Ahmed El Mallawany • Written by Ahmed Amin</div>
+                            <div class="episode-description">
+                                أحداث غير متوقعة تجبر العائلة على اتخاذ قرارات حاسمة ستؤثر على مستقبلهم جميعًا.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Video Player Modal -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Kamel El Adad - S1:E1</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="video-container">
+                    <!-- Video player/iframe will be inserted here by JavaScript -->
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Select an episode to watch</p>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="language-selection">
+                        <span>Language: </span>
+                        <button class="language-btn active" id="langArabic" title="Arabic Audio">
+                            <img src="https://flagcdn.com/24x18/eg.png" alt="Arabic" class="flag-icon">
+                        </button>
+                        <button class="language-btn" id="langEnglish" title="English Audio">
+                            <img src="https://flagcdn.com/24x18/us.png" alt="English" class="flag-icon">
+                        </button>
+                    </div>
+                    <div class="player-info">
+                        <span>Source: voe.sx</span>
+                        <select class="quality-selector">
+                            <option value="auto">Auto Quality</option>
+                            <option value="1080p">1080p</option>
+                            <option value="720p">720p</option>
+                            <option value="480p">480p</option>
+                            <option value="360p">360p</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Sci-Fi</a></li>
+                    <li><a href="#">Horror</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Season tabs functionality
+            const seasonBoxes = document.querySelectorAll('.season-box');
+            const episodeLists = document.querySelectorAll('.episodes-list');
+            const episodesTitle = document.querySelector('.episodes-container h2');
+            
+            // Set default active season to 1
+            document.querySelector('.season-box[data-season="1"]').click();
+            
+            seasonBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    // Remove active class from all season boxes
+                    seasonBoxes.forEach(item => item.classList.remove('active'));
+                    
+                    // Add active class to clicked season box
+                    this.classList.add('active');
+                    
+                    // Get season number
+                    const seasonNumber = this.getAttribute('data-season');
+                    
+                    // Hide all episode lists
+                    episodeLists.forEach(list => list.classList.add('hidden'));
+                    
+                    // Show the selected season's episode list
+                    document.getElementById(`season${seasonNumber}-episodes`).classList.remove('hidden');
+                    
+                    // Update episodes title
+                    episodesTitle.textContent = `Episodes - Season ${seasonNumber}`;
+                });
+            });
+            
+            // Star rating functionality
+            const stars = document.querySelectorAll('.star');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    
+                    // Remove active class from all stars
+                    stars.forEach(s => s.classList.remove('active'));
+                    
+                    // Add active class to clicked star and all stars before it
+                    stars.forEach(s => {
+                        if (parseInt(s.getAttribute('data-rating')) <= parseInt(rating)) {
+                            s.classList.add('active');
+                        }
+                    });
+                    
+                    // Here you would normally send the rating to a server
+                    console.log(`User rated this series: ${rating}/10`);
+                });
+            });
+            
+            // Video modal functionality
+            const episodeItems = document.querySelectorAll('.episode-item');
+            const videoModal = document.getElementById('videoModal');
+            const closeModal = document.querySelector('.close-modal');
+            const videoContainer = document.querySelector('.video-container');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            // Open modal when clicking on an episode
+            episodeItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const seasonNumber = this.closest('.episodes-list').id.replace('season', '').replace('-episodes', '');
+                    const episodeNumber = this.getAttribute('data-episode');
+                    const episodeTitle = this.querySelector('.episode-title').textContent;
+                    const videoUrl = this.getAttribute('data-url');
+                    
+                    // Update modal title
+                    modalTitle.textContent = `Kamel El Adad - S${seasonNumber}:E${episodeNumber} ${episodeTitle}`;
+                    
+                    // Create iframe for the video
+                    videoContainer.innerHTML = `
+                        <iframe src="${videoUrl}" 
+                            frameborder="0" 
+                            allowfullscreen>
+                        </iframe>
+                    `;
+                    
+                    // Show modal
+                    videoModal.classList.add('active');
+                    
+                    // Prevent body scrolling when modal is open
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                videoModal.classList.remove('active');
+                
+                // Stop video by removing the iframe
+                videoContainer.innerHTML = `
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Select an episode to watch</p>
+                    </div>
+                `;
+                
+                // Allow body scrolling again
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close modal when clicking outside of content
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) {
+                    closeModal.click();
+                }
+            });
+            
+            // Language selection
+            const langButtons = document.querySelectorAll('.language-btn');
+            
+            langButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all language buttons
+                    langButtons.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Here you would normally switch the audio track
+                    console.log(`Switched to ${this.id === 'langArabic' ? 'Arabic' : 'English'} audio`);
+                });
+            });
+            
+            // Quality selector
+            const qualitySelector = document.querySelector('.quality-selector');
+            
+            qualitySelector.addEventListener('change', function() {
+                // Here you would normally change the video quality
+                console.log(`Changed quality to: ${this.value}`);
+            });
+        });
+    </script>
+</body>
+</html>
