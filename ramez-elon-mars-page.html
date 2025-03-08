@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramez Elon Mars - StreamHub</title>
+    <style>
+        /* Global styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #141414;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e50914;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #f5f5f5;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-nav li {
+            margin-right: 20px;
+        }
+
+        .main-nav a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            color: #e50914;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .search {
+            position: relative;
+            margin-right: 20px;
+        }
+
+        .search input {
+            background-color: #000;
+            border: 1px solid #333;
+            color: #f5f5f5;
+            padding: 8px 36px 8px 10px;
+            border-radius: 4px;
+            width: 240px;
+        }
+
+        .search i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .user-profile img {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Main content styles */
+        .detail-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Series info section */
+        .series-info-container {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .series-poster img {
+            width: 220px;
+            height: 330px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .series-description {
+            max-width: 800px;
+        }
+
+        .series-description h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .series-meta {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .dot {
+            margin: 0 10px;
+        }
+
+        .synopsis {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .cast, .creators {
+            margin-top: 20px;
+        }
+
+        .cast h3, .creators h3 {
+            color: #aaa;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        /* Series actions */
+        .series-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .watchlist-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .trailer-btn {
+            background-color: #FFC107;
+            color: #000;
+        }
+
+        .action-btn .icon {
+            margin-right: 8px;
+        }
+
+        /* Star rating */
+        .rating-container {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+        }
+
+        .rating-container h3 {
+            margin-bottom: 10px;
+        }
+
+        .star-rating {
+            display: flex;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .star {
+            color: #555;
+        }
+
+        .star.active, .star:hover {
+            color: gold;
+        }
+
+        .avg-rating {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Episodes section */
+        .episodes-section {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+        }
+
+        .seasons-selector h2 {
+            margin-bottom: 20px;
+        }
+
+        .season-boxes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .season-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .season-box.active {
+            background-color: #e50914;
+        }
+
+        .episodes-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .episodes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .episodes-list.hidden {
+            display: none;
+        }
+
+        .episode-item {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 15px;
+            background-color: #222;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .episode-item:hover {
+            transform: scale(1.01);
+            background-color: #333;
+        }
+
+        .episode-thumbnail {
+            position: relative;
+            width: 160px;
+            height: 90px;
+        }
+
+        .episode-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .episode-item:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            font-size: 24px;
+        }
+
+        .episode-details {
+            padding: 10px 15px 10px 0;
+        }
+
+        .episode-number {
+            font-weight: bold;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .episode-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .episode-duration, .episode-info {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .episode-description {
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Video modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            width: 80%;
+            max-width: 1200px;
+            background-color: #111;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #000;
+        }
+
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+            color: #aaa;
+        }
+
+        .play-button {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #000;
+        }
+
+        .language-selection {
+            display: flex;
+            align-items: center;
+        }
+
+        .language-btn {
+            background: none;
+            border: 1px solid #333;
+            margin-left: 10px;
+            padding: 5px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .language-btn.active {
+            opacity: 1;
+            border-color: #e50914;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 18px;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .quality-selector {
+            margin-left: 15px;
+            background-color: #111;
+            color: #f5f5f5;
+            border: 1px solid #333;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-column p {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: #333;
+            border-radius: 50%;
+            color: #f5f5f5;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #e50914;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #e50914;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">Stream<span>Hub</span></a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="movies.html">Movies</a></li>
+                    <li><a href="tvshows.html">TV Shows</a></li>
+                    <li><a href="arabic-series.html" class="active">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-right">
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                    <i>🔍</i>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/32/32" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="detail-content">
+        <!-- Series Info Section -->
+        <section class="series-info-container">
+            <div class="series-poster">
+                <img src="https://upimg.my/apis/f81e7e5a-7d16-4d88-acff-a08de27e0d0b/movies/19907.webp" alt="Ramez Elon Mars">
+            </div>
+            
+            <div class="series-description">
+                <h1>Ramez Elon Mars</h1>
+                <div class="series-meta">
+                    <span class="year">2023</span>
+                    <span class="dot">•</span>
+                    <span class="rating">TV-PG</span>
+                    <span class="dot">•</span>
+                    <span class="seasons">1 Season</span>
+                    <span class="dot">•</span>
+                    <span class="genre">Reality, Comedy, Prank Show</span>
+                </div>
+                <p class="synopsis">
+                    "Ramez Elon Mars" is the latest prank show from Egyptian comedian and actor Ramez Galal, known for his outrageous and controversial pranks during the holy month of Ramadan. This season features a space-themed concept inspired by Mars exploration.
+                </p>
+                <p class="synopsis">
+                    Each episode, unsuspecting celebrities are invited to a special event, only to find themselves caught in an elaborate prank that involves simulated space travel and Mars-related scenarios. The show creates shocking situations that push celebrities to their limits before the famous host reveals himself.
+                </p>
+                <div class="cast">
+                    <h3>Host:</h3>
+                    <p>Ramez Galal</p>
+                </div>
+                <div class="creators">
+                    <h3>Director:</h3>
+                    <p>Ramez Galal</p>
+                </div>
+            </div>
+            
+            <div class="series-actions">
+                <button class="action-btn subscribe-btn">
+                    <i class="icon">🔔</i>
+                    Subscribe to Series
+                </button>
+                <button class="action-btn watchlist-btn">
+                    <i class="icon">➕</i>
+                    Add to Watchlist
+                </button>
+                <button class="action-btn trailer-btn">
+                    <i class="icon">▶</i>
+                    Watch Trailer
+                </button>
+                <div class="rating-container">
+                    <h3>Rate this:</h3>
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                        <span class="star" data-rating="6">★</span>
+                        <span class="star" data-rating="7">★</span>
+                        <span class="star" data-rating="8">★</span>
+                        <span class="star" data-rating="9">★</span>
+                        <span class="star" data-rating="10">★</span>
+                    </div>
+                    <div class="avg-rating">
+                        Average: <span>7.4</span>/10
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seasons & Episodes Section -->
+        <section class="episodes-section">
+            <div class="seasons-selector">
+                <h2>Seasons</h2>
+                <div class="season-boxes">
+                    <div class="season-box active" data-season="1">1</div>
+                </div>
+            </div>
+            
+            <div class="episodes-container">
+                <h2>Episodes - Season 1</h2>
+                
+                <div class="episodes-list" id="season1-episodes">
+                    <!-- Season 1 Episodes -->
+                    <!-- Episode 1 -->
+                    <div class="episode-item" data-episode="1">
+                        <div class="episode-thumbnail">
+                            <img src="https://upimg.my/apis/f81e7e5a-7d16-4d88-acff-a08de27e0d0b/movies/19907.webp" alt="Episode 1">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 1</div>
+                            <div class="episode-title">"The First Victim"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 1, 2023</div>
+                            <div class="episode-description">
+                                Ramez Galal launches his space-themed prank show with a celebrity guest who has no idea what's in store for them on this simulated Mars journey.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 2 -->
+                    <div class="episode-item" data-episode="2">
+                        <div class="episode-thumbnail">
+                            <img src="https://upimg.my/apis/f81e7e5a-7d16-4d88-acff-a08de27e0d0b/movies/19907.webp" alt="Episode 2">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 2</div>
+                            <div class="episode-title">"Space Crisis"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 2, 2023</div>
+                            <div class="episode-description">
+                                A famous actor becomes the target of Ramez's elaborate prank involving a simulated space emergency that pushes them to their limits.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 3 -->
+                    <div class="episode-item" data-episode="3">
+                        <div class="episode-thumbnail">
+                            <img src="https://upimg.my/apis/f81e7e5a-7d16-4d88-acff-a08de27e0d0b/movies/19907.webp" alt="Episode 3">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 3</div>
+                            <div class="episode-title">"Martian Encounter"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 3, 2023</div>
+                            <div class="episode-description">
+                                A popular singer is lured into the elaborate Mars simulation, where they face unexpected events designed to test their courage.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 4 -->
+                    <div class="episode-item" data-episode="4">
+                        <div class="episode-thumbnail">
+                            <img src="https://upimg.my/apis/f81e7e5a-7d16-4d88-acff-a08de27e0d0b/movies/19907.webp" alt="Episode 4">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 4</div>
+                            <div class="episode-title">"Zero Gravity"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 4, 2023</div>
+                            <div class="episode-description">
+                                Ramez creates a zero-gravity scenario to prank an unsuspecting sports star, leading to hilarious and terrifying reactions.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 5 -->
+                    <div class="episode-item" data-episode="5">
+                        <div class="episode-thumbnail">
+                            <img src="https://upimg.my/apis/f81e7e5a-7d16-4d88-acff-a08de27e0d0b/movies/19907.webp" alt="Episode 5">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 5</div>
+                            <div class="episode-title">"Red Planet Panic"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 5, 2023</div>
+                            <div class="episode-description">
+                                A beloved TV personality faces their fears when trapped in Ramez's Mars simulation that appears to go catastrophically wrong.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 6 -->
+                    <div class="episode-item" data-episode="6">
+                        <div class="episode-thumbnail">
+                            <img src="https://upimg.my/apis/f81e7e5a-7d16-4d88-acff-a08de27e0d0b/movies/19907.webp" alt="Episode 6">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 6</div>
+                            <div class="episode-title">"Space Malfunction"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 6, 2023</div>
+                            <div class="episode-description">
+                                A prominent comedian becomes the victim of Ramez's Mars expedition prank, facing a series of staged malfunctions and emergencies.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Episode 7 -->
+                    <div class="episode-item" data-episode="7">
+                        <div class="episode-thumbnail">
+                            <img src="https://upimg.my/apis/f81e7e5a-7d16-4d88-acff-a08de27e0d0b/movies/19907.webp" alt="Episode 7">
+                            <div class="play-overlay">
+                                <div class="play-icon">▶</div>
+                            </div>
+                        </div>
+                        <div class="episode-details">
+                            <div class="episode-number">Episode 7</div>
+                            <div class="episode-title">"Grand Finale"</div>
+                            <div class="episode-duration">45 min</div>
+                            <div class="episode-info">Aired: Apr 7, 2023</div>
+                            <div class="episode-description">
+                                In the season finale, Ramez pulls out all the stops to create his most elaborate Mars-themed prank yet for a very special celebrity guest.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Video Player Modal -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Ramez Elon Mars - S1:E1 The First Victim</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="video-container">
+                    <!-- Video player/iframe will be inserted here by JavaScript -->
+                    <div class="video-placeholder">
+                        <div class="play-button">▶</div>
+                        <p>Select an episode to watch</p>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <div class="language-selection">
+                        <span>Language: </span>
+                        <button class="language-btn active" id="langArabic" title="Arabic Audio">
+                            <img src="https://flagcdn.com/24x18/eg.png" alt="Arabic" class="flag-icon">
+                        </button>
+                        <button class="language-btn" id="langEnglish" title="English Audio">
+                            <img src="https://flagcdn.com/24x18/us.png" alt="English" class="flag-icon">
+                        </button>
+                    </div>
+                    <div class="player-info">
+                        <span>Source: voe.sx</span>
+                        <select class="quality-selector">
+                            <option value="auto">Auto Quality</option>
+                            <option value="1080p">1080p</option>
+                            <option value="720p">720p</option>
+                            <option value="480p">480p</option>
+                            <option value="360p">360p</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>StreamHub</h3>
+                <p>The best streaming platform for movies and TV shows. Watch anywhere, anytime.</p>
+                <div class="social-icons">
+                    <a href="#"><span>f</span></a>
+                    <a href="#"><span>t</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>ig</span></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#">Arabic Series</a></li>
+                    <li><a href="#">Arabic Movies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Comedy</a></li>
+                    <li><a href="#">Drama</a></li>
+                    <li><a href="#">Reality</a></li>
+                    <li><a href="#">Entertainment</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 StreamHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Episode video URLs
+            const season1Videos = {
+                "1": "https://voe.sx/e/pdjpfltmudfr", // Episode 1
+                "2": "https://voe.sx/e/ry8aiqmutky9", // Episode 2
+                "3": "https://voe.sx/e/a3dntnas7at8", // Episode 3
+                "4": "https://voe.sx/e/1bz262xrh08j", // Episode 4
+                "5": "https://voe.sx/e/nrkd7xrxtrq8", // Episode 5
+                "6": "https://voe.sx/e/j7g6kxhiznzx", // Episode 6
+                "7": "https://voe.sx/e/h51epin1kxob", // Episode 7
+            };
+            
+            // Placeholder for English version videos (to be filled later)
+            const season1VideosEng = {};
+            
+            // Set the same thumbnail for all episodes
+            document.querySelectorAll('.episode-item .episode-thumbnail img').forEach(img => {
+                img.src = "https://upimg.my/apis/f81e7e5a-7d16-4d88-acff-a08de27e0d0b/movies/19907.webp";
+                img.alt = "Ramez Elon Mars";
+                // Adjust the image display to show properly in the thumbnail container
+                img.style.objectFit = "cover";
+            });
+            
+            // Current playing episode tracking
+            let currentSeason = "1";
+            let currentEpisode = "1";
+            let currentLanguage = "ar"; // Default language is Arabic
+            
+            // Season box functionality
+            const seasonBoxes = document.querySelectorAll('.season-box');
+            seasonBoxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    // This show only has one season, but keeping the code for potential future seasons
+                    seasonBoxes.forEach(b => b.classList.remove('active'));
+                    box.classList.add('active');
+                    currentSeason = box.dataset.season;
+                });
+            });
+            
+            // Video player related elements
+            const videoModal = document.getElementById('videoModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const videoContainer = document.querySelector('.video-container');
+            const closeModal = document.querySelector('.close-modal');
+            
+            // Episode click handler - Open video modal
+            const episodeItems = document.querySelectorAll('.episode-item');
+            
+            episodeItems.forEach(episode => {
+                episode.addEventListener('click', () => {
+                    // Update tracking variables
+                    currentSeason = document.querySelector('.season-box.active').dataset.season;
+                    currentEpisode = episode.dataset.episode;
+                    
+                    loadAndPlayEpisode(currentSeason, currentEpisode, currentLanguage);
+                });
+            });
+            
+            // Function to load and play an episode with language selection
+            function loadAndPlayEpisode(season, episode, language) {
+                const episodeItem = document.querySelector(`.episodes-list:not(.hidden) .episode-item[data-episode="${episode}"]`);
+                if (!episodeItem) return;
+                
+                const episodeTitle = episodeItem.querySelector('.episode-title').textContent;
+                
+                // Set the modal title with language indicator
+                const langText = language === 'ar' ? 'Arabic' : 'English';
+                modalTitle.textContent = `Ramez Elon Mars - S${season}:E${episode} ${episodeTitle} (${langText})`;
+                
+                // Get the correct video source based on season and language
+                let videoSrc = null;
+                
+                if (language === 'ar') {
+                    // Arabic version
+                    if (season === '1' && season1Videos[episode]) {
+                        videoSrc = season1Videos[episode];
+                    }
+                } else {
+                    // English version (placeholder for now)
+                    if (season === '1' && season1VideosEng[episode]) {
+                        videoSrc = season1VideosEng[episode];
+                    }
+                }
+                
+                // Create video player if video source is available
+                if (videoSrc) {
+                    // Clear previous content
+                    videoContainer.innerHTML = '';
+                    
+                    // Create and append the iframe
+                    const iframe = document.createElement('iframe');
+                    iframe.src = videoSrc;
+                    iframe.width = '100%';
+                    iframe.height = '100%';
+                    iframe.style.position = 'absolute';
+                    iframe.style.top = '0';
+                    iframe.style.left = '0';
+                    iframe.frameBorder = '0';
+                    iframe.scrolling = 'no';
+                    iframe.allowFullscreen = true;
+                    
+                    videoContainer.appendChild(iframe);
+                } else {
+                    // Show placeholder message (especially for English version not yet available)
+                    videoContainer.innerHTML = `
+                        <div class="video-placeholder">
+                            <div class="play-button">▶</div>
+                            <p>${language === 'en' ? 'English version coming soon' : 'Video not available for this episode'}</p>
+                        </div>
+                    `;
+                }
+                
+                // Show the modal
+                videoModal.style.display = 'flex';
+                
+                console.log(`Playing Season ${season}, Episode ${episode} in ${language}`);
+            }
+            
+            // Language selection handlers
+            document.getElementById('langArabic').addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+                currentLanguage = 'ar';
+                
+                // Update active state of language buttons
+                document.getElementById('langEnglish').classList.remove('active');
+                this.classList.add('active');
+                
+                loadAndPlayEpisode(currentSeason, currentEpisode, currentLanguage);
+            });
+            
+            document.getElementById('langEnglish').addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+                currentLanguage = 'en';
+                
+                // Update active state of language buttons
+                document.getElementById('langArabic').classList.remove('active');
+                this.classList.add('active');
+                
+                loadAndPlayEpisode(currentSeason, currentEpisode, currentLanguage);
+            });
+            
+            // Close modal when clicking the X
+            closeModal.addEventListener('click', () => {
+                videoModal.style.display = 'none';
+                // Stop any playing videos by clearing the container
+                videoContainer.innerHTML = '';
+            });
+            
+            // Close modal when clicking outside the content
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    videoModal.style.display = 'none';
+                    // Stop any playing videos by clearing the container
+                    videoContainer.innerHTML = '';
+                }
+            });
+            
+            // Star rating functionality
+            const stars = document.querySelectorAll('.star');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    
+                    // Clear all active stars
+                    stars.forEach(s => s.classList.remove('active'));
+                    
+                    // Set active stars up to the clicked one
+                    stars.forEach(s => {
+                        if (parseInt(s.dataset.rating) <= rating) {
+                            s.classList.add('active');
+                        }
+                    });
+                    
+                    console.log(`User rated the series ${rating}/10`);
+                });
+            });
+            
+            // Action buttons functionality
+            const subscribeBtn = document.querySelector('.subscribe-btn');
+            const watchlistBtn = document.querySelector('.watchlist-btn');
+            const trailerBtn = document.querySelector('.trailer-btn');
+            
+            subscribeBtn.addEventListener('click', () => {
+                // Toggle subscribe status
+                const isSubscribed = subscribeBtn.classList.toggle('subscribed');
+                
+                if (isSubscribed) {
+                    subscribeBtn.innerHTML = '<i class="icon">✓</i> Subscribed';
+                    subscribeBtn.style.backgroundColor = '#388E3C';
+                } else {
+                    subscribeBtn.innerHTML = '<i class="icon">🔔</i> Subscribe to Series';
+                    subscribeBtn.style.backgroundColor = '#4CAF50';
+                }
+                
+                console.log(`User ${isSubscribed ? 'subscribed to' : 'unsubscribed from'} the series`);
+            });
+            
+            watchlistBtn.addEventListener('click', () => {
+                // Toggle watchlist status
+                const isInWatchlist = watchlistBtn.classList.toggle('in-watchlist');
+                
+                if (isInWatchlist) {
+                    watchlistBtn.innerHTML = '<i class="icon">✓</i> In Watchlist';
+                    watchlistBtn.style.backgroundColor = '#1565C0';
+                } else {
+                    watchlistBtn.innerHTML = '<i class="icon">➕</i> Add to Watchlist';
+                    watchlistBtn.style.backgroundColor = '#2196F3';
+                }
+                
+                console.log(`User ${isInWatchlist ? 'added series to' : 'removed series from'} watchlist`);
+            });
+            
+            trailerBtn.addEventListener('click', () => {
+                // Open the video modal with the trailer
+                modalTitle.textContent = 'Ramez Elon Mars - Official Trailer';
+                
+                // Use a placeholder for the trailer
+                videoContainer.innerHTML = '';
+                
+                const trailerPlaceholder = document.createElement('div');
+                trailerPlaceholder.className = 'video-placeholder';
+                trailerPlaceholder.innerHTML = `
+                    <div class="play-button">▶</div>
+                    <p>Trailer coming soon</p>
+                `;
+                
+                videoContainer.appendChild(trailerPlaceholder);
+                
+                videoModal.style.display = 'flex';
+                console.log('Attempting to play series trailer');
+            });
+            
+            // Quality selector (for demonstration - would need real implementation)
+            const qualitySelector = document.querySelector('.quality-selector');
+            qualitySelector.addEventListener('change', function() {
+                console.log(`Quality changed to: ${this.value}`);
+                // In a real implementation, this would change the video quality
+            });
+        });
+    </script>
+</body>
+</html>
